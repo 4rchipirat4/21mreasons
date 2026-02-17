@@ -889,89 +889,123 @@ export default function BTCPortal() {
         </div>
       </div>
 
-      {/* Rolling Ticker Bar */}
-      <div className="ticker-bar" style={{ overflow: "hidden", background: D2, borderBottom: `1px solid ${D3}`, padding: "5px 0", whiteSpace: "nowrap" }}>
+      {/* Rolling Ticker Bar — pauses on hover, all links clickable */}
+      <div className="ticker-bar" 
+        style={{ overflow: "hidden", background: D2, borderBottom: `1px solid ${D3}`, padding: "5px 0", whiteSpace: "nowrap" }}
+        onMouseEnter={(e) => { const el = e.currentTarget.querySelector('.ticker-track'); if (el) el.style.animationPlayState = 'paused'; }}
+        onMouseLeave={(e) => { const el = e.currentTarget.querySelector('.ticker-track'); if (el) el.style.animationPlayState = 'running'; }}
+      >
         <style>{`
           @keyframes tickerScroll {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
           }
+          .ticker-track a { color: inherit; text-decoration: none; }
+          .ticker-track a:hover { text-decoration: underline; color: ${O} !important; }
         `}</style>
-        <div style={{ display: "inline-block", animation: "tickerScroll 120s linear infinite" }}>
+        <div className="ticker-track" style={{ display: "inline-block", animation: "tickerScroll 120s linear infinite" }}>
           {[0, 1].map((copy) => (
             <span key={copy} style={{ fontSize: "clamp(8px, 0.85vw, 11px)", fontFamily: "var(--mono)", letterSpacing: "0.02em" }}>
               <span style={{ color: O, fontWeight: 700 }}>CHAMPIONS</span><span style={{ color: G1 }}> ░ </span>
-              <span style={{ color: W2 }}>James Check</span><span style={{ color: G2 }}> — Analyst, _checkonchain</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Saifedean Ammous</span><span style={{ color: G2 }}> — Author, The Bitcoin Standard</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Jeff Booth</span><span style={{ color: G2 }}> — Author, The Price of Tomorrow</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Lyn Alden</span><span style={{ color: G2 }}> — Author, Broken Money</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Mark Moss</span><span style={{ color: G2 }}> — Macro Analyst & Educator</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>James Lavish</span><span style={{ color: G2 }}> — Fund Manager, The Informationist</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Michael Saylor</span><span style={{ color: G2 }}> — Chairman, Strategy Inc.</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Jason Lowery</span><span style={{ color: G2 }}> — Author, Softwar (MIT)</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Tom Luongo</span><span style={{ color: G2 }}> — Macro Geopolitics, Gold Goats 'n Guns</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Luke Gromen</span><span style={{ color: G2 }}> — Founder, FFTT</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Matt Odell</span><span style={{ color: G2 }}> — Privacy Advocate, Citadel Dispatch</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Matthew Mezinskis</span><span style={{ color: G2 }}> — Analyst, Porkopolis Economics</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Mel Mattison</span><span style={{ color: G2 }}> — Macro Strategist & Author</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Jordi Visser</span><span style={{ color: G2 }}> — CIO & Macro Thinker</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Michael Howell</span><span style={{ color: G2 }}> — CEO, CrossBorder Capital</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Erik Cason</span><span style={{ color: G2 }}> — Author, Cryptosovereignty</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Larry Lepard</span><span style={{ color: G2 }}> — Managing Partner, EMA</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Tim Draper</span><span style={{ color: G2 }}> — Venture Capitalist, Draper Associates</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Max Keiser</span><span style={{ color: G2 }}> — Broadcaster & BTC Advisor to El Salvador</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Stacy Herbert</span><span style={{ color: G2 }}> — Co-host, Keiser Report / BTC Advisor</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Hal Finney</span><span style={{ color: G2 }}> — Pioneer, First BTC Recipient ✝</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Adam Back</span><span style={{ color: G2 }}> — CEO, Blockstream / Hashcash Inventor</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Parker Lewis</span><span style={{ color: G2 }}> — Author, Gradually Then Suddenly</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Robert Breedlove</span><span style={{ color: G2 }}> — Host, What Is Money?</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Natalie Brunell</span><span style={{ color: G2 }}> — Host, Coin Stories</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Preston Pysh</span><span style={{ color: G2 }}> — Host, The Investor's Podcast</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Greg Foss</span><span style={{ color: G2 }}> — Credit Markets, Validus Power</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Alex Gladstein</span><span style={{ color: G2 }}> — CSO, Human Rights Foundation</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Giovanni Santostasi</span><span style={{ color: G2 }}> — Creator, Power Law Model</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Jack Mallers</span><span style={{ color: G2 }}> — CEO, Strike</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Andreas Antonopoulos</span><span style={{ color: G2 }}> — Author, Mastering Bitcoin</span>
+              {[
+                { n: "James Check", d: "Analyst, _checkonchain", u: "https://x.com/_checkonchain" },
+                { n: "Saifedean Ammous", d: "Author, The Bitcoin Standard", u: "https://saifedean.com" },
+                { n: "Jeff Booth", d: "Author, The Price of Tomorrow", u: "https://x.com/JeffBooth" },
+                { n: "Lyn Alden", d: "Author, Broken Money", u: "https://x.com/LynAldenContact" },
+                { n: "Mark Moss", d: "Macro Analyst & Educator", u: "https://x.com/1MarkMoss" },
+                { n: "James Lavish", d: "Fund Manager, The Informationist", u: "https://x.com/jaborman" },
+                { n: "Michael Saylor", d: "Chairman, Strategy Inc.", u: "https://x.com/saylor" },
+                { n: "Jason Lowery", d: "Author, Softwar (MIT)", u: "https://x.com/JasonPLowery" },
+                { n: "Tom Luongo", d: "Macro Geopolitics, Gold Goats 'n Guns", u: "https://x.com/TFL1728" },
+                { n: "Luke Gromen", d: "Founder, FFTT", u: "https://x.com/LukeGromen" },
+                { n: "Matt Odell", d: "Privacy Advocate, Citadel Dispatch", u: "https://x.com/ODELL" },
+                { n: "Matthew Mezinskis", d: "Analyst, Porkopolis Economics", u: "https://x.com/MatthewMezinskis" },
+                { n: "Mel Mattison", d: "Macro Strategist & Author", u: "https://x.com/MelMattison1" },
+                { n: "Jordi Visser", d: "CIO & Macro Thinker", u: "https://x.com/JordiVisser" },
+                { n: "Michael Howell", d: "CEO, CrossBorder Capital", u: "https://x.com/crossabordjcap" },
+                { n: "Erik Cason", d: "Author, Cryptosovereignty", u: "https://x.com/Erikcason" },
+                { n: "Larry Lepard", d: "Managing Partner, EMA", u: "https://x.com/LawrenceLepard" },
+                { n: "Tim Draper", d: "Venture Capitalist, Draper Associates", u: "https://x.com/TimDraper" },
+                { n: "Max Keiser", d: "Broadcaster & BTC Advisor to El Salvador", u: "https://x.com/maxkeiser" },
+                { n: "Stacy Herbert", d: "Co-host, Keiser Report / BTC Advisor", u: "https://x.com/stabordi" },
+                { n: "Hal Finney", d: "Pioneer, First BTC Recipient ✝", u: "https://en.wikipedia.org/wiki/Hal_Finney_(computer_scientist)" },
+                { n: "Adam Back", d: "CEO, Blockstream / Hashcash Inventor", u: "https://x.com/adam3us" },
+                { n: "Parker Lewis", d: "Author, Gradually Then Suddenly", u: "https://x.com/parkeralewis" },
+                { n: "Robert Breedlove", d: "Host, What Is Money?", u: "https://x.com/Breedlove22" },
+                { n: "Natalie Brunell", d: "Host, Coin Stories", u: "https://x.com/natabordi" },
+                { n: "Preston Pysh", d: "Host, The Investor's Podcast", u: "https://x.com/PrestonPysh" },
+                { n: "Greg Foss", d: "Credit Markets, Validus Power", u: "https://x.com/FossGregfoss" },
+                { n: "Alex Gladstein", d: "CSO, Human Rights Foundation", u: "https://x.com/gladstein" },
+                { n: "Giovanni Santostasi", d: "Creator, Power Law Model", u: "https://x.com/Giovann35084111" },
+                { n: "Jack Mallers", d: "CEO, Strike", u: "https://x.com/jackmallers" },
+                { n: "Andreas Antonopoulos", d: "Author, Mastering Bitcoin", u: "https://x.com/aantonop" },
+              ].map((c, i) => (
+                <span key={`c${copy}-${i}`}>
+                  <a href={c.u} target="_blank" rel="noopener noreferrer" style={{ color: W2 }}>{c.n}</a>
+                  <span style={{ color: G2 }}> — {c.d}</span><span style={{ color: G1 }}> ◆ </span>
+                </span>
+              ))}
               <span style={{ color: G1 }}> ░░░ </span>
               <span style={{ color: E, fontWeight: 700 }}>PRO-BITCOIN HEADS OF STATE</span><span style={{ color: G1 }}> ░ </span>
-              <span style={{ color: W2 }}>President Donald Trump</span><span style={{ color: G2 }}> — USA — Strategic Bitcoin Reserve, Executive Orders</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>President Nayib Bukele</span><span style={{ color: G2 }}> — El Salvador — First nation to adopt BTC as legal tender</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>PM Shehbaz Sharif</span><span style={{ color: G2 }}> — Pakistan — Announced Strategic Bitcoin Reserve 2026</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>King Jigme Khesar</span><span style={{ color: G2 }}> — Bhutan — State-linked hydroelectric BTC mining</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>President Faustin-Archange Touadéra</span><span style={{ color: G2 }}> — Central African Republic — BTC legal tender</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>President Javier Milei</span><span style={{ color: G2 }}> — Argentina — Pro-crypto deregulation</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>VP Heng Swee Keat</span><span style={{ color: G2 }}> — Singapore — Progressive crypto framework via MAS</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>President Bola Tinubu</span><span style={{ color: G2 }}> — Nigeria — National blockchain policy</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: W2 }}>Diet Member Satoshi Hamada</span><span style={{ color: G2 }}> — Japan — Proposed national Bitcoin reserve</span>
+              {[
+                { n: "President Donald Trump", d: "USA — Strategic Bitcoin Reserve, Executive Orders" },
+                { n: "President Nayib Bukele", d: "El Salvador — First nation to adopt BTC as legal tender" },
+                { n: "PM Shehbaz Sharif", d: "Pakistan — Announced Strategic Bitcoin Reserve 2026" },
+                { n: "King Jigme Khesar", d: "Bhutan — State-linked hydroelectric BTC mining" },
+                { n: "President Faustin-Archange Touadéra", d: "Central African Republic — BTC legal tender" },
+                { n: "President Javier Milei", d: "Argentina — Pro-crypto deregulation" },
+                { n: "VP Heng Swee Keat", d: "Singapore — Progressive crypto framework via MAS" },
+                { n: "President Bola Tinubu", d: "Nigeria — National blockchain policy" },
+                { n: "Diet Member Satoshi Hamada", d: "Japan — Proposed national Bitcoin reserve" },
+              ].map((h, i) => (
+                <span key={`h${copy}-${i}`}>
+                  <span style={{ color: W2 }}>{h.n}</span>
+                  <span style={{ color: G2 }}> — {h.d}</span><span style={{ color: G1 }}> ◆ </span>
+                </span>
+              ))}
               <span style={{ color: G1 }}> ░░░ </span>
               <span style={{ color: E, fontWeight: 700 }}>ESSENTIAL READING</span><span style={{ color: G1 }}> ░ </span>
-              <span style={{ color: O, fontWeight: 600 }}>The Bitcoin Standard</span><span style={{ color: G2 }}> — Saifedean Ammous</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>The Fiat Standard</span><span style={{ color: G2 }}> — Saifedean Ammous</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>Principles of Economics</span><span style={{ color: G2 }}> — Saifedean Ammous</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>Broken Money</span><span style={{ color: G2 }}> — Lyn Alden</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>The Price of Tomorrow</span><span style={{ color: G2 }}> — Jeff Booth</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>Mastering Bitcoin</span><span style={{ color: G2 }}> — Andreas Antonopoulos</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>Layered Money</span><span style={{ color: G2 }}> — Nik Bhatia</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>The Bitcoin Standard Podcast</span><span style={{ color: G2 }}> — Saifedean Ammous</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>Thank God for Bitcoin</span><span style={{ color: G2 }}> — Jimmy Song et al.</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>Check Your Financial Privilege</span><span style={{ color: G2 }}> — Alex Gladstein</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>Softwar</span><span style={{ color: G2 }}> — Jason Lowery (MIT)</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>The Sovereign Individual</span><span style={{ color: G2 }}> — Davidson & Rees-Mogg</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>Inventing Bitcoin</span><span style={{ color: G2 }}> — Yan Pritzker</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>Bitcoin: Hard Money You Can't F*ck With</span><span style={{ color: G2 }}> — Jason Williams</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>The Internet of Money</span><span style={{ color: G2 }}> — Andreas Antonopoulos</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>21 Lessons</span><span style={{ color: G2 }}> — Gigi</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>Gradually, Then Suddenly</span><span style={{ color: G2 }}> — Parker Lewis</span>
+              {[
+                { t: "The Bitcoin Standard", a: "Saifedean Ammous", u: "https://www.audible.com/pd/The-Bitcoin-Standard-Audiobook/B07D7ZRKLJ" },
+                { t: "The Fiat Standard", a: "Saifedean Ammous", u: "https://www.audible.com/pd/The-Fiat-Standard-Audiobook/B09MYXQGBV" },
+                { t: "Principles of Economics", a: "Saifedean Ammous", u: "https://www.audible.com/pd/Principles-of-Economics-Audiobook/B0C6RCWYR3" },
+                { t: "Broken Money", a: "Lyn Alden", u: "https://www.audible.com/pd/Broken-Money-Audiobook/B0CG1BNP9P" },
+                { t: "The Price of Tomorrow", a: "Jeff Booth", u: "https://www.audible.com/pd/The-Price-of-Tomorrow-Audiobook/B083Z5WRBG" },
+                { t: "Mastering Bitcoin", a: "Andreas Antonopoulos", u: "https://www.amazon.com/Mastering-Bitcoin-Programming-Open-Blockchain/dp/1098150090" },
+                { t: "Layered Money", a: "Nik Bhatia", u: "https://www.audible.com/pd/Layered-Money-Audiobook/B08QDFM3RY" },
+                { t: "The Bitcoin Standard Podcast", a: "Saifedean Ammous", u: "https://open.spotify.com/show/691nFDIWWmhFFAz7xp3wAr" },
+                { t: "Thank God for Bitcoin", a: "Jimmy Song et al.", u: "https://www.audible.com/pd/Thank-God-for-Bitcoin-Audiobook/B08XWFD5HK" },
+                { t: "Check Your Financial Privilege", a: "Alex Gladstein", u: "https://www.amazon.com/Check-Your-Financial-Privilege-Alex/dp/B0B48HKQ27" },
+                { t: "Softwar", a: "Jason Lowery (MIT)", u: "https://www.amazon.com/Softwar-Thesis-Power-Projection-Cybersecurity/dp/B0BW35F1TJ" },
+                { t: "The Sovereign Individual", a: "Davidson & Rees-Mogg", u: "https://www.audible.com/pd/The-Sovereign-Individual-Audiobook/B07TWNP9NB" },
+                { t: "Inventing Bitcoin", a: "Yan Pritzker", u: "https://www.amazon.com/Inventing-Bitcoin-Technology-Decentralized-Explained/dp/B087C4BCJ2" },
+                { t: "Bitcoin: Hard Money You Can't F*ck With", a: "Jason Williams", u: "https://www.audible.com/pd/Bitcoin-Hard-Money-You-Cant-Fck-With-Audiobook/B085FK7MLH" },
+                { t: "The Internet of Money", a: "Andreas Antonopoulos", u: "https://www.audible.com/pd/The-Internet-of-Money-Audiobook/B071KGKJR6" },
+                { t: "21 Lessons", a: "Gigi", u: "https://21lessons.com" },
+                { t: "Gradually, Then Suddenly", a: "Parker Lewis", u: "https://www.amazon.com/Gradually-Then-Suddenly-Parker-Lewis/dp/B0CV3TP1MH" },
+              ].map((b, i) => (
+                <span key={`b${copy}-${i}`}>
+                  <a href={b.u} target="_blank" rel="noopener noreferrer" style={{ color: O, fontWeight: 600 }}>{b.t}</a>
+                  <span style={{ color: G2 }}> — {b.a}</span><span style={{ color: G1 }}> ◆ </span>
+                </span>
+              ))}
               <span style={{ color: G1 }}> ░░░ </span>
               <span style={{ color: E, fontWeight: 700 }}>RESOURCES</span><span style={{ color: G1 }}> ░ </span>
-              <span style={{ color: O, fontWeight: 600 }}>checkonchain.com</span><span style={{ color: G2 }}> — On-chain Analytics</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>bitcoinmagazinepro.com</span><span style={{ color: G2 }}> — Charts & Data</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>charts.bitbo.io</span><span style={{ color: G2 }}> — Power Law & Pricing</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>porkopolis.io</span><span style={{ color: G2 }}> — Power Law Chart</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>cryptoquant.com</span><span style={{ color: G2 }}> — On-chain Intelligence</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>mempool.space</span><span style={{ color: G2 }}> — Block Explorer</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>wtfhappenedin1971.com</span><span style={{ color: G2 }}> — The Fiat Experiment</span><span style={{ color: G1 }}> ◆ </span>
-              <span style={{ color: O, fontWeight: 600 }}>hope.com</span><span style={{ color: G2 }}> — Bitcoin for Beginners</span>
+              {[
+                { t: "checkonchain.com", d: "On-chain Analytics", u: "https://charts.checkonchain.com/" },
+                { t: "bitcoinmagazinepro.com", d: "Charts & Data", u: "https://www.bitcoinmagazinepro.com/" },
+                { t: "charts.bitbo.io", d: "Power Law & Pricing", u: "https://charts.bitbo.io/long-term-power-law/" },
+                { t: "porkopolis.io", d: "Power Law Chart", u: "https://www.porkopolis.io/thechart/" },
+                { t: "cryptoquant.com", d: "On-chain Intelligence", u: "https://cryptoquant.com/" },
+                { t: "mempool.space", d: "Block Explorer", u: "https://mempool.space/" },
+                { t: "wtfhappenedin1971.com", d: "The Fiat Experiment", u: "https://wtfhappenedin1971.com/" },
+                { t: "hope.com", d: "Bitcoin for Beginners", u: "https://hope.com/" },
+              ].map((r, i) => (
+                <span key={`r${copy}-${i}`}>
+                  <a href={r.u} target="_blank" rel="noopener noreferrer" style={{ color: O, fontWeight: 600 }}>{r.t}</a>
+                  <span style={{ color: G2 }}> — {r.d}</span><span style={{ color: G1 }}> ◆ </span>
+                </span>
+              ))}
               <span style={{ color: G1 }}> ░░░░░░ </span>
             </span>
           ))}
