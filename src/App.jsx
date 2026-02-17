@@ -765,13 +765,12 @@ export default function BTCPortal() {
           gap: 2px;
           padding: 2px;
           background: ${BK};
-          max-height: calc(100vh - 90px);
           overflow: hidden;
         }
         .post-col {
           flex-shrink: 0;
-          width: min(60vh, 48vw);
-          min-width: 340px;
+          width: min(calc(100vh - 90px), 50vw);
+          height: min(calc(100vh - 90px), 50vw);
         }
         .right-grid {
           flex: 1;
@@ -784,8 +783,7 @@ export default function BTCPortal() {
             "metrics  value"
             "quote    value";
           gap: 2px;
-          height: min(60vh, 48vw);
-          min-height: 340px;
+          height: min(calc(100vh - 90px), 50vw);
         }
         .tile-powerlaw { grid-area: powerlaw; }
         .tile-metrics  { grid-area: metrics; }
@@ -800,7 +798,8 @@ export default function BTCPortal() {
         /* ── TABLET (≤ 1024px) ── */
         @media (max-width: 1024px) {
           .post-col {
-            width: min(50vh, 46vw);
+            width: min(calc(100vh - 90px), 50vw);
+            height: min(calc(100vh - 90px), 50vw);
           }
         }
 
