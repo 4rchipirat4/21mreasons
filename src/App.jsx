@@ -809,24 +809,22 @@ export default function BTCPortal() {
             flex-direction: column;
             gap: 2px;
             padding: 2px;
+            overflow: visible;
           }
           .post-col {
             width: 100%;
+            height: auto;
           }
           .right-grid {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto auto;
-            grid-template-areas:
-              "powerlaw powerlaw"
-              "metrics  quote"
-              "value    value";
-            height: auto;
+            display: flex;
+            flex-direction: column;
             gap: 2px;
+            height: auto;
           }
-          .tile-powerlaw { min-height: 200px; }
-          .tile-metrics  { min-height: 200px; }
+          .tile-powerlaw { min-height: 220px; }
+          .tile-metrics  { min-height: 220px; }
           .tile-quote    { min-height: 160px; }
-          .tile-value    { min-height: 280px; }
+          .tile-value    { min-height: 300px; }
 
           .header-bar { display: none; }
           .header-bar-mobile { display: flex; }
@@ -836,18 +834,10 @@ export default function BTCPortal() {
 
         /* ── SMALL MOBILE (≤ 480px) ── */
         @media (max-width: 480px) {
-          .right-grid {
-            grid-template-columns: 1fr;
-            grid-template-areas:
-              "powerlaw"
-              "value"
-              "metrics"
-              "quote";
-          }
-          .tile-powerlaw { min-height: 180px; }
-          .tile-metrics  { min-height: 220px; }
-          .tile-quote    { min-height: 140px; }
-          .tile-value    { min-height: 300px; }
+          .tile-powerlaw { min-height: 200px; }
+          .tile-metrics  { min-height: 240px; }
+          .tile-quote    { min-height: 160px; }
+          .tile-value    { min-height: 320px; }
         }
       `}</style>
       {/* Top progress bar */}
