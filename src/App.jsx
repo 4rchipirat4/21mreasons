@@ -18,15 +18,11 @@ const E  = "#00E5FF";
 function SplashScreen({ onComplete }) {
   const videoRef = useRef(null);
   const [fadeOut, setFadeOut] = useState(false);
-  const [showText, setShowText] = useState(false);
 
   useEffect(() => {
     const vid = videoRef.current;
     if (!vid) return;
     
-    // Show our overlay text when the AI text would appear (~2s)
-    const textTimer = setTimeout(() => setShowText(true), 1800);
-
     const handleEnd = () => {
       setFadeOut(true);
       setTimeout(onComplete, 1200);
@@ -34,11 +30,11 @@ function SplashScreen({ onComplete }) {
 
     vid.addEventListener("ended", handleEnd);
     vid.play().catch(() => {
-      setShowText(true);
-      setTimeout(() => { setFadeOut(true); setTimeout(onComplete, 1200); }, 3000);
+      // Autoplay blocked — skip splash after 2s
+      setTimeout(() => { setFadeOut(true); setTimeout(onComplete, 1200); }, 2000);
     });
 
-    return () => { vid.removeEventListener("ended", handleEnd); clearTimeout(textTimer); };
+    return () => vid.removeEventListener("ended", handleEnd);
   }, [onComplete]);
 
   return (
@@ -52,59 +48,17 @@ function SplashScreen({ onComplete }) {
         cursor: "pointer",
       }}
     >
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700;800;900&display=swap');
-        @keyframes textFadeIn { 0% { opacity: 0; transform: translateY(8px); } 100% { opacity: 1; transform: translateY(0); } }
-      `}</style>
-      <div style={{ position: "relative", maxWidth: "100%", maxHeight: "100vh" }}>
-        <video
-          ref={videoRef}
-          src="/intro.mp4"
-          muted
-          playsInline
-          preload="auto"
-          style={{
-            maxWidth: "100%", maxHeight: "100vh",
-            objectFit: "contain", display: "block",
-          }}
-        />
-        {/* Clean text overlay — covers the AI-generated text */}
-        {showText && (
-          <div style={{
-            position: "absolute",
-            top: "36%", left: 0, right: 0,
-            textAlign: "center",
-            pointerEvents: "none",
-          }}>
-            {/* Background patch to hide AI text underneath */}
-            <div style={{
-              position: "absolute", inset: 0,
-              background: "radial-gradient(ellipse 80% 100% at 50% 50%, rgba(80,30,0,0.85) 0%, rgba(80,30,0,0.6) 40%, transparent 70%)",
-            }} />
-            <div style={{ position: "relative", zIndex: 1 }}>
-              <div style={{
-                fontSize: "clamp(28px, 7vw, 52px)", fontWeight: 800, color: W,
-                fontFamily: "'IBM Plex Sans', -apple-system, sans-serif",
-                letterSpacing: "-0.02em", lineHeight: 1.1,
-                animation: "textFadeIn 0.8s ease forwards",
-                textShadow: "0 2px 20px rgba(0,0,0,0.6)",
-              }}>
-                21m Reasons
-              </div>
-              <div style={{
-                fontSize: "clamp(14px, 3.5vw, 24px)", fontWeight: 400, color: "rgba(255,255,255,0.85)",
-                fontFamily: "'IBM Plex Sans', -apple-system, sans-serif",
-                letterSpacing: "0.02em", marginTop: 6,
-                animation: "textFadeIn 0.8s ease 0.2s forwards",
-                opacity: 0,
-                textShadow: "0 2px 16px rgba(0,0,0,0.5)",
-              }}>
-                BTC explained — bit by bit
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+      <video
+        ref={videoRef}
+        src="/intro.mp4"
+        muted
+        playsInline
+        preload="auto"
+        style={{
+          maxWidth: "100%", maxHeight: "100vh",
+          objectFit: "contain", display: "block",
+        }}
+      />
       <div style={{
         position: "absolute", bottom: 30, left: 0, right: 0, textAlign: "center",
         fontSize: 11, color: G2, fontFamily: "'JetBrains Mono', monospace",
