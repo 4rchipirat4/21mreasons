@@ -681,7 +681,7 @@ function PowerLawSVG() {
     lower.push(`${x},${base + 4 + t * 16}`);
   }
   return (
-    <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" style={{ width: "100%", height: "100%" }}>
+    <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="xMidYMid meet" style={{ width: "100%", height: "100%" }}>
       <defs>
         <linearGradient id="bf" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor={O} stopOpacity="0.18" />
@@ -765,23 +765,27 @@ export default function BTCPortal() {
           gap: 2px;
           padding: 2px;
           background: ${BK};
+          max-height: calc(100vh - 90px);
+          overflow: hidden;
         }
         .post-col {
           flex-shrink: 0;
-          width: min(62vh, 54vw);
+          width: min(60vh, 48vw);
+          min-width: 340px;
         }
         .right-grid {
           flex: 1;
           min-width: 0;
           display: grid;
           grid-template-columns: 38.2% 61.8%;
-          grid-template-rows: 50% 30% 20%;
+          grid-template-rows: 48% 32% 20%;
           grid-template-areas:
             "powerlaw powerlaw"
             "metrics  value"
             "quote    value";
           gap: 2px;
-          height: min(62vh, 54vw);
+          height: min(60vh, 48vw);
+          min-height: 340px;
         }
         .tile-powerlaw { grid-area: powerlaw; }
         .tile-metrics  { grid-area: metrics; }
