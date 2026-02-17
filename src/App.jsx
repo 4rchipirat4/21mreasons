@@ -821,10 +821,11 @@ export default function BTCPortal() {
             gap: 2px;
             height: auto;
           }
-          .tile-powerlaw { min-height: 220px; }
-          .tile-metrics  { min-height: 220px; }
-          .tile-quote    { min-height: 160px; }
-          .tile-value    { min-height: 300px; }
+          /* Reorder: quotes first, fundamentals second, then power law, then metrics */
+          .tile-quote    { order: 1; min-height: 180px; }
+          .tile-value    { order: 2; min-height: 320px; }
+          .tile-powerlaw { order: 3; min-height: 220px; }
+          .tile-metrics  { order: 4; min-height: 240px; }
 
           .header-bar { display: none; }
           .header-bar-mobile { display: flex; }
@@ -835,9 +836,9 @@ export default function BTCPortal() {
         /* ── SMALL MOBILE (≤ 480px) ── */
         @media (max-width: 480px) {
           .tile-powerlaw { min-height: 200px; }
-          .tile-metrics  { min-height: 240px; }
-          .tile-quote    { min-height: 160px; }
-          .tile-value    { min-height: 320px; }
+          .tile-metrics  { min-height: 260px; }
+          .tile-quote    { min-height: 180px; }
+          .tile-value    { min-height: 340px; }
         }
       `}</style>
       {/* Top progress bar */}
