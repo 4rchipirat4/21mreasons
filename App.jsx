@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 const O  = "#F7931A";
 const BK = "#000000";
@@ -13,6 +13,72 @@ const G4 = "#B0B0B0";
 const W2 = "#E8E8E8";
 const W  = "#FFFFFF";
 const E  = "#00E5FF";
+
+/* ─── SPLASH SCREEN ─── */
+function SplashScreen({ onComplete }) {
+  const videoRef = useRef(null);
+  const [fadeOut, setFadeOut] = useState(false);
+
+  useEffect(() => {
+    const vid = videoRef.current;
+    if (!vid) return;
+    
+    const handleEnd = () => {
+      setFadeOut(true);
+      setTimeout(onComplete, 1200);
+    };
+
+    vid.addEventListener("ended", handleEnd);
+    vid.play().catch(() => {
+      // Autoplay blocked — skip splash after 2s
+      setTimeout(() => { setFadeOut(true); setTimeout(onComplete, 1200); }, 2000);
+    });
+
+    return () => vid.removeEventListener("ended", handleEnd);
+  }, [onComplete]);
+
+  return (
+    <div
+      onClick={() => { setFadeOut(true); setTimeout(onComplete, 800); }}
+      style={{
+        position: "fixed", inset: 0, zIndex: 9999, background: BK,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        opacity: fadeOut ? 0 : 1,
+        transition: "opacity 1.2s ease",
+        cursor: "pointer",
+      }}
+    >
+      <video
+        ref={videoRef}
+        src="/intro.mp4"
+        muted
+        playsInline
+        preload="auto"
+        style={{
+          maxWidth: "100%", maxHeight: "100vh",
+          objectFit: "contain", display: "block",
+        }}
+      />
+      <div style={{
+        position: "absolute", bottom: 30, left: 0, right: 0, textAlign: "center",
+        fontSize: 11, color: G2, fontFamily: "'JetBrains Mono', monospace",
+        letterSpacing: "0.1em", opacity: fadeOut ? 0 : 0.6,
+        transition: "opacity 0.5s ease",
+      }}>
+        TAP TO SKIP
+      </div>
+    </div>
+  );
+}
+
+export default function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
+  if (showSplash) {
+    return <SplashScreen onComplete={() => setShowSplash(false)} />;
+  }
+  return <MainPortal />;
+}
 
 const useBTC = () => {
   const [price, setPrice] = useState(68450);
@@ -528,11 +594,13 @@ const QUOTES = [
   { text: "Bitcoin is overwhelmingly the number one priority, driven by its scarcity and decentralized nature.", author: "Robert Mitchnick", role: "Head of Digital Assets, BlackRock" },
   { text: "I'd advise putting 15% in either Bitcoin or gold to protect against debt crisis and currency devaluation.", author: "Ray Dalio", role: "Founder, Bridgewater Associates" },
   { text: "Only Bitcoin is digital gold. Everything else is just trying to be.", author: "Steve Wozniak", role: "Co-founder, Apple" },
+  { text: "Bitcoin is not just money, it is a technology. Unlike Gold, Silver, or even paper stocks... they can just keep printing paper forever. ", author: "Grant Cardone", role: "Cardone Capital" },
   { text: "Bitcoin is the one thing that can't be stopped. It's like the early internet — it will just keep growing.", author: "Steve Wozniak", role: "Co-founder, Apple" },
   { text: "I do think Bitcoin is the first encrypted money that has the potential to do something like change the world.", author: "Peter Thiel", role: "Co-founder, PayPal" },
   { text: "The governments of the world have spent hundreds of trillions bailing out a decaying system just to kick the can down the road. Bitcoin is the exit.", author: "Raoul Pal", role: "CEO, Real Vision" },
   { text: "Bitcoin is a swarm of cyber hornets serving the goddess of wisdom, feeding on the fire of truth.", author: "Michael Saylor", role: "Chairman, Strategy Inc." },
   { text: "I think the internet is going to be one of the major forces for reducing the role of government. The one thing that's missing is a reliable e-cash.", author: "Milton Friedman", role: "Nobel Laureate, Economics (1999)" },
+  { text: "Bitcoin has made me not only stronger, more powerful, more anti-fragile but also, a more thoughtful, nicer, richer, and more productive human being.", author: "Gary Cardone", role: "Disruptor,  Bldg." },
   { text: "Every informed person needs to know about Bitcoin because it might be one of the world's most important developments.", author: "Leon Luow", role: "Nobel Peace Prize Nominee" },
   { text: "We have elected to put our money and faith in a mathematical framework that is free of politics and human error.", author: "Tyler Winklevoss", role: "Co-founder, Gemini" },
   { text: "At its core, Bitcoin is a smart currency designed by very forward-thinking engineers.", author: "Peter Diamandis", role: "Founder, XPRIZE" },
@@ -739,7 +807,7 @@ function YearlyLowsBars() {
   );
 }
 
-export default function BTCPortal() {
+function MainPortal() {
   const { price, prev } = useBTC();
   const up = price >= prev;
   return (
@@ -821,10 +889,11 @@ export default function BTCPortal() {
             gap: 2px;
             height: auto;
           }
-          .tile-powerlaw { min-height: 220px; }
-          .tile-metrics  { min-height: 220px; }
-          .tile-quote    { min-height: 160px; }
-          .tile-value    { min-height: 300px; }
+          /* Reorder: quotes first, fundamentals second, then power law, then metrics */
+          .tile-quote    { order: 1; min-height: 180px; }
+          .tile-value    { order: 2; min-height: 320px; }
+          .tile-powerlaw { order: 3; min-height: 220px; }
+          .tile-metrics  { order: 4; min-height: 240px; }
 
           .header-bar { display: none; }
           .header-bar-mobile { display: flex; }
@@ -835,9 +904,9 @@ export default function BTCPortal() {
         /* ── SMALL MOBILE (≤ 480px) ── */
         @media (max-width: 480px) {
           .tile-powerlaw { min-height: 200px; }
-          .tile-metrics  { min-height: 240px; }
-          .tile-quote    { min-height: 160px; }
-          .tile-value    { min-height: 320px; }
+          .tile-metrics  { min-height: 260px; }
+          .tile-quote    { min-height: 180px; }
+          .tile-value    { min-height: 340px; }
         }
       `}</style>
       {/* Top progress bar */}
@@ -910,6 +979,7 @@ export default function BTCPortal() {
                 { n: "Luke Gromen", d: "Founder, FFTT", u: "https://x.com/LukeGromen" },
                 { n: "Matt Odell", d: "Privacy Advocate, Citadel Dispatch", u: "https://x.com/ODELL" },
                 { n: "Matthew Mezinskis", d: "Analyst, Porkopolis Economics", u: "https://x.com/MatthewMezinskis" },
+                { n: "Grant Cardone", d: "Real Estate King", u: "grantcardone.com/10xfree" },
                 { n: "Mel Mattison", d: "Macro Strategist & Author", u: "https://x.com/MelMattison1" },
                 { n: "Jordi Visser", d: "CIO & Macro Thinker", u: "https://x.com/JordiVisser" },
                 { n: "Michael Howell", d: "CEO, CrossBorder Capital", u: "https://x.com/crossabordjcap" },
@@ -917,6 +987,7 @@ export default function BTCPortal() {
                 { n: "Larry Lepard", d: "Managing Partner, EMA", u: "https://x.com/LawrenceLepard" },
                 { n: "Tim Draper", d: "Venture Capitalist, Draper Associates", u: "https://x.com/TimDraper" },
                 { n: "Max Keiser", d: "Broadcaster & BTC Advisor to El Salvador", u: "https://x.com/maxkeiser" },
+                { n: "Gary Cardone", d: "Disruptor", u: "iamgarycardone.com" },
                 { n: "Stacy Herbert", d: "Co-host, Keiser Report / BTC Advisor", u: "https://x.com/stabordi" },
                 { n: "Hal Finney", d: "Pioneer, First BTC Recipient ✝", u: "https://en.wikipedia.org/wiki/Hal_Finney_(computer_scientist)" },
                 { n: "Adam Back", d: "CEO, Blockstream / Hashcash Inventor", u: "https://x.com/adam3us" },
