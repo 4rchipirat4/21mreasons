@@ -594,13 +594,13 @@ const QUOTES = [
   { text: "Bitcoin is overwhelmingly the number one priority, driven by its scarcity and decentralized nature.", author: "Robert Mitchnick", role: "Head of Digital Assets, BlackRock" },
   { text: "I'd advise putting 15% in either Bitcoin or gold to protect against debt crisis and currency devaluation.", author: "Ray Dalio", role: "Founder, Bridgewater Associates" },
   { text: "Only Bitcoin is digital gold. Everything else is just trying to be.", author: "Steve Wozniak", role: "Co-founder, Apple" },
-  { text: "Bitcoin is not just money, it is a technology. Unlike Gold, Silver, or even paper stocks... they can just keep printing paper forever. ", author: "Grant Cardone", role: "Cardone Capital" },
+  { text: "I went from thinking Bitcoin was a scam to mass-acquiring it. I was wrong and I'm not afraid to say it. The math changed my mind.", author: "Grant Cardone", role: "CEO, Cardone Capital — $4.5B Portfolio" },
   { text: "Bitcoin is the one thing that can't be stopped. It's like the early internet — it will just keep growing.", author: "Steve Wozniak", role: "Co-founder, Apple" },
   { text: "I do think Bitcoin is the first encrypted money that has the potential to do something like change the world.", author: "Peter Thiel", role: "Co-founder, PayPal" },
   { text: "The governments of the world have spent hundreds of trillions bailing out a decaying system just to kick the can down the road. Bitcoin is the exit.", author: "Raoul Pal", role: "CEO, Real Vision" },
   { text: "Bitcoin is a swarm of cyber hornets serving the goddess of wisdom, feeding on the fire of truth.", author: "Michael Saylor", role: "Chairman, Strategy Inc." },
   { text: "I think the internet is going to be one of the major forces for reducing the role of government. The one thing that's missing is a reliable e-cash.", author: "Milton Friedman", role: "Nobel Laureate, Economics (1999)" },
-  { text: "Bitcoin has made me not only stronger, more powerful, more anti-fragile but also, a more thoughtful, nicer, richer, and more productive human being.", author: "Gary Cardone", role: "Disruptor,  Bldg." },
+  { text: "Bitcoin forces you to think longer term. It changes the way you see money, time, energy, and what's worth building.", author: "Gary Cardone", role: "Entrepreneur & Bitcoin Advocate" },
   { text: "Every informed person needs to know about Bitcoin because it might be one of the world's most important developments.", author: "Leon Luow", role: "Nobel Peace Prize Nominee" },
   { text: "We have elected to put our money and faith in a mathematical framework that is free of politics and human error.", author: "Tyler Winklevoss", role: "Co-founder, Gemini" },
   { text: "At its core, Bitcoin is a smart currency designed by very forward-thinking engineers.", author: "Peter Diamandis", role: "Founder, XPRIZE" },
@@ -887,13 +887,13 @@ const MODEL_VIEWS = [
     render: "xaubtc",
   },
   {
-    label: "$50 in BTC — 4 Years Ago",
-    source: "$50 bought in any month, held for 4 years",
+    label: "$50/Month DCA — 4-Year Periods",
+    source: "$50/month for 4 years — every period profitable",
     stats: [
-      { l: "Invested", v: "$50", a: G4 },
-      { l: "Best", v: "$3,860", a: "#00CC66" },
-      { l: "Worst", v: "$118", a: "#FF4444" },
-      { l: "Average", v: "$770", a: O },
+      { l: "Monthly", v: "$50", a: G4 },
+      { l: "Total In", v: "$2,400", a: G4 },
+      { l: "Best Period", v: "2017–21", a: "#00CC66" },
+      { l: "Result", v: "ALL GREEN", a: O },
     ],
     render: "fifty",
   },
@@ -1135,51 +1135,50 @@ function XAUBTCLine() {
 
 /* ─── $50 INVESTED 4 YEARS AGO ─── */
 function FiftyDollarsAgo() {
-  // Monthly avg BTC prices for 2021-2022 (the "4 years ago" window from 2025/2026 perspective)
-  const entries = [
-    { m: "Jan 21", price: 33000 }, { m: "Apr 21", price: 55000 }, { m: "Jul 21", price: 32000 },
-    { m: "Oct 21", price: 61000 }, { m: "Jan 22", price: 38000 }, { m: "Apr 22", price: 40000 },
-    { m: "Jul 22", price: 22000 }, { m: "Oct 22", price: 19500 }, { m: "Jan 23", price: 21000 },
-    { m: "Apr 23", price: 28000 }, { m: "Jul 23", price: 29500 }, { m: "Oct 23", price: 27000 },
+  // $50/month DCA over each 4-year period, showing result at end
+  // Monthly avg BTC prices by year (simplified — avg of monthly closes)
+  const yearPrices = {
+    2016: 570, 2017: 4000, 2018: 7500, 2019: 7200, 2020: 11000,
+    2021: 47000, 2022: 19300, 2023: 28500, 2024: 63000, 2025: 96000,
+  };
+  const periods = [
+    { start: 2016, end: 2020 }, { start: 2017, end: 2021 },
+    { start: 2018, end: 2022 }, { start: 2019, end: 2023 },
+    { start: 2020, end: 2024 }, { start: 2021, end: 2025 },
   ];
-  const currentPrice = 96000;
-  const invest = 50;
-  const data = entries.map(e => {
-    const btcBought = invest / e.price;
-    const valueNow = btcBought * currentPrice;
-    return { ...e, valueNow: Math.round(valueNow), gain: ((valueNow / invest - 1) * 100).toFixed(0) };
+  const data = periods.map(p => {
+    let totalBtc = 0;
+    const invested = 50 * 12 * 4; // $50/mo * 48 months
+    for (let y = p.start; y < p.end; y++) {
+      totalBtc += (50 * 12) / yearPrices[y]; // $600/year at that year's avg price
+    }
+    const endValue = Math.round(totalBtc * yearPrices[p.end]);
+    const roi = Math.round((endValue / invested - 1) * 100);
+    return { label: `${p.start}–${p.end}`, invested, endValue, roi, totalBtc: totalBtc.toFixed(4) };
   });
-  const maxV = Math.max(...data.map(d => d.valueNow));
-  const w = 300, h = 90;
-  const barW = (w - 20) / data.length;
+  const maxV = Math.max(...data.map(d => d.endValue));
 
   return (
     <div>
-      <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="xMidYMid meet" style={{ width: "100%", height: "100%" }}>
-        {/* $50 reference line */}
-        {(() => {
-          const refY = h - 10 - (50 / maxV) * (h - 24);
-          return (
-            <g>
-              <line x1="10" y1={refY} x2={w} y2={refY} stroke={G2} strokeWidth="0.5" strokeDasharray="3,2" opacity="0.5" />
-              <text x={w - 2} y={refY - 3} fill={G2} fontSize="5" fontFamily="monospace" textAnchor="end">$50 invested</text>
-            </g>
-          );
-        })()}
-        {/* Bars */}
-        {data.map((d, i) => {
-          const barH = Math.max(3, (d.valueNow / maxV) * (h - 24));
-          const x = 12 + i * barW;
-          return (
-            <g key={d.m}>
-              <rect x={x + 1} y={h - 10 - barH} width={barW - 2} height={barH} fill={O} opacity={0.5 + (d.valueNow / maxV) * 0.5} rx="1" />
-              <text x={x + barW / 2} y={h - 10 - barH - 3} fill={O} fontSize="5" fontFamily="monospace" textAnchor="middle" fontWeight="600">${d.valueNow}</text>
-              <text x={x + barW / 2} y={h - 1} fill={G2} fontSize="4.5" fontFamily="monospace" textAnchor="middle">{d.m.replace(" ", "\n")}</text>
-            </g>
-          );
-        })}
-        <text x="4" y="10" fill={G2} fontSize="6" fontFamily="monospace">$50 → BTC at various points, valued today at ${currentPrice.toLocaleString()}</text>
-      </svg>
+      <div style={{ display: "grid", gridTemplateColumns: `repeat(${data.length}, 1fr)`, gap: 4 }}>
+        {data.map(d => (
+          <div key={d.label} style={{ background: D3, borderRadius: 3, padding: "clamp(4px, 0.6%, 8px)", textAlign: "center" }}>
+            <div style={{ fontSize: "clamp(6px, 0.55vw, 7px)", color: G3, fontFamily: "var(--mono)" }}>{d.label}</div>
+            <div style={{ fontSize: "clamp(9px, 1vw, 13px)", fontWeight: 800, color: d.roi > 0 ? "#00CC66" : "#FF4444", fontFamily: "var(--mono)", margin: "3px 0" }}>
+              ${d.endValue >= 10000 ? (d.endValue / 1000).toFixed(0) + "K" : d.endValue.toLocaleString()}
+            </div>
+            <div style={{ fontSize: "clamp(5px, 0.45vw, 6px)", color: d.roi > 0 ? "#00CC66" : "#FF4444", fontFamily: "var(--mono)" }}>
+              {d.roi > 0 ? "+" : ""}{d.roi}%
+            </div>
+            <div style={{ height: 3, background: "rgba(255,255,255,0.05)", borderRadius: 2, marginTop: 3, overflow: "hidden" }}>
+              <div style={{ width: `${Math.min((d.endValue / maxV) * 100, 100)}%`, height: "100%", background: d.roi > 0 ? "#00CC66" : "#FF4444", borderRadius: 2, opacity: 0.6 }} />
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={{ fontSize: "clamp(6px, 0.55vw, 8px)", color: G4, fontFamily: "var(--mono)", marginTop: 6, textAlign: "center" }}>
+        $50/month × 48 months = <span style={{ color: O, fontWeight: 700 }}>$2,400 invested</span> per period. Every 4-year DCA has been profitable.
+      </div>
     </div>
   );
 }
@@ -1428,39 +1427,41 @@ function MainPortal() {
             <span key={copy} style={{ fontSize: "clamp(8px, 0.85vw, 11px)", fontFamily: "var(--mono)", letterSpacing: "0.02em" }}>
               <span style={{ color: O, fontWeight: 700 }}>CHAMPIONS</span><span style={{ color: G1 }}> ░ </span>
               {[
-                { n: "James Check", d: "Analyst, _checkonchain", u: "https://x.com/_checkonchain" },
+                { n: "Michael Saylor", d: "Chairman, Strategy Inc. — $50B+ BTC Treasury", u: "https://x.com/saylor" },
+                { n: "Larry Fink", d: "CEO, BlackRock — Launched IBIT, $11.5T AUM", u: "https://x.com/BlackRock" },
+                { n: "Jack Mallers", d: "CEO, Strike — Lightning Payments Pioneer", u: "https://x.com/jackmallers" },
                 { n: "Saifedean Ammous", d: "Author, The Bitcoin Standard", u: "https://saifedean.com" },
+                { n: "Lyn Alden", d: "Author, Broken Money — Macro Analyst", u: "https://x.com/LynAldenContact" },
                 { n: "Jeff Booth", d: "Author, The Price of Tomorrow", u: "https://x.com/JeffBooth" },
-                { n: "Lyn Alden", d: "Author, Broken Money", u: "https://x.com/LynAldenContact" },
+                { n: "Adam Back", d: "CEO, Blockstream — Hashcash Inventor", u: "https://x.com/adam3us" },
+                { n: "James Check", d: "Lead Analyst, Glassnode / _checkonchain", u: "https://x.com/_checkonchain" },
+                { n: "Jason Lowery", d: "Author, Softwar — National Defence Thesis (MIT)", u: "https://x.com/JasonPLowery" },
+                { n: "Parker Lewis", d: "Author, Gradually Then Suddenly", u: "https://x.com/parkeralewis" },
+                { n: "Luke Gromen", d: "Founder, FFTT — Macro Strategist", u: "https://x.com/LukeGromen" },
+                { n: "Larry Lepard", d: "Managing Partner, EMA — Sound Money Advocate", u: "https://x.com/LawrenceLepard" },
+                { n: "Greg Foss", d: "Credit Analyst — Bitcoin as Credit Default Swap", u: "https://x.com/FossGregfoss" },
+                { n: "Preston Pysh", d: "Host, The Investor's Podcast Network", u: "https://x.com/PrestonPysh" },
                 { n: "Mark Moss", d: "Macro Analyst & Educator", u: "https://x.com/1MarkMoss" },
                 { n: "James Lavish", d: "Fund Manager, The Informationist", u: "https://x.com/jaborman" },
-                { n: "Michael Saylor", d: "Chairman, Strategy Inc.", u: "https://x.com/saylor" },
-                { n: "Jason Lowery", d: "Author, Softwar (MIT)", u: "https://x.com/JasonPLowery" },
-                { n: "Tom Luongo", d: "Macro Geopolitics, Gold Goats 'n Guns", u: "https://x.com/TFL1728" },
-                { n: "Luke Gromen", d: "Founder, FFTT", u: "https://x.com/LukeGromen" },
                 { n: "Matt Odell", d: "Privacy Advocate, Citadel Dispatch", u: "https://x.com/ODELL" },
-                { n: "Matthew Mezinskis", d: "Analyst, Porkopolis Economics", u: "https://x.com/MatthewMezinskis" },
-                { n: "Grant Cardone", d: "Real Estate King", u: "grantcardone.com/10xfree" },
+                { n: "Alex Gladstein", d: "CSO, Human Rights Foundation", u: "https://x.com/gladstein" },
+                { n: "Giovanni Santostasi", d: "Creator, Bitcoin Power Law Model", u: "https://x.com/Giovann35084111" },
+                { n: "Matthew Mezinskis", d: "Porkopolis Economics — Money Supply Analyst", u: "https://x.com/MatthewMezinskis" },
+                { n: "Robert Breedlove", d: "Host, What Is Money? Podcast", u: "https://x.com/Breedlove22" },
+                { n: "Natalie Brunell", d: "Host, Coin Stories Podcast", u: "https://x.com/natbrunell" },
+                { n: "Andreas Antonopoulos", d: "Author, Mastering Bitcoin", u: "https://x.com/aantonop" },
+                { n: "Max Keiser", d: "Broadcaster & BTC Advisor to El Salvador", u: "https://x.com/maxkeiser" },
+                { n: "Stacy Herbert", d: "Co-host, Keiser Report / El Salvador Advisor", u: "https://x.com/stabordi" },
                 { n: "Mel Mattison", d: "Macro Strategist & Author", u: "https://x.com/MelMattison1" },
                 { n: "Jordi Visser", d: "CIO & Macro Thinker", u: "https://x.com/JordiVisser" },
-                { n: "Michael Howell", d: "CEO, CrossBorder Capital", u: "https://x.com/crossabordjcap" },
+                { n: "Michael Howell", d: "CEO, CrossBorder Capital — Liquidity Analyst", u: "https://x.com/crossabordjcap" },
                 { n: "Erik Cason", d: "Author, Cryptosovereignty", u: "https://x.com/Erikcason" },
-                { n: "Larry Lepard", d: "Managing Partner, EMA", u: "https://x.com/LawrenceLepard" },
                 { n: "Tim Draper", d: "Venture Capitalist, Draper Associates", u: "https://x.com/TimDraper" },
-                { n: "Max Keiser", d: "Broadcaster & BTC Advisor to El Salvador", u: "https://x.com/maxkeiser" },
-                { n: "Gary Cardone", d: "Disruptor", u: "iamgarycardone.com" },
-                { n: "Stacy Herbert", d: "Co-host, Keiser Report / BTC Advisor", u: "https://x.com/stabordi" },
-                { n: "Hal Finney", d: "Pioneer, First BTC Recipient ✝", u: "https://en.wikipedia.org/wiki/Hal_Finney_(computer_scientist)" },
-                { n: "Adam Back", d: "CEO, Blockstream / Hashcash Inventor", u: "https://x.com/adam3us" },
-                { n: "Parker Lewis", d: "Author, Gradually Then Suddenly", u: "https://x.com/parkeralewis" },
-                { n: "Robert Breedlove", d: "Host, What Is Money?", u: "https://x.com/Breedlove22" },
-                { n: "Natalie Brunell", d: "Host, Coin Stories", u: "https://x.com/natabordi" },
-                { n: "Preston Pysh", d: "Host, The Investor's Podcast", u: "https://x.com/PrestonPysh" },
-                { n: "Greg Foss", d: "Credit Markets, Validus Power", u: "https://x.com/FossGregfoss" },
-                { n: "Alex Gladstein", d: "CSO, Human Rights Foundation", u: "https://x.com/gladstein" },
-                { n: "Giovanni Santostasi", d: "Creator, Power Law Model", u: "https://x.com/Giovann35084111" },
-                { n: "Jack Mallers", d: "CEO, Strike", u: "https://x.com/jackmallers" },
-                { n: "Andreas Antonopoulos", d: "Author, Mastering Bitcoin", u: "https://x.com/aantonop" },
+                { n: "Tom Luongo", d: "Macro Geopolitics, Gold Goats 'n Guns", u: "https://x.com/TFL1728" },
+                { n: "Grant Cardone", d: "CEO, Cardone Capital — Real Estate & BTC", u: "https://x.com/GrantCardone" },
+                { n: "Gary Cardone", d: "Entrepreneur & Bitcoin Advocate", u: "https://x.com/iamgarycardone" },
+                { n: "Hal Finney", d: "Pioneer — First BTC Transaction Recipient ✝", u: "https://en.wikipedia.org/wiki/Hal_Finney_(computer_scientist)" },
+                { n: "Raoul Pal", d: "CEO, Real Vision — Macro & Digital Assets", u: "https://x.com/RaoulGMI" },
               ].map((c, i) => (
                 <span key={`c${copy}-${i}`}>
                   <a href={c.u} target="_blank" rel="noopener noreferrer" style={{ color: W2 }}>{c.n}</a>
@@ -1488,23 +1489,23 @@ function MainPortal() {
               <span style={{ color: G1 }}> ░░░ </span>
               <span style={{ color: E, fontWeight: 700 }}>ESSENTIAL READING</span><span style={{ color: G1 }}> ░ </span>
               {[
-                { t: "The Bitcoin Standard", a: "Saifedean Ammous", u: "https://www.audible.com/pd/The-Bitcoin-Standard-Audiobook/B07D7ZRKLJ" },
-                { t: "The Fiat Standard", a: "Saifedean Ammous", u: "https://www.audible.com/pd/The-Fiat-Standard-Audiobook/B09MYXQGBV" },
-                { t: "Principles of Economics", a: "Saifedean Ammous", u: "https://www.audible.com/pd/Principles-of-Economics-Audiobook/B0C6RCWYR3" },
-                { t: "Broken Money", a: "Lyn Alden", u: "https://www.audible.com/pd/Broken-Money-Audiobook/B0CG1BNP9P" },
-                { t: "The Price of Tomorrow", a: "Jeff Booth", u: "https://www.audible.com/pd/The-Price-of-Tomorrow-Audiobook/B083Z5WRBG" },
-                { t: "Mastering Bitcoin", a: "Andreas Antonopoulos", u: "https://www.amazon.com/Mastering-Bitcoin-Programming-Open-Blockchain/dp/1098150090" },
-                { t: "Layered Money", a: "Nik Bhatia", u: "https://www.audible.com/pd/Layered-Money-Audiobook/B08QDFM3RY" },
-                { t: "The Bitcoin Standard Podcast", a: "Saifedean Ammous", u: "https://open.spotify.com/show/691nFDIWWmhFFAz7xp3wAr" },
-                { t: "Thank God for Bitcoin", a: "Jimmy Song et al.", u: "https://www.audible.com/pd/Thank-God-for-Bitcoin-Audiobook/B08XWFD5HK" },
-                { t: "Check Your Financial Privilege", a: "Alex Gladstein", u: "https://www.amazon.com/Check-Your-Financial-Privilege-Alex/dp/B0B48HKQ27" },
-                { t: "Softwar", a: "Jason Lowery (MIT)", u: "https://www.amazon.com/Softwar-Thesis-Power-Projection-Cybersecurity/dp/B0BW35F1TJ" },
-                { t: "The Sovereign Individual", a: "Davidson & Rees-Mogg", u: "https://www.audible.com/pd/The-Sovereign-Individual-Audiobook/B07TWNP9NB" },
-                { t: "Inventing Bitcoin", a: "Yan Pritzker", u: "https://www.amazon.com/Inventing-Bitcoin-Technology-Decentralized-Explained/dp/B087C4BCJ2" },
-                { t: "Bitcoin: Hard Money You Can't F*ck With", a: "Jason Williams", u: "https://www.audible.com/pd/Bitcoin-Hard-Money-You-Cant-Fck-With-Audiobook/B085FK7MLH" },
-                { t: "The Internet of Money", a: "Andreas Antonopoulos", u: "https://www.audible.com/pd/The-Internet-of-Money-Audiobook/B071KGKJR6" },
-                { t: "21 Lessons", a: "Gigi", u: "https://21lessons.com" },
+                { t: "The Bitcoin Standard", a: "Saifedean Ammous", u: "https://www.amazon.com/Bitcoin-Standard-Decentralized-Alternative-Central/dp/1119473861" },
+                { t: "Broken Money", a: "Lyn Alden", u: "https://www.amazon.com/Broken-Money-Financial-System-Failing/dp/B0CG86LWMR" },
+                { t: "The Price of Tomorrow", a: "Jeff Booth", u: "https://www.amazon.com/Price-Tomorrow-Deflation-Abundant-Future/dp/1999257405" },
+                { t: "The Fiat Standard", a: "Saifedean Ammous", u: "https://www.amazon.com/Fiat-Standard-Slavery-Alternative-Civilization/dp/1544526474" },
+                { t: "Softwar", a: "Jason Lowery (MIT)", u: "https://www.amazon.com/Softwar-Novel-Theory-Power-Projection/dp/B0BW35F1TJ" },
                 { t: "Gradually, Then Suddenly", a: "Parker Lewis", u: "https://www.amazon.com/Gradually-Then-Suddenly-Parker-Lewis/dp/B0CV3TP1MH" },
+                { t: "Mastering Bitcoin", a: "Andreas Antonopoulos", u: "https://www.amazon.com/Mastering-Bitcoin-Programming-Open-Blockchain/dp/1098150090" },
+                { t: "Layered Money", a: "Nik Bhatia", u: "https://www.amazon.com/Layered-Money-Dollars-Bitcoin-Currencies/dp/1736110527" },
+                { t: "Principles of Economics", a: "Saifedean Ammous", u: "https://www.amazon.com/Principles-Economics-Saifedean-Ammous/dp/1544526660" },
+                { t: "Check Your Financial Privilege", a: "Alex Gladstein", u: "https://www.amazon.com/Check-Your-Financial-Privilege-Alex/dp/B0B48HKQ27" },
+                { t: "The Sovereign Individual", a: "Davidson & Rees-Mogg", u: "https://www.amazon.com/Sovereign-Individual-Mastering-Transition-Information/dp/0684832720" },
+                { t: "Inventing Bitcoin", a: "Yan Pritzker", u: "https://www.amazon.com/Inventing-Bitcoin-Technology-Decentralized-Explained/dp/B087C4BCJ2" },
+                { t: "Thank God for Bitcoin", a: "Jimmy Song et al.", u: "https://www.amazon.com/Thank-God-Bitcoin-Creation-Redemption/dp/1641991216" },
+                { t: "Bitcoin: Hard Money", a: "Jason Williams", u: "https://www.amazon.com/Bitcoin-Hard-Money-Cant-Fck/dp/B085BGKP3B" },
+                { t: "The Internet of Money", a: "Andreas Antonopoulos", u: "https://www.amazon.com/Internet-Money-Andreas-M-Antonopoulos/dp/1537000454" },
+                { t: "21 Lessons", a: "Gigi", u: "https://21lessons.com" },
+                { t: "The Bitcoin Standard Podcast", a: "Saifedean Ammous", u: "https://open.spotify.com/show/691nFDIWWmhFFAz7xp3wAr" },
               ].map((b, i) => (
                 <span key={`b${copy}-${i}`}>
                   <a href={b.u} target="_blank" rel="noopener noreferrer" style={{ color: O, fontWeight: 600 }}>{b.t}</a>
@@ -1514,14 +1515,21 @@ function MainPortal() {
               <span style={{ color: G1 }}> ░░░ </span>
               <span style={{ color: E, fontWeight: 700 }}>RESOURCES</span><span style={{ color: G1 }}> ░ </span>
               {[
+                { t: "Clark Moody Dashboard", d: "Live BTC Metrics", u: "https://bitcoin.clarkmoody.com/dashboard/" },
                 { t: "checkonchain.com", d: "On-chain Analytics", u: "https://charts.checkonchain.com/" },
                 { t: "bitcoinmagazinepro.com", d: "Charts & Data", u: "https://www.bitcoinmagazinepro.com/" },
-                { t: "charts.bitbo.io", d: "Power Law & Pricing", u: "https://charts.bitbo.io/long-term-power-law/" },
+                { t: "charts.bitbo.io", d: "Power Law & Pricing Models", u: "https://charts.bitbo.io/long-term-power-law/" },
                 { t: "porkopolis.io", d: "Power Law Chart", u: "https://www.porkopolis.io/thechart/" },
+                { t: "bgeometrics.com", d: "Power Law Analytics", u: "https://charts.bgeometrics.com/" },
+                { t: "mempool.space", d: "Block Explorer & Fees", u: "https://mempool.space/" },
                 { t: "cryptoquant.com", d: "On-chain Intelligence", u: "https://cryptoquant.com/" },
-                { t: "mempool.space", d: "Block Explorer", u: "https://mempool.space/" },
-                { t: "wtfhappenedin1971.com", d: "The Fiat Experiment", u: "https://wtfhappenedin1971.com/" },
+                { t: "newhedge.io", d: "BTC vs Traditional Assets", u: "https://newhedge.io/bitcoin" },
+                { t: "dcabtc.com", d: "DCA Calculator", u: "https://dcabtc.com/" },
+                { t: "river.com/learn", d: "Bitcoin Education", u: "https://river.com/learn" },
                 { t: "hope.com", d: "Bitcoin for Beginners", u: "https://hope.com/" },
+                { t: "nakamotoinstitute.org", d: "Satoshi's Writings & History", u: "https://nakamotoinstitute.org/" },
+                { t: "wtfhappenedin1971.com", d: "The Fiat Experiment", u: "https://wtfhappenedin1971.com/" },
+                { t: "bitcoin.org", d: "Official Bitcoin Site", u: "https://bitcoin.org/" },
               ].map((r, i) => (
                 <span key={`r${copy}-${i}`}>
                   <a href={r.u} target="_blank" rel="noopener noreferrer" style={{ color: O, fontWeight: 600 }}>{r.t}</a>
