@@ -864,6 +864,50 @@ const MODEL_VIEWS = [
     ],
     render: "mvrv",
   },
+  {
+    label: "BTC vs Assets — Annual Returns",
+    source: "BTC outperforms in 8 of 10 years",
+    stats: [
+      { l: "BTC Avg", v: "+210%", a: O },
+      { l: "Gold Avg", v: "+9%", a: "#FFD700" },
+      { l: "S&P Avg", v: "+14%", a: "#4A9EFF" },
+      { l: "Winner", v: "BTC 8/10", a: "#00CC66" },
+    ],
+    render: "annual",
+  },
+  {
+    label: "XAU/BTC Ratio — Gold vs Bitcoin",
+    source: "Gold priced in BTC — a 99.6% decline since 2013",
+    stats: [
+      { l: "2013", v: "7.2 BTC/oz", a: "#FFD700" },
+      { l: "2025", v: "0.03 BTC/oz", a: O },
+      { l: "Decline", v: "-99.6%", a: "#FF4444" },
+      { l: "Verdict", v: "BTC WINS", a: "#00CC66" },
+    ],
+    render: "xaubtc",
+  },
+  {
+    label: "$50 in BTC — 4 Years Ago",
+    source: "$50 bought in any month, held for 4 years",
+    stats: [
+      { l: "Invested", v: "$50", a: G4 },
+      { l: "Best", v: "$3,860", a: "#00CC66" },
+      { l: "Worst", v: "$118", a: "#FF4444" },
+      { l: "Average", v: "$770", a: O },
+    ],
+    render: "fifty",
+  },
+  {
+    label: "4-Year HODL Returns",
+    source: "Buy any year, hold 4 years — 100% win rate",
+    stats: [
+      { l: "Entries", v: "12", a: G4 },
+      { l: "All Positive", v: "YES", a: "#00CC66" },
+      { l: "Best", v: "45x", a: O },
+      { l: "Worst", v: "+104%", a: E },
+    ],
+    render: "hodl",
+  },
 ];
 
 function ModelCarousel() {
@@ -902,6 +946,10 @@ function ModelCarousel() {
         {m.render === "rainbow" && <RainbowSVG />}
         {m.render === "ma200" && <MA200SVG />}
         {m.render === "mvrv" && <MVRVBars />}
+        {m.render === "annual" && <AnnualReturns />}
+        {m.render === "xaubtc" && <XAUBTCLine />}
+        {m.render === "fifty" && <FiftyDollarsAgo />}
+        {m.render === "hodl" && <HODLReturns />}
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 6, marginTop: 6 }}>
         {m.stats.map((d) => (
@@ -1032,62 +1080,106 @@ function MVRVBars() {
   );
 }
 
-/* ─── PERFORMANCE SECTION ─── */
-const PERF_VIEWS = [
-  {
-    label: "BTC vs Assets — Annual Returns",
-    render: "annual",
-  },
-  {
-    label: "XAU/BTC — Gold Priced in Bitcoin",
-    render: "xaubtc",
-  },
-  {
-    label: "DCA — $50/week into Bitcoin",
-    render: "dca",
-  },
-  {
-    label: "HODL — Every 4-Year Hold = Profit",
-    render: "hodl",
-  },
-];
-
-function PerformanceSection() {
-  const [pi, setPi] = useState(0);
-  const [fade, setFade] = useState(true);
-  const [resetKey, setResetKey] = useState(0);
-
-  const go = useCallback((n) => {
-    setFade(false);
-    setTimeout(() => { setPi(n); setFade(true); }, 200);
-  }, []);
-
-  useEffect(() => {
-    const t = setInterval(() => go((pi + 1) % PERF_VIEWS.length), 14000);
-    return () => clearInterval(t);
-  }, [pi, go, resetKey]);
-
-  const p = PERF_VIEWS[pi];
+/* ─── XAU/BTC LINE CHART ─── */
+function XAUBTCLine() {
+  const data = [
+    { y: "2011", r: 200 }, { y: "2012", r: 130 }, { y: "2013", r: 7.2 },
+    { y: "2014", r: 2.4 }, { y: "2015", r: 4.5 }, { y: "2016", r: 1.35 },
+    { y: "2017", r: 0.093 }, { y: "2018", r: 0.34 }, { y: "2019", r: 0.20 },
+    { y: "2020", r: 0.065 }, { y: "2021", r: 0.039 }, { y: "2022", r: 0.11 },
+    { y: "2023", r: 0.048 }, { y: "2024", r: 0.028 }, { y: "2025", r: 0.030 },
+  ];
+  const w = 300, h = 120;
+  // Log scale so the decline from 200 → 0.03 is visible
+  const logMin = Math.log10(0.02), logMax = Math.log10(250);
+  const toY = (v) => h - 10 - ((Math.log10(v) - logMin) / (logMax - logMin)) * (h - 22);
+  const pts = data.map((d, i) => `${12 + (i / (data.length - 1)) * (w - 16)},${toY(d.r)}`);
+  const fillPts = [...pts, `${12 + (w - 16)},${h - 10}`, `12,${h - 10}`];
 
   return (
-    <div style={{ background: D2, padding: "clamp(8px, 1.5%, 14px)", margin: "2px", cursor: "pointer", userSelect: "none" }}
-      onClick={() => { go((pi + 1) % PERF_VIEWS.length); setResetKey(k => k + 1); }}
-    >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-        <TileLabel text={p.label} accent={O} />
-        <div style={{ display: "flex", gap: 3, alignItems: "center" }}>
-          {PERF_VIEWS.map((_, i) => (
-            <div key={i} style={{ width: i === pi ? 12 : 4, height: 4, borderRadius: 2, background: i === pi ? O : G1, transition: "all 0.3s" }} />
-          ))}
-          <span style={{ fontSize: "clamp(6px, 0.55vw, 8px)", color: G2, fontFamily: "var(--mono)", marginLeft: 6 }}>TAP FOR NEXT →</span>
-        </div>
-      </div>
-      <div style={{ opacity: fade ? 1 : 0, transition: "opacity 0.2s ease" }}>
-        {p.render === "annual" && <AnnualReturns />}
-        {p.render === "xaubtc" && <XAUBTCRatio />}
-        {p.render === "dca" && <DCAPerformance />}
-        {p.render === "hodl" && <HODLReturns />}
-      </div>
+    <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="xMidYMid meet" style={{ width: "100%", height: "100%" }}>
+      <defs>
+        <linearGradient id="xauFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#FFD700" stopOpacity="0.2" />
+          <stop offset="100%" stopColor="#FFD700" stopOpacity="0.01" />
+        </linearGradient>
+      </defs>
+      {[0.25, 0.5, 0.75].map(y => (
+        <line key={y} x1="12" y1={h * y} x2={w} y2={h * y} stroke={G1} strokeWidth="0.3" opacity="0.15" />
+      ))}
+      {/* Y-axis labels */}
+      {[0.03, 1, 10, 100].map(v => {
+        const y = toY(v);
+        return <text key={v} x="10" y={y + 3} fill={G2} fontSize="5" fontFamily="monospace" textAnchor="end">{v >= 1 ? v : v}</text>;
+      })}
+      {/* Fill */}
+      <polygon points={fillPts.join(" ")} fill="url(#xauFill)" />
+      {/* Line */}
+      <polyline points={pts.join(" ")} fill="none" stroke="#FFD700" strokeWidth="1.8" />
+      {/* Dots */}
+      {data.map((d, i) => (
+        <circle key={d.y} cx={12 + (i / (data.length - 1)) * (w - 16)} cy={toY(d.r)} r="2" fill={i >= data.length - 2 ? O : "#FFD700"} opacity="0.8" />
+      ))}
+      {/* Year labels */}
+      {data.filter((_, i) => i % 2 === 0 || i === data.length - 1).map((d, _, arr) => {
+        const idx = data.indexOf(d);
+        return <text key={d.y} x={12 + (idx / (data.length - 1)) * (w - 16)} y={h - 1} fill={G2} fontSize="5" fontFamily="monospace" textAnchor="middle">{d.y.slice(2)}</text>;
+      })}
+      {/* Annotations */}
+      <text x="14" y="12" fill={G2} fontSize="6" fontFamily="monospace">XAU/BTC Ratio — Gold priced in Bitcoin (log scale)</text>
+      <text x={w - 4} y="18" fill="#FFD700" fontSize="6" fontFamily="monospace" textAnchor="end">200 BTC/oz → 0.03 BTC/oz</text>
+      <text x={w - 4} y="26" fill="#FF4444" fontSize="5.5" fontFamily="monospace" textAnchor="end">↓ 99.98% decline</text>
+    </svg>
+  );
+}
+
+/* ─── $50 INVESTED 4 YEARS AGO ─── */
+function FiftyDollarsAgo() {
+  // Monthly avg BTC prices for 2021-2022 (the "4 years ago" window from 2025/2026 perspective)
+  const entries = [
+    { m: "Jan 21", price: 33000 }, { m: "Apr 21", price: 55000 }, { m: "Jul 21", price: 32000 },
+    { m: "Oct 21", price: 61000 }, { m: "Jan 22", price: 38000 }, { m: "Apr 22", price: 40000 },
+    { m: "Jul 22", price: 22000 }, { m: "Oct 22", price: 19500 }, { m: "Jan 23", price: 21000 },
+    { m: "Apr 23", price: 28000 }, { m: "Jul 23", price: 29500 }, { m: "Oct 23", price: 27000 },
+  ];
+  const currentPrice = 96000;
+  const invest = 50;
+  const data = entries.map(e => {
+    const btcBought = invest / e.price;
+    const valueNow = btcBought * currentPrice;
+    return { ...e, valueNow: Math.round(valueNow), gain: ((valueNow / invest - 1) * 100).toFixed(0) };
+  });
+  const maxV = Math.max(...data.map(d => d.valueNow));
+  const w = 300, h = 90;
+  const barW = (w - 20) / data.length;
+
+  return (
+    <div>
+      <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="xMidYMid meet" style={{ width: "100%", height: "100%" }}>
+        {/* $50 reference line */}
+        {(() => {
+          const refY = h - 10 - (50 / maxV) * (h - 24);
+          return (
+            <g>
+              <line x1="10" y1={refY} x2={w} y2={refY} stroke={G2} strokeWidth="0.5" strokeDasharray="3,2" opacity="0.5" />
+              <text x={w - 2} y={refY - 3} fill={G2} fontSize="5" fontFamily="monospace" textAnchor="end">$50 invested</text>
+            </g>
+          );
+        })()}
+        {/* Bars */}
+        {data.map((d, i) => {
+          const barH = Math.max(3, (d.valueNow / maxV) * (h - 24));
+          const x = 12 + i * barW;
+          return (
+            <g key={d.m}>
+              <rect x={x + 1} y={h - 10 - barH} width={barW - 2} height={barH} fill={O} opacity={0.5 + (d.valueNow / maxV) * 0.5} rx="1" />
+              <text x={x + barW / 2} y={h - 10 - barH - 3} fill={O} fontSize="5" fontFamily="monospace" textAnchor="middle" fontWeight="600">${d.valueNow}</text>
+              <text x={x + barW / 2} y={h - 1} fill={G2} fontSize="4.5" fontFamily="monospace" textAnchor="middle">{d.m.replace(" ", "\n")}</text>
+            </g>
+          );
+        })}
+        <text x="4" y="10" fill={G2} fontSize="6" fontFamily="monospace">$50 → BTC at various points, valued today at ${currentPrice.toLocaleString()}</text>
+      </svg>
     </div>
   );
 }
@@ -1130,114 +1222,6 @@ function AnnualReturns() {
       </div>
       <div style={{ fontSize: "clamp(6px, 0.55vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 6, textAlign: "center" }}>
         BTC outperforms in 8 of 10 years. Even in down years (-73%, -65%), it recovers within 2 years.
-      </div>
-    </div>
-  );
-}
-
-function XAUBTCRatio() {
-  const data = [
-    { y: "2013", r: 7.2 }, { y: "2015", r: 4.5 }, { y: "2016", r: 1.35 },
-    { y: "2017", r: 0.093 }, { y: "2018", r: 0.34 }, { y: "2019", r: 0.20 },
-    { y: "2020", r: 0.065 }, { y: "2021", r: 0.039 }, { y: "2022", r: 0.11 },
-    { y: "2023", r: 0.048 }, { y: "2024", r: 0.028 }, { y: "2025", r: 0.030 },
-  ];
-  const maxR = 8;
-  return (
-    <div>
-      <div style={{ display: "flex", alignItems: "flex-end", gap: 3, height: 80, paddingBottom: 14 }}>
-        {data.map((d, i) => {
-          const barH = Math.max(3, (d.r / maxR) * 100);
-          return (
-            <div key={d.y} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end" }}>
-              <div style={{ width: "100%", height: `${barH}%`, background: i >= data.length - 2 ? "#FFD700" : `rgba(255,215,0,${0.2 + (1 - i / data.length) * 0.5})`, borderRadius: "2px 2px 0 0", minHeight: 3 }} />
-              <span style={{ fontSize: "clamp(5px, 0.45vw, 6px)", color: G2, fontFamily: "var(--mono)", marginTop: 2 }}>{d.y.slice(2)}</span>
-            </div>
-          );
-        })}
-      </div>
-      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "clamp(7px, 0.7vw, 9px)", fontFamily: "var(--mono)", marginTop: 4 }}>
-        <span style={{ color: "#FFD700" }}>2013: 7.2 BTC per oz gold</span>
-        <span style={{ color: O, fontWeight: 700 }}>2025: 0.03 BTC per oz</span>
-        <span style={{ color: "#FF4444" }}>↓ 99.6% decline</span>
-      </div>
-      <div style={{ fontSize: "clamp(6px, 0.55vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 4, textAlign: "center" }}>
-        Gold "going up" in dollars hides that it's collapsing against BTC. XAU/BTC is a losing chart everywhere but the last 12 months.
-      </div>
-    </div>
-  );
-}
-
-function DCAPerformance() {
-  const prices = [430,960,13900,3700,7200,29000,47500,16500,42200,93000,96000];
-  const years = ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025"];
-  let totalInvested = 0, totalBtc = 0;
-  const data = years.map((y, i) => {
-    const yearInvest = 50 * 52;
-    totalInvested += yearInvest;
-    totalBtc += yearInvest / prices[i];
-    return { y, invested: totalInvested, value: Math.round(totalBtc * prices[i]), btc: totalBtc.toFixed(3) };
-  });
-  const maxV = Math.max(...data.map(d => d.value));
-  const w = 300, ht = 80;
-  const toY = (v) => ht - 4 - (v / maxV) * (ht - 12);
-  const investedPts = data.map((d, i) => `${(i / (data.length - 1)) * w},${toY(d.invested)}`).join(" ");
-  const valuePts = data.map((d, i) => `${(i / (data.length - 1)) * w},${toY(d.value)}`).join(" ");
-  const valueFill = data.map((d, i) => `${(i / (data.length - 1)) * w},${toY(d.value)}`);
-  valueFill.push(`${w},${ht - 4}`);
-  valueFill.unshift(`0,${ht - 4}`);
-  const last = data[data.length - 1];
-  const roi = ((last.value / last.invested - 1) * 100).toFixed(0);
-
-  return (
-    <div>
-      <svg viewBox={`0 0 ${w} ${ht}`} preserveAspectRatio="xMidYMid meet" style={{ width: "100%", height: 80 }}>
-        <defs>
-          <linearGradient id="dcaFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={O} stopOpacity="0.25" />
-            <stop offset="100%" stopColor={O} stopOpacity="0.02" />
-          </linearGradient>
-        </defs>
-        {[0.25, 0.5, 0.75].map(y => (
-          <line key={y} x1="0" y1={ht * y} x2={w} y2={ht * y} stroke={G1} strokeWidth="0.3" opacity="0.15" />
-        ))}
-        {/* Invested line (flat, grey, dashed) */}
-        <polyline points={investedPts} fill="none" stroke={G2} strokeWidth="1" strokeDasharray="3,2" opacity="0.7" />
-        {/* Value area fill */}
-        <polygon points={valueFill.join(" ")} fill="url(#dcaFill)" />
-        {/* Value line */}
-        <polyline points={valuePts} fill="none" stroke={O} strokeWidth="1.8" />
-        {/* Dots on value line */}
-        {data.map((d, i) => (
-          <circle key={d.y} cx={(i / (data.length - 1)) * w} cy={toY(d.value)} r="2" fill={O} opacity="0.8" />
-        ))}
-        {/* Year labels */}
-        {data.map((d, i) => (
-          <text key={d.y} x={(i / (data.length - 1)) * w} y={ht - 0} fill={G2} fontSize="5" fontFamily="monospace" textAnchor="middle">{d.y.slice(2)}</text>
-        ))}
-        <text x="4" y="10" fill={G2} fontSize="6" fontFamily="monospace">$50/week DCA into Bitcoin (2015–2025)</text>
-      </svg>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 6, marginTop: 6 }}>
-        <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: "clamp(10px, 1.2vw, 15px)", fontWeight: 800, color: G4, fontFamily: "var(--mono)" }}>${(last.invested / 1000).toFixed(0)}K</div>
-          <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 1 }}>Invested</div>
-        </div>
-        <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: "clamp(10px, 1.2vw, 15px)", fontWeight: 800, color: O, fontFamily: "var(--mono)" }}>${(last.value / 1000).toFixed(0)}K</div>
-          <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 1 }}>Value</div>
-        </div>
-        <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: "clamp(10px, 1.2vw, 15px)", fontWeight: 800, color: E, fontFamily: "var(--mono)" }}>{last.btc}</div>
-          <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 1 }}>BTC</div>
-        </div>
-        <div style={{ textAlign: "center" }}>
-          <div style={{ fontSize: "clamp(10px, 1.2vw, 15px)", fontWeight: 800, color: "#00CC66", fontFamily: "var(--mono)" }}>+{roi}%</div>
-          <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 1 }}>ROI</div>
-        </div>
-      </div>
-      <div style={{ display: "flex", gap: 12, fontSize: "clamp(6px, 0.55vw, 8px)", fontFamily: "var(--mono)", marginTop: 4, justifyContent: "center" }}>
-        <span><span style={{ display: "inline-block", width: 8, height: 1.5, background: G2, marginRight: 3, verticalAlign: "middle" }} />Invested</span>
-        <span><span style={{ display: "inline-block", width: 8, height: 2, background: O, marginRight: 3, verticalAlign: "middle" }} />Portfolio Value</span>
       </div>
     </div>
   );
@@ -1559,9 +1543,6 @@ function MainPortal() {
           <div className="tile-quote"><QuoteTile /></div>
         </div>
       </div>
-
-      {/* ─── PERFORMANCE SECTION ─── */}
-      <PerformanceSection />
 
       {/* Footer */}
       <div style={{
