@@ -786,24 +786,29 @@ function PowerLawSVG() {
 }
 function YearlyLowsBars() {
   const max = 80000;
+  const w = 300, h = 130;
+  const rows = YEARLY_LOWS;
+  const rowH = (h - 4) / rows.length;
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-      {YEARLY_LOWS.map((d, i) => {
-        const barW = Math.max(3, (d.v / max) * 100);
-        const isCurrent = d.current; const is2025 = d.y === "2025"; const highlight = isCurrent || is2025;
+    <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="xMidYMid meet" style={{ width: "100%", height: "100%" }}>
+      {rows.map((d, i) => {
+        const barW = Math.max(4, (d.v / max) * (w - 80));
+        const y = 2 + i * rowH;
+        const isCurrent = d.current;
+        const is2025 = d.y === "2025";
+        const col = isCurrent ? O : is2025 ? G3 : G1;
+        const textCol = isCurrent ? O : is2025 ? G4 : G3;
         return (
-          <div key={d.y} style={{ display: "flex", alignItems: "center", gap: 3 }}>
-            <span style={{ color: isCurrent ? O : is2025 ? G4 : G2, fontSize: 7, fontFamily: "var(--mono)", width: 26, textAlign: "right", fontWeight: highlight ? 700 : 400 }}>{d.y}</span>
-            <div style={{ flex: 1, height: 8, background: D3, borderRadius: 1, overflow: "hidden" }}>
-              <div style={{ width: `${barW}%`, height: "100%", borderRadius: 1, background: isCurrent ? O : is2025 ? G3 : G1 }} />
-            </div>
-            <span style={{ color: isCurrent ? O : is2025 ? G4 : G3, fontSize: 7, fontFamily: "var(--mono)", width: 44, textAlign: "right", fontWeight: highlight ? 700 : 400 }}>
+          <g key={d.y}>
+            <text x="28" y={y + rowH * 0.72} fill={textCol} fontSize="7.5" fontFamily="monospace" textAnchor="end" fontWeight={isCurrent || is2025 ? "700" : "400"}>{d.y}</text>
+            <rect x="32" y={y + 1} width={barW} height={rowH - 2.5} fill={col} rx="1.5" opacity={isCurrent ? 1 : is2025 ? 0.7 : 0.5} />
+            <text x={36 + barW} y={y + rowH * 0.72} fill={textCol} fontSize="7.5" fontFamily="monospace" fontWeight={isCurrent || is2025 ? "700" : "400"}>
               ${d.v >= 1000 ? (d.v / 1000).toFixed(1) + "K" : d.v}
-            </span>
-          </div>
+            </text>
+          </g>
         );
       })}
-    </div>
+    </svg>
   );
 }
 
@@ -1133,51 +1138,45 @@ function XAUBTCLine() {
   );
 }
 
-/* ─── $50 INVESTED 4 YEARS AGO ─── */
+/* ─── $50/MONTH DCA OVER 4-YEAR PERIODS ─── */
 function FiftyDollarsAgo() {
-  // $50/month DCA over each 4-year period, showing result at end
-  // Monthly avg BTC prices by year (simplified — avg of monthly closes)
   const yearPrices = {
-    2016: 570, 2017: 4000, 2018: 7500, 2019: 7200, 2020: 11000,
-    2021: 47000, 2022: 19300, 2023: 28500, 2024: 63000, 2025: 96000,
+    2012: 8, 2013: 530, 2014: 530, 2015: 275, 2016: 570, 2017: 4000,
+    2018: 7500, 2019: 7200, 2020: 11000, 2021: 47000, 2022: 19300,
+    2023: 28500, 2024: 63000, 2025: 96000,
   };
   const periods = [
-    { start: 2016, end: 2020 }, { start: 2017, end: 2021 },
-    { start: 2018, end: 2022 }, { start: 2019, end: 2023 },
-    { start: 2020, end: 2024 }, { start: 2021, end: 2025 },
+    { s: 2012, e: 2016 }, { s: 2013, e: 2017 }, { s: 2014, e: 2018 },
+    { s: 2015, e: 2019 }, { s: 2016, e: 2020 }, { s: 2017, e: 2021 },
+    { s: 2018, e: 2022 }, { s: 2019, e: 2023 }, { s: 2020, e: 2024 },
+    { s: 2021, e: 2025 },
   ];
+  const invested = 50 * 12 * 4; // $2,400
   const data = periods.map(p => {
     let totalBtc = 0;
-    const invested = 50 * 12 * 4; // $50/mo * 48 months
-    for (let y = p.start; y < p.end; y++) {
-      totalBtc += (50 * 12) / yearPrices[y]; // $600/year at that year's avg price
-    }
-    const endValue = Math.round(totalBtc * yearPrices[p.end]);
+    for (let y = p.s; y < p.e; y++) totalBtc += (50 * 12) / yearPrices[y];
+    const endValue = Math.round(totalBtc * yearPrices[p.e]);
     const roi = Math.round((endValue / invested - 1) * 100);
-    return { label: `${p.start}–${p.end}`, invested, endValue, roi, totalBtc: totalBtc.toFixed(4) };
+    return { label: `'${String(p.s).slice(2)}–'${String(p.e).slice(2)}`, endValue, roi };
   });
-  const maxV = Math.max(...data.map(d => d.endValue));
 
   return (
     <div>
-      <div style={{ display: "grid", gridTemplateColumns: `repeat(${data.length}, 1fr)`, gap: 4 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 4 }}>
         {data.map(d => (
-          <div key={d.label} style={{ background: D3, borderRadius: 3, padding: "clamp(4px, 0.6%, 8px)", textAlign: "center" }}>
-            <div style={{ fontSize: "clamp(6px, 0.55vw, 7px)", color: G3, fontFamily: "var(--mono)" }}>{d.label}</div>
-            <div style={{ fontSize: "clamp(9px, 1vw, 13px)", fontWeight: 800, color: d.roi > 0 ? "#00CC66" : "#FF4444", fontFamily: "var(--mono)", margin: "3px 0" }}>
+          <div key={d.label} style={{ background: D3, borderRadius: 3, padding: "clamp(3px, 0.5%, 6px)", textAlign: "center" }}>
+            <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G3, fontFamily: "var(--mono)" }}>{d.label}</div>
+            <div style={{ fontSize: "clamp(10px, 1.15vw, 15px)", fontWeight: 800, color: d.roi > 0 ? "#00CC66" : "#FF4444", fontFamily: "var(--mono)", margin: "2px 0" }}>
               ${d.endValue >= 10000 ? (d.endValue / 1000).toFixed(0) + "K" : d.endValue.toLocaleString()}
             </div>
-            <div style={{ fontSize: "clamp(5px, 0.45vw, 6px)", color: d.roi > 0 ? "#00CC66" : "#FF4444", fontFamily: "var(--mono)" }}>
+            <div style={{ fontSize: "clamp(5px, 0.5vw, 7px)", color: d.roi > 0 ? "rgba(0,204,102,0.7)" : "rgba(255,68,68,0.7)", fontFamily: "var(--mono)" }}>
               {d.roi > 0 ? "+" : ""}{d.roi}%
-            </div>
-            <div style={{ height: 3, background: "rgba(255,255,255,0.05)", borderRadius: 2, marginTop: 3, overflow: "hidden" }}>
-              <div style={{ width: `${Math.min((d.endValue / maxV) * 100, 100)}%`, height: "100%", background: d.roi > 0 ? "#00CC66" : "#FF4444", borderRadius: 2, opacity: 0.6 }} />
             </div>
           </div>
         ))}
       </div>
-      <div style={{ fontSize: "clamp(6px, 0.55vw, 8px)", color: G4, fontFamily: "var(--mono)", marginTop: 6, textAlign: "center" }}>
-        $50/month × 48 months = <span style={{ color: O, fontWeight: 700 }}>$2,400 invested</span> per period. Every 4-year DCA has been profitable.
+      <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G4, fontFamily: "var(--mono)", marginTop: 6, textAlign: "center" }}>
+        <span style={{ color: "#00CC66", fontWeight: 700 }}>100% WIN RATE</span> — $50/month × 48 months = <span style={{ color: O }}>$2,400</span> invested per period
       </div>
     </div>
   );
@@ -1191,36 +1190,26 @@ function AnnualReturns() {
     { y: "2021", btc: 60, gold: -4, sp: 29 }, { y: "2022", btc: -65, gold: -1, sp: -18 },
     { y: "2023", btc: 155, gold: 13, sp: 26 }, { y: "2024", btc: 120, gold: 27, sp: 23 },
   ];
-  const cap = (v) => Math.min(Math.max(v, -80), 200);
+  const fmtBtc = (v) => v > 200 ? `${(v/100).toFixed(0)}x` : `${v > 0 ? "+" : ""}${v}%`;
+  const fmtPct = (v) => `${v > 0 ? "+" : ""}${v}%`;
   return (
-    <div>
-      <div style={{ display: "grid", gridTemplateColumns: `40px repeat(${data.length}, 1fr)`, gap: 2, fontSize: "clamp(6px, 0.6vw, 8px)", fontFamily: "var(--mono)" }}>
-        <div />
-        {data.map(d => <div key={d.y} style={{ textAlign: "center", color: G2 }}>{d.y}</div>)}
-        {/* BTC row */}
-        <div style={{ color: O, fontWeight: 700, display: "flex", alignItems: "center" }}>BTC</div>
-        {data.map(d => (
-          <div key={`b${d.y}`} style={{ textAlign: "center", padding: "3px 0", background: d.btc > 0 ? `rgba(247,147,26,${Math.min(cap(d.btc) / 200, 1) * 0.5})` : "rgba(255,68,68,0.2)", borderRadius: 2 }}>
-            <span style={{ color: d.btc > 0 ? O : "#FF4444", fontWeight: 700 }}>{d.btc > 0 ? "+" : ""}{d.btc > 200 ? `${(d.btc/100).toFixed(0)}x` : `${d.btc}%`}</span>
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "3px 4px", fontFamily: "var(--mono)" }}>
+      {data.map(d => {
+        const btcWins = d.btc > d.gold && d.btc > d.sp;
+        return (
+          <div key={d.y} style={{ background: D3, borderRadius: 3, padding: "clamp(3px, 0.5%, 6px) clamp(2px, 0.3%, 4px)", textAlign: "center" }}>
+            <div style={{ fontSize: "clamp(7px, 0.7vw, 9px)", color: G3, fontWeight: 600, marginBottom: 2 }}>{d.y}</div>
+            <div style={{ fontSize: "clamp(9px, 1.1vw, 14px)", fontWeight: 800, color: d.btc > 0 ? O : "#FF4444", lineHeight: 1.2 }}>{fmtBtc(d.btc)}</div>
+            <div style={{ fontSize: "clamp(6px, 0.55vw, 7px)", color: "#FFD700", marginTop: 1 }}>{fmtPct(d.gold)}</div>
+            <div style={{ fontSize: "clamp(6px, 0.55vw, 7px)", color: "#4A9EFF" }}>{fmtPct(d.sp)}</div>
+            {btcWins && <div style={{ fontSize: "clamp(5px, 0.4vw, 6px)", color: "#00CC66", fontWeight: 700, marginTop: 1 }}>BTC ✓</div>}
           </div>
-        ))}
-        {/* Gold row */}
-        <div style={{ color: "#FFD700", fontWeight: 700, display: "flex", alignItems: "center" }}>GOLD</div>
-        {data.map(d => (
-          <div key={`g${d.y}`} style={{ textAlign: "center", padding: "3px 0", background: d.gold > 0 ? "rgba(255,215,0,0.08)" : "rgba(255,68,68,0.08)", borderRadius: 2 }}>
-            <span style={{ color: d.gold > 0 ? "#FFD700" : "#FF4444" }}>{d.gold > 0 ? "+" : ""}{d.gold}%</span>
-          </div>
-        ))}
-        {/* S&P row */}
-        <div style={{ color: "#4A9EFF", fontWeight: 700, display: "flex", alignItems: "center" }}>S&P</div>
-        {data.map(d => (
-          <div key={`s${d.y}`} style={{ textAlign: "center", padding: "3px 0", background: d.sp > 0 ? "rgba(74,158,255,0.08)" : "rgba(255,68,68,0.08)", borderRadius: 2 }}>
-            <span style={{ color: d.sp > 0 ? "#4A9EFF" : "#FF4444" }}>{d.sp > 0 ? "+" : ""}{d.sp}%</span>
-          </div>
-        ))}
-      </div>
-      <div style={{ fontSize: "clamp(6px, 0.55vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 6, textAlign: "center" }}>
-        BTC outperforms in 8 of 10 years. Even in down years (-73%, -65%), it recovers within 2 years.
+        );
+      })}
+      <div style={{ gridColumn: "1 / -1", display: "flex", justifyContent: "center", gap: 12, fontSize: "clamp(6px, 0.55vw, 8px)", marginTop: 2 }}>
+        <span style={{ color: O, fontWeight: 700 }}>■ BTC</span>
+        <span style={{ color: "#FFD700" }}>■ Gold</span>
+        <span style={{ color: "#4A9EFF" }}>■ S&P 500</span>
       </div>
     </div>
   );
