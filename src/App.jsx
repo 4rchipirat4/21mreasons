@@ -807,6 +807,483 @@ function YearlyLowsBars() {
   );
 }
 
+/* ─── MODEL VIEWS for carousel ─── */
+const MODEL_VIEWS = [
+  {
+    label: "Power Law Corridor",
+    source: "Santostasi — P = a · t^b",
+    stats: [
+      { l: "Fair Value", v: "~$118K", a: O },
+      { l: "Floor", v: "~$45K", a: G4 },
+      { l: "Deviation", v: "-42%", a: E },
+      { l: "Model", v: "P = a · t^b", a: G3 },
+    ],
+    render: "powerlaw",
+  },
+  {
+    label: "BTC Yearly Lows",
+    source: "The floor keeps rising — every year",
+    stats: [
+      { l: "2024 Low", v: "$38.5K", a: G4 },
+      { l: "2025 Low", v: "$74.5K", a: O },
+      { l: "2026 Low", v: "$60.1K", a: E },
+      { l: "Trend", v: "UP ONLY", a: O },
+    ],
+    render: "yearlylows",
+  },
+  {
+    label: "Rainbow Price Bands",
+    source: "Logarithmic growth — valuation zones",
+    stats: [
+      { l: "Fire Sale", v: "< $52K", a: "#0066CC" },
+      { l: "Accumulate", v: "$52–80K", a: "#00CC66" },
+      { l: "Fair Value", v: "$80–140K", a: "#FFD700" },
+      { l: "Bubble", v: "> $280K", a: "#FF0000" },
+    ],
+    render: "rainbow",
+  },
+  {
+    label: "200-Week Moving Average",
+    source: "BTC has never closed a cycle below it",
+    stats: [
+      { l: "200W MA", v: "~$46K", a: E },
+      { l: "Price", v: "~$96K", a: O },
+      { l: "Multiple", v: "2.09x", a: G4 },
+      { l: "Signal", v: "ABOVE", a: "#00CC66" },
+    ],
+    render: "ma200",
+  },
+  {
+    label: "MVRV Z-Score",
+    source: "On-chain: market value vs realised value",
+    stats: [
+      { l: "Z-Score", v: "0.45", a: E },
+      { l: "Overvalued", v: "> 7.0", a: "#FF4444" },
+      { l: "Undervalued", v: "< 0.5", a: "#00CC66" },
+      { l: "Signal", v: "GREEN ZONE", a: O },
+    ],
+    render: "mvrv",
+  },
+];
+
+function ModelCarousel() {
+  const [mi, setMi] = useState(0);
+  const [fade, setFade] = useState(true);
+  const [resetKey, setResetKey] = useState(0);
+
+  const go = useCallback((n) => {
+    setFade(false);
+    setTimeout(() => { setMi(n); setFade(true); }, 200);
+  }, []);
+
+  useEffect(() => {
+    const t = setInterval(() => go((mi + 1) % MODEL_VIEWS.length), 14000);
+    return () => clearInterval(t);
+  }, [mi, go, resetKey]);
+
+  const m = MODEL_VIEWS[mi];
+
+  return (
+    <div
+      style={{ background: D2, padding: 12, overflow: "hidden", display: "flex", flexDirection: "column", width: "100%", height: "100%", cursor: "pointer", userSelect: "none" }}
+      onClick={() => { go((mi + 1) % MODEL_VIEWS.length); setResetKey(k => k + 1); }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
+        <TileLabel text={m.label} />
+        <div style={{ display: "flex", gap: 3, alignItems: "center" }}>
+          {MODEL_VIEWS.map((_, i) => (
+            <div key={i} style={{ width: i === mi ? 12 : 4, height: 4, borderRadius: 2, background: i === mi ? O : G1, transition: "all 0.3s" }} />
+          ))}
+        </div>
+      </div>
+      <div style={{ opacity: fade ? 1 : 0, transition: "opacity 0.2s ease", flex: 1, minHeight: 0, position: "relative" }}>
+        {m.render === "powerlaw" && <PowerLawSVG />}
+        {m.render === "yearlylows" && <YearlyLowsBars />}
+        {m.render === "rainbow" && <RainbowSVG />}
+        {m.render === "ma200" && <MA200SVG />}
+        {m.render === "mvrv" && <MVRVBars />}
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 6, marginTop: 6 }}>
+        {m.stats.map((d) => (
+          <div key={d.l} style={{ textAlign: "center" }}>
+            <div style={{ fontSize: "clamp(10px, 1.2vw, 15px)", fontWeight: 800, color: d.a, fontFamily: "var(--mono)" }}>{d.v}</div>
+            <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 1 }}>{d.l}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{ fontSize: "clamp(5px, 0.5vw, 7px)", color: G2, fontFamily: "var(--mono)", marginTop: 4, textAlign: "center" }}>{m.source}</div>
+    </div>
+  );
+}
+
+/* ─── ADDITIONAL SVG CHARTS FOR CAROUSEL ─── */
+function RainbowSVG() {
+  const w = 300, h = 120;
+  const colors = ["#FF0000","#FF6600","#FFAA00","#FFD700","#AAFF00","#00CC66","#0066CC"];
+  const labels = ["Max Bubble","Bubble","FOMO","Fair Value","Accumulate","Buy","Fire Sale"];
+  const bands = colors.map((c, bi) => {
+    const pts = [];
+    for (let i = 0; i <= 100; i++) {
+      const x = (i / 100) * w, t = i / 100;
+      const base = h - Math.pow(t, 2.2) * h * 0.65 - 6;
+      const offset = (bi - 3) * (4 + t * 8);
+      pts.push(`${x},${base + offset}`);
+    }
+    return pts;
+  });
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="xMidYMid meet" style={{ width: "100%", height: "100%" }}>
+      {bands.map((pts, i) => (
+        <polyline key={i} points={pts.join(" ")} fill="none" stroke={colors[i]} strokeWidth="1.8" opacity="0.7" />
+      ))}
+      <circle cx={w * 0.9} cy={h * 0.38} r="3" fill={E}>
+        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" />
+      </circle>
+      <text x={w * 0.9 + 6} y={h * 0.42} fill={E} fontSize="7" fontFamily="monospace" fontWeight="700">NOW</text>
+      <text x="4" y="12" fill={G2} fontSize="6" fontFamily="monospace">Rainbow Price Bands — Log Growth Curve</text>
+      {labels.map((l, i) => (
+        <text key={l} x={w - 4} y={h * 0.18 + i * 12} fill={colors[i]} fontSize="5" fontFamily="monospace" textAnchor="end" opacity="0.7">{l}</text>
+      ))}
+    </svg>
+  );
+}
+
+function MA200SVG() {
+  const w = 300, h = 120;
+  const priceData = [310,960,13900,3700,7200,29000,47500,16500,42200,93000,96000];
+  const maData = [280,420,2200,5800,4500,6800,17500,24000,27500,38000,46000];
+  const maxP = 100000;
+  const toY = (v) => h - 8 - (Math.log10(Math.max(v, 1)) / Math.log10(maxP)) * (h - 16);
+  const pricePts = priceData.map((v, i) => `${(i / (priceData.length - 1)) * w},${toY(v)}`);
+  const maPts = maData.map((v, i) => `${(i / (maData.length - 1)) * w},${toY(v)}`);
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="xMidYMid meet" style={{ width: "100%", height: "100%" }}>
+      {[0.25, 0.5, 0.75].map(y => (
+        <line key={y} x1="0" y1={h * y} x2={w} y2={h * y} stroke={G1} strokeWidth="0.3" opacity="0.2" />
+      ))}
+      <polyline points={maPts.join(" ")} fill="none" stroke="#00CC66" strokeWidth="2" opacity="0.8" />
+      <polyline points={pricePts.join(" ")} fill="none" stroke={O} strokeWidth="1.5" opacity="0.9" />
+      {priceData.map((v, i) => (
+        <circle key={i} cx={(i / (priceData.length - 1)) * w} cy={toY(v)} r="2" fill={O} opacity="0.6" />
+      ))}
+      <text x="4" y="12" fill={G2} fontSize="6" fontFamily="monospace">200-Week Moving Average (2015–2026)</text>
+      <text x={w - 4} y="12" fill="#00CC66" fontSize="6" fontFamily="monospace" textAnchor="end">— 200W MA</text>
+      <text x={w - 4} y="20" fill={O} fontSize="6" fontFamily="monospace" textAnchor="end">— BTC Price</text>
+    </svg>
+  );
+}
+
+function MVRVBars() {
+  const data = [
+    { y: "2013", z: 8.5 }, { y: "2014", z: 1.2 }, { y: "2015", z: -0.2 },
+    { y: "2016", z: 0.8 }, { y: "2017", z: 9.5 }, { y: "2018", z: 0.1 },
+    { y: "2019", z: 2.5 }, { y: "2020", z: 3.8 }, { y: "2021", z: 7.2 },
+    { y: "2022", z: -0.5 }, { y: "2023", z: 1.8 }, { y: "2024", z: 3.2 },
+    { y: "2025", z: 2.4 }, { y: "2026", z: 0.45 },
+  ];
+  const w = 300, h = 120;
+  const maxZ = 10, minZ = -1;
+  const range = maxZ - minZ;
+  const zeroY = h - 10 - ((0 - minZ) / range) * (h - 22);
+  const overY = h - 10 - ((7 - minZ) / range) * (h - 22);
+  const barW = (w - 40) / data.length;
+
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="xMidYMid meet" style={{ width: "100%", height: "100%" }}>
+      {/* Y-axis labels */}
+      {[0, 2, 4, 7, 10].map(v => {
+        const y = h - 10 - ((v - minZ) / range) * (h - 22);
+        return (
+          <g key={v}>
+            <line x1="22" y1={y} x2={w} y2={y} stroke={G1} strokeWidth="0.3" opacity="0.25" />
+            <text x="18" y={y + 3} fill={G2} fontSize="5.5" fontFamily="monospace" textAnchor="end">{v}</text>
+          </g>
+        );
+      })}
+      {/* Overvalued zone */}
+      <line x1="22" y1={overY} x2={w} y2={overY} stroke="#FF4444" strokeWidth="0.6" strokeDasharray="3,2" opacity="0.6" />
+      <text x={w - 2} y={overY - 3} fill="#FF4444" fontSize="5" fontFamily="monospace" textAnchor="end">Overvalued &gt;7</text>
+      {/* Zero line */}
+      <line x1="22" y1={zeroY} x2={w} y2={zeroY} stroke="#00CC66" strokeWidth="0.6" strokeDasharray="3,2" opacity="0.6" />
+      <text x={w - 2} y={zeroY + 8} fill="#00CC66" fontSize="5" fontFamily="monospace" textAnchor="end">Undervalued &lt;0.5</text>
+      {/* Bars */}
+      {data.map((d, i) => {
+        const x = 24 + i * barW;
+        const barTop = h - 10 - ((Math.max(d.z, 0) - minZ) / range) * (h - 22);
+        const barBot = zeroY;
+        const barH = Math.abs(barBot - barTop);
+        const col = d.z > 7 ? "#FF4444" : d.z < 0.5 ? "#00CC66" : O;
+        const opacity = d.z > 7 ? 0.9 : d.z < 0.5 ? 0.8 : 0.4 + Math.min(d.z / 10, 0.5);
+        return (
+          <g key={d.y}>
+            {d.z >= 0 ? (
+              <rect x={x + 1} y={barTop} width={barW - 2} height={Math.max(barH, 1)} fill={col} opacity={opacity} rx="1" />
+            ) : (
+              <rect x={x + 1} y={zeroY} width={barW - 2} height={Math.max(((0 - d.z) / range) * (h - 22), 2)} fill="#00CC66" opacity="0.7" rx="1" />
+            )}
+            <text x={x + barW / 2} y={h - 1} fill={i === data.length - 1 ? O : G2} fontSize="5" fontFamily="monospace" textAnchor="middle" fontWeight={i === data.length - 1 ? "700" : "400"}>
+              {d.y.slice(2)}
+            </text>
+          </g>
+        );
+      })}
+      <text x="4" y="10" fill={G2} fontSize="6" fontFamily="monospace">MVRV Z-Score (2013–2026)</text>
+    </svg>
+  );
+}
+
+/* ─── PERFORMANCE SECTION ─── */
+const PERF_VIEWS = [
+  {
+    label: "BTC vs Assets — Annual Returns",
+    render: "annual",
+  },
+  {
+    label: "XAU/BTC — Gold Priced in Bitcoin",
+    render: "xaubtc",
+  },
+  {
+    label: "DCA — $50/week into Bitcoin",
+    render: "dca",
+  },
+  {
+    label: "HODL — Every 4-Year Hold = Profit",
+    render: "hodl",
+  },
+];
+
+function PerformanceSection() {
+  const [pi, setPi] = useState(0);
+  const [fade, setFade] = useState(true);
+  const [resetKey, setResetKey] = useState(0);
+
+  const go = useCallback((n) => {
+    setFade(false);
+    setTimeout(() => { setPi(n); setFade(true); }, 200);
+  }, []);
+
+  useEffect(() => {
+    const t = setInterval(() => go((pi + 1) % PERF_VIEWS.length), 14000);
+    return () => clearInterval(t);
+  }, [pi, go, resetKey]);
+
+  const p = PERF_VIEWS[pi];
+
+  return (
+    <div style={{ background: D2, padding: "clamp(8px, 1.5%, 14px)", margin: "2px", cursor: "pointer", userSelect: "none" }}
+      onClick={() => { go((pi + 1) % PERF_VIEWS.length); setResetKey(k => k + 1); }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+        <TileLabel text={p.label} accent={O} />
+        <div style={{ display: "flex", gap: 3, alignItems: "center" }}>
+          {PERF_VIEWS.map((_, i) => (
+            <div key={i} style={{ width: i === pi ? 12 : 4, height: 4, borderRadius: 2, background: i === pi ? O : G1, transition: "all 0.3s" }} />
+          ))}
+          <span style={{ fontSize: "clamp(6px, 0.55vw, 8px)", color: G2, fontFamily: "var(--mono)", marginLeft: 6 }}>TAP FOR NEXT →</span>
+        </div>
+      </div>
+      <div style={{ opacity: fade ? 1 : 0, transition: "opacity 0.2s ease" }}>
+        {p.render === "annual" && <AnnualReturns />}
+        {p.render === "xaubtc" && <XAUBTCRatio />}
+        {p.render === "dca" && <DCAPerformance />}
+        {p.render === "hodl" && <HODLReturns />}
+      </div>
+    </div>
+  );
+}
+
+function AnnualReturns() {
+  const data = [
+    { y: "2015", btc: 35, gold: -10, sp: 1 }, { y: "2016", btc: 125, gold: 8, sp: 12 },
+    { y: "2017", btc: 1350, gold: 13, sp: 22 }, { y: "2018", btc: -73, gold: -2, sp: -4 },
+    { y: "2019", btc: 95, gold: 18, sp: 31 }, { y: "2020", btc: 305, gold: 25, sp: 18 },
+    { y: "2021", btc: 60, gold: -4, sp: 29 }, { y: "2022", btc: -65, gold: -1, sp: -18 },
+    { y: "2023", btc: 155, gold: 13, sp: 26 }, { y: "2024", btc: 120, gold: 27, sp: 23 },
+  ];
+  const cap = (v) => Math.min(Math.max(v, -80), 200);
+  return (
+    <div>
+      <div style={{ display: "grid", gridTemplateColumns: `40px repeat(${data.length}, 1fr)`, gap: 2, fontSize: "clamp(6px, 0.6vw, 8px)", fontFamily: "var(--mono)" }}>
+        <div />
+        {data.map(d => <div key={d.y} style={{ textAlign: "center", color: G2 }}>{d.y}</div>)}
+        {/* BTC row */}
+        <div style={{ color: O, fontWeight: 700, display: "flex", alignItems: "center" }}>BTC</div>
+        {data.map(d => (
+          <div key={`b${d.y}`} style={{ textAlign: "center", padding: "3px 0", background: d.btc > 0 ? `rgba(247,147,26,${Math.min(cap(d.btc) / 200, 1) * 0.5})` : "rgba(255,68,68,0.2)", borderRadius: 2 }}>
+            <span style={{ color: d.btc > 0 ? O : "#FF4444", fontWeight: 700 }}>{d.btc > 0 ? "+" : ""}{d.btc > 200 ? `${(d.btc/100).toFixed(0)}x` : `${d.btc}%`}</span>
+          </div>
+        ))}
+        {/* Gold row */}
+        <div style={{ color: "#FFD700", fontWeight: 700, display: "flex", alignItems: "center" }}>GOLD</div>
+        {data.map(d => (
+          <div key={`g${d.y}`} style={{ textAlign: "center", padding: "3px 0", background: d.gold > 0 ? "rgba(255,215,0,0.08)" : "rgba(255,68,68,0.08)", borderRadius: 2 }}>
+            <span style={{ color: d.gold > 0 ? "#FFD700" : "#FF4444" }}>{d.gold > 0 ? "+" : ""}{d.gold}%</span>
+          </div>
+        ))}
+        {/* S&P row */}
+        <div style={{ color: "#4A9EFF", fontWeight: 700, display: "flex", alignItems: "center" }}>S&P</div>
+        {data.map(d => (
+          <div key={`s${d.y}`} style={{ textAlign: "center", padding: "3px 0", background: d.sp > 0 ? "rgba(74,158,255,0.08)" : "rgba(255,68,68,0.08)", borderRadius: 2 }}>
+            <span style={{ color: d.sp > 0 ? "#4A9EFF" : "#FF4444" }}>{d.sp > 0 ? "+" : ""}{d.sp}%</span>
+          </div>
+        ))}
+      </div>
+      <div style={{ fontSize: "clamp(6px, 0.55vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 6, textAlign: "center" }}>
+        BTC outperforms in 8 of 10 years. Even in down years (-73%, -65%), it recovers within 2 years.
+      </div>
+    </div>
+  );
+}
+
+function XAUBTCRatio() {
+  const data = [
+    { y: "2013", r: 7.2 }, { y: "2015", r: 4.5 }, { y: "2016", r: 1.35 },
+    { y: "2017", r: 0.093 }, { y: "2018", r: 0.34 }, { y: "2019", r: 0.20 },
+    { y: "2020", r: 0.065 }, { y: "2021", r: 0.039 }, { y: "2022", r: 0.11 },
+    { y: "2023", r: 0.048 }, { y: "2024", r: 0.028 }, { y: "2025", r: 0.030 },
+  ];
+  const maxR = 8;
+  return (
+    <div>
+      <div style={{ display: "flex", alignItems: "flex-end", gap: 3, height: 80, paddingBottom: 14 }}>
+        {data.map((d, i) => {
+          const barH = Math.max(3, (d.r / maxR) * 100);
+          return (
+            <div key={d.y} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end" }}>
+              <div style={{ width: "100%", height: `${barH}%`, background: i >= data.length - 2 ? "#FFD700" : `rgba(255,215,0,${0.2 + (1 - i / data.length) * 0.5})`, borderRadius: "2px 2px 0 0", minHeight: 3 }} />
+              <span style={{ fontSize: "clamp(5px, 0.45vw, 6px)", color: G2, fontFamily: "var(--mono)", marginTop: 2 }}>{d.y.slice(2)}</span>
+            </div>
+          );
+        })}
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "clamp(7px, 0.7vw, 9px)", fontFamily: "var(--mono)", marginTop: 4 }}>
+        <span style={{ color: "#FFD700" }}>2013: 7.2 BTC per oz gold</span>
+        <span style={{ color: O, fontWeight: 700 }}>2025: 0.03 BTC per oz</span>
+        <span style={{ color: "#FF4444" }}>↓ 99.6% decline</span>
+      </div>
+      <div style={{ fontSize: "clamp(6px, 0.55vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 4, textAlign: "center" }}>
+        Gold "going up" in dollars hides that it's collapsing against BTC. XAU/BTC is a losing chart everywhere but the last 12 months.
+      </div>
+    </div>
+  );
+}
+
+function DCAPerformance() {
+  const prices = [430,960,13900,3700,7200,29000,47500,16500,42200,93000,96000];
+  const years = ["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025"];
+  let totalInvested = 0, totalBtc = 0;
+  const data = years.map((y, i) => {
+    const yearInvest = 50 * 52;
+    totalInvested += yearInvest;
+    totalBtc += yearInvest / prices[i];
+    return { y, invested: totalInvested, value: Math.round(totalBtc * prices[i]), btc: totalBtc.toFixed(3) };
+  });
+  const maxV = Math.max(...data.map(d => d.value));
+  const w = 300, ht = 80;
+  const toY = (v) => ht - 4 - (v / maxV) * (ht - 12);
+  const investedPts = data.map((d, i) => `${(i / (data.length - 1)) * w},${toY(d.invested)}`).join(" ");
+  const valuePts = data.map((d, i) => `${(i / (data.length - 1)) * w},${toY(d.value)}`).join(" ");
+  const valueFill = data.map((d, i) => `${(i / (data.length - 1)) * w},${toY(d.value)}`);
+  valueFill.push(`${w},${ht - 4}`);
+  valueFill.unshift(`0,${ht - 4}`);
+  const last = data[data.length - 1];
+  const roi = ((last.value / last.invested - 1) * 100).toFixed(0);
+
+  return (
+    <div>
+      <svg viewBox={`0 0 ${w} ${ht}`} preserveAspectRatio="xMidYMid meet" style={{ width: "100%", height: 80 }}>
+        <defs>
+          <linearGradient id="dcaFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={O} stopOpacity="0.25" />
+            <stop offset="100%" stopColor={O} stopOpacity="0.02" />
+          </linearGradient>
+        </defs>
+        {[0.25, 0.5, 0.75].map(y => (
+          <line key={y} x1="0" y1={ht * y} x2={w} y2={ht * y} stroke={G1} strokeWidth="0.3" opacity="0.15" />
+        ))}
+        {/* Invested line (flat, grey, dashed) */}
+        <polyline points={investedPts} fill="none" stroke={G2} strokeWidth="1" strokeDasharray="3,2" opacity="0.7" />
+        {/* Value area fill */}
+        <polygon points={valueFill.join(" ")} fill="url(#dcaFill)" />
+        {/* Value line */}
+        <polyline points={valuePts} fill="none" stroke={O} strokeWidth="1.8" />
+        {/* Dots on value line */}
+        {data.map((d, i) => (
+          <circle key={d.y} cx={(i / (data.length - 1)) * w} cy={toY(d.value)} r="2" fill={O} opacity="0.8" />
+        ))}
+        {/* Year labels */}
+        {data.map((d, i) => (
+          <text key={d.y} x={(i / (data.length - 1)) * w} y={ht - 0} fill={G2} fontSize="5" fontFamily="monospace" textAnchor="middle">{d.y.slice(2)}</text>
+        ))}
+        <text x="4" y="10" fill={G2} fontSize="6" fontFamily="monospace">$50/week DCA into Bitcoin (2015–2025)</text>
+      </svg>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 6, marginTop: 6 }}>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: "clamp(10px, 1.2vw, 15px)", fontWeight: 800, color: G4, fontFamily: "var(--mono)" }}>${(last.invested / 1000).toFixed(0)}K</div>
+          <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 1 }}>Invested</div>
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: "clamp(10px, 1.2vw, 15px)", fontWeight: 800, color: O, fontFamily: "var(--mono)" }}>${(last.value / 1000).toFixed(0)}K</div>
+          <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 1 }}>Value</div>
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: "clamp(10px, 1.2vw, 15px)", fontWeight: 800, color: E, fontFamily: "var(--mono)" }}>{last.btc}</div>
+          <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 1 }}>BTC</div>
+        </div>
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontSize: "clamp(10px, 1.2vw, 15px)", fontWeight: 800, color: "#00CC66", fontFamily: "var(--mono)" }}>+{roi}%</div>
+          <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 1 }}>ROI</div>
+        </div>
+      </div>
+      <div style={{ display: "flex", gap: 12, fontSize: "clamp(6px, 0.55vw, 8px)", fontFamily: "var(--mono)", marginTop: 4, justifyContent: "center" }}>
+        <span><span style={{ display: "inline-block", width: 8, height: 1.5, background: G2, marginRight: 3, verticalAlign: "middle" }} />Invested</span>
+        <span><span style={{ display: "inline-block", width: 8, height: 2, background: O, marginRight: 3, verticalAlign: "middle" }} />Portfolio Value</span>
+      </div>
+    </div>
+  );
+}
+
+function HODLReturns() {
+  // Average annual BTC prices (approx mid-year or yearly average)
+  const avgPrices = {
+    2011: 6, 2012: 8, 2013: 530, 2014: 530, 2015: 275, 2016: 570,
+    2017: 4000, 2018: 7500, 2019: 7200, 2020: 11000, 2021: 47000,
+    2022: 19300, 2023: 28500, 2024: 63000, 2025: 96000, 2026: 85000,
+  };
+  // Calculate: buy at avg price of entry year, sell at avg price 4 years later
+  const data = [
+    { y: "2011", sell: "2015" }, { y: "2012", sell: "2016" }, { y: "2013", sell: "2017" },
+    { y: "2014", sell: "2018" }, { y: "2015", sell: "2019" }, { y: "2016", sell: "2020" },
+    { y: "2017", sell: "2021" }, { y: "2018", sell: "2022" }, { y: "2019", sell: "2023" },
+    { y: "2020", sell: "2024" }, { y: "2021", sell: "2025" }, { y: "2022", sell: "2026" },
+  ].map(d => {
+    const buyP = avgPrices[parseInt(d.y)];
+    const sellP = avgPrices[parseInt(d.sell)];
+    const ret = ((sellP / buyP - 1) * 100);
+    const retStr = ret >= 1000 ? `${(ret / 100).toFixed(0)}x` : `${Math.round(ret)}%`;
+    return { y: d.y, sell: d.sell, ret, retStr, positive: ret > 0 };
+  });
+
+  return (
+    <div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 4 }}>
+        {data.map(d => (
+          <div key={d.y} style={{ background: D3, borderRadius: 3, padding: "clamp(4px, 0.8%, 8px)", textAlign: "center" }}>
+            <div style={{ fontSize: "clamp(6px, 0.55vw, 7px)", color: G2, fontFamily: "var(--mono)" }}>Buy {d.y}</div>
+            <div style={{ fontSize: "clamp(10px, 1.1vw, 14px)", fontWeight: 800, color: d.positive ? "#00CC66" : "#FF4444", fontFamily: "var(--mono)", margin: "2px 0" }}>
+              {d.positive ? "+" : ""}{d.retStr}
+            </div>
+            <div style={{ fontSize: "clamp(5px, 0.45vw, 6px)", color: G3, fontFamily: "var(--mono)" }}>Sell {d.sell}</div>
+          </div>
+        ))}
+      </div>
+      <div style={{ fontSize: "clamp(7px, 0.65vw, 9px)", color: G4, fontFamily: "var(--mono)", marginTop: 8, textAlign: "center" }}>
+        <span style={{ color: "#00CC66", fontWeight: 700 }}>100% WIN RATE</span> — Every 4-year hold in Bitcoin's history has been profitable. Based on avg annual prices.
+      </div>
+    </div>
+  );
+}
+
 function MainPortal() {
   const { price, prev } = useBTC();
   const up = price >= prev;
@@ -1076,30 +1553,15 @@ function MainPortal() {
       <div className="main-layout">
         <div className="post-col"><PostTile /></div>
         <div className="right-grid">
-          <div className="tile-powerlaw" style={{ background: D2, padding: 12, overflow: "hidden", display: "flex", flexDirection: "column" }}>
-            <TileLabel text="Power Law Model" />
-            <div style={{ flex: 1, minHeight: 0, position: "relative" }}>
-              <PowerLawSVG />
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 6, marginTop: 6 }}>
-              {[
-                { l: "Fair Value", v: "~$118K", a: O },
-                { l: "Floor", v: "~$45K", a: G4 },
-                { l: "Deviation", v: "-42%", a: E },
-                { l: "Model", v: "P = a · t^b", a: G3 },
-              ].map((d) => (
-                <div key={d.l} style={{ textAlign: "center" }}>
-                  <div style={{ fontSize: "clamp(10px, 1.2vw, 15px)", fontWeight: 800, color: d.a, fontFamily: "var(--mono)" }}>{d.v}</div>
-                  <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 1 }}>{d.l}</div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <div className="tile-powerlaw"><ModelCarousel /></div>
           <div className="tile-metrics"><MetricsTile /></div>
           <div className="tile-value"><ValueTile /></div>
           <div className="tile-quote"><QuoteTile /></div>
         </div>
       </div>
+
+      {/* ─── PERFORMANCE SECTION ─── */}
+      <PerformanceSection />
 
       {/* Footer */}
       <div style={{
@@ -1112,12 +1574,23 @@ function MainPortal() {
             21M REASONS — <span style={{ color: O, fontWeight: 700 }}>{POSTS.length} reasons</span> and counting
           </span>
         </div>
-        <div className="footer-links" style={{ display: "flex", gap: 14, alignItems: "center" }}>
+        <div className="footer-links" style={{ display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap" }}>
           {[
-            { label: "checkonchain.com", url: "https://charts.checkonchain.com/" },
-            { label: "bitbo.io", url: "https://charts.bitbo.io/long-term-power-law/" },
-            { label: "porkopolis.io", url: "https://www.porkopolis.io/thechart/" },
+            { label: "clark moody", url: "https://bitcoin.clarkmoody.com/dashboard/" },
             { label: "mempool.space", url: "https://mempool.space/" },
+            { label: "bitcoin.org", url: "https://bitcoin.org/" },
+            { label: "btc.com", url: "https://btc.com/" },
+            { label: "bitbo.io", url: "https://charts.bitbo.io/long-term-power-law/" },
+            { label: "btc mag pro", url: "https://www.bitcoinmagazinepro.com/charts/" },
+            { label: "porkopolis.io", url: "https://www.porkopolis.io/thechart/" },
+            { label: "checkonchain", url: "https://charts.checkonchain.com/" },
+            { label: "bgeometrics", url: "https://charts.bgeometrics.com/" },
+            { label: "dcabtc.com", url: "https://dcabtc.com/" },
+            { label: "newhedge.io", url: "https://newhedge.io/bitcoin" },
+            { label: "river learn", url: "https://river.com/learn" },
+            { label: "hope.com", url: "https://hope.com/" },
+            { label: "nakamoto inst.", url: "https://nakamotoinstitute.org/" },
+            { label: "wtfhappenedin1971", url: "https://wtfhappenedin1971.com/" },
           ].map((l) => (
             <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer"
               style={{ fontSize: "clamp(7px, 0.7vw, 9px)", fontFamily: "var(--mono)", color: G2, textDecoration: "none" }}
