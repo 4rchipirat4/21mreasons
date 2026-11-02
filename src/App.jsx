@@ -463,9 +463,31 @@ const POSTS = [
   { tag: "REASON #238", headline: "BRAIN-COMPUTER INTERFACES WILL LET YOU SEND BITCOIN WITH A THOUGHT — THE ULTIMATE FRICTIONLESS PAYMENT", body: "Neuralink and others are building direct neural interfaces. When thought-to-action latency approaches zero, Bitcoin becomes the first money you can spend at the speed of thought." },
   { tag: "REASON #284", headline: "EVERY MAJOR TECHNOLOGICAL REVOLUTION HAS REQUIRED A NEW FORM OF MONEY — AGRICULTURE GOT COINS. INDUSTRY GOT BANKS. THE DIGITAL AGE GETS BITCOIN.", body: "Money evolves with civilisation. Shells, metals, paper, digits. Each era demands money native to its technology. AI, space, and robotics demand money native to the internet. Bitcoin." },
   { tag: "REASON #304", headline: "THE CONVERGENCE OF AI, ROBOTICS, SPACE, AND BITCOIN ISN'T SCIENCE FICTION — IT'S THE NEXT 10 YEARS. AND BITCOIN IS THE ECONOMIC FOUNDATION FOR ALL OF IT.", body: "Every emerging technology needs a settlement layer. Permissionless. Borderless. Instant. Trustless. Scarce. There is only one candidate. There has only ever been one." },
+  { tag: "REASON #305", headline: "BINANCE LOST AN ESTIMATED $6.3 BILLION IN A HOT-WALLET HACK IN OCT 2026 — THE BITCOIN NETWORK DIDN'T MISS A SINGLE BLOCK", body: "The largest crypto theft on record hit an exchange, not the protocol. Withdrawals were paused; Bitcoin kept producing blocks every ~10 minutes. Exchanges are banks with a crypto logo. Not your keys, not your coins — self-custody is the whole point." },
+  { tag: "REASON #306", headline: "GALAXY RESEARCH: THE 2026 SELL-OFF WAS A HEDGE-FUND ARBITRAGE UNWIND — ETF HOLDINGS FELL JUST 11% WHILE THE PRICE FELL 53%", body: "Nine funds, including Millennium, Goldman Sachs and Tudor, cut 68,000 BTC of ETF exposure as the futures basis trade dried up. Everyone else added. Since the June low, US spot ETFs have added ~87,000 BTC. Hot money left; patient money stayed." },
+  { tag: "REASON #307", headline: "SOUTH AFRICA'S FNB OPENED BITCOIN TO NEARLY 9 MILLION BANK CLIENTS IN OCT 2026 — FROM JUST R10 (ABOUT 60 CENTS)", body: "South Africa's second-largest bank now lets customers buy Bitcoin 24/7 straight from their banking app. When a bank this size moves, it's because its customers are demanding it. Buy wherever is easiest — then learn to hold your own keys." },
+  { tag: "REASON #308", headline: "GERMANY'S SPARKASSEN SAVINGS BANKS STARTED SELLING BITCOIN IN THEIR APP IN OCT 2026", body: "Via DekaBank, participating Sparkassen launched Bitcoin trading on 19 Oct for €0.99 per order, rolling out bank by bank over the coming months. The most conservative savers in Europe can now buy Bitcoin where they keep their current account." },
+  { tag: "REASON #309", headline: "STANDARD CHARTERED NOW LETS WEALTHY CLIENTS BUY BITCOIN DIRECTLY FROM THEIR BANK ACCOUNT — A FIRST FOR THE BANK IN ANY MARKET", body: "Launched in the UAE in Oct 2026 under a Dubai VARA licence, starting with professional investors, with more markets planned. One of the oldest names in global banking is now a Bitcoin on-ramp." },
+  { tag: "REASON #310", headline: "NORTH AMERICA'S GRID WATCHDOG NOW WRITES BITCOIN MINERS INTO ITS RELIABILITY RULES — MINING IS PART OF THE ENERGY SYSTEM", body: "On 27 Oct 2026 NERC's board adopted reliability standards for large computational loads, including crypto mining facilities, and is filing them with FERC. Grid operators don't write rules for fads. They write them for permanent infrastructure." },
+  { tag: "REASON #311", headline: "BITCOIN MINERS GET PAID TO SWITCH OFF — RIOT BOOKED $31.1 MILLION IN POWER-CURTAILMENT CREDITS IN THE FIRST HALF OF 2026", body: "When Texas demand spikes, miners power down in minutes and hand the electricity back to everyone else on the grid. No other large industrial load can disappear that fast. Bitcoin mining is the grid's shock absorber." },
+  { tag: "REASON #312", headline: "MINING DIFFICULTY ROSE 11.75% IN OCTOBER 2026 — WITH BTC WELL BELOW ITS HIGH, THE NETWORK STILL RUNS AT OVER 1,000 EXAHASHES PER SECOND", body: "The 29 Oct retarget took difficulty to 148.36T, the highest since Nov 2025. Miners keep plugging in machines through the bear. Price is opinion. Hashrate is commitment — and the security of the network keeps growing." },
+  { tag: "REASON #313", headline: "LIGHTNING IS REACHING THE CHECKOUT — SOAP MERCHANTS NOW TAKE LIGHTNING, AND ELIGIBLE CASH APP USERS CAN PAY A LIGHTNING QR FROM THEIR DOLLAR BALANCE", body: "Launched in Oct 2026 through Voltage, alongside exchange WhiteBIT adding Lightning deposits and withdrawals. Payments in seconds for near-zero network fees, 24/7. The open network quietly connects to the apps people already use." },
+  { tag: "REASON #314", headline: "US DEBT ROSE FROM $38.1T TO $40.6T IN THE 12 MONTHS TO 29 OCT 2026 — ABOUT $6.9 BILLION A DAY", body: "That's Treasury's own Debt to the Penny data. $2.5 trillion of new debt in a single year, and someone has to pay for it — through taxes or through debasing the dollar. Bitcoin's supply grew by about 0.8% over the same period, on a schedule set in 2009." },
 ];
 
 POSTS.forEach((p, i) => { p.scheme = i % 4; });
+
+// Deep link: ?reason=305 or #reason-305 opens that reason first.
+function initialPostIndex() {
+  try {
+    const m = (window.location.search + window.location.hash).match(/reason[=-](\d+)/i);
+    if (m) {
+      const i = POSTS.findIndex((p) => p.tag === `REASON #${m[1]}`);
+      if (i >= 0) return i;
+    }
+  } catch (e) { /* ignore */ }
+  return Math.floor(Math.random() * POSTS.length);
+}
 
 const YEARLY_LOWS = [
   { y: "2012", v: 4 },{ y: "2013", v: 65 },{ y: "2014", v: 275 },{ y: "2015", v: 172 },
@@ -628,43 +650,43 @@ function ValueTile() {
   );
 }
 
-// On-chain snapshot: values as of 21 Oct 2026 (bitcoin-data.com / BGeometrics). Update periodically.
-const METRICS_ASOF = "21 Oct 2026";
+// On-chain snapshot: values as of 1 Nov 2026 (bitcoin-data.com / BGeometrics; cost-basis prices as of 26 Oct). Update periodically.
+const METRICS_ASOF = "1 Nov 2026";
 const METRICS = [
   {
-    label: "TMMP", value: "$79.5K", subtitle: "True Market Mean Price",
+    label: "TMMP", value: "$78.4K", subtitle: "True Market Mean Price",
     desc: "Average on-chain cost basis for active investors using Cointime Economics. Price trading near it = market roughly at breakeven.",
-    rows: [{ l: "Realized Price", v: "~$53.6K", a: G4 }, { l: "STH Cost Basis", v: "~$74.9K", a: G4 }, { l: "Signal", v: "AT ACTIVE COST BASIS", a: O }],
+    rows: [{ l: "Realized Price", v: "~$54.0K", a: G4 }, { l: "STH Cost Basis", v: "~$75.8K", a: G4 }, { l: "Signal", v: "AT ACTIVE COST BASIS", a: O }],
     accent: E, source: "bitcoin-data.com",
   },
   {
-    label: "MVRV", value: "1.57", subtitle: "Market Value to Realized Value",
+    label: "MVRV", value: "1.45", subtitle: "Market Value to Realized Value",
     desc: "Below 1.0 = historically the best buying opportunities; above 3.7 = overheated. Mid-range today, well below cycle-top levels.",
-    rows: [{ l: "Overvalued", v: "> 3.7", a: G3 }, { l: "Undervalued", v: "< 1.0", a: E }, { l: "Current", v: "1.57 — MID-RANGE", a: O }],
+    rows: [{ l: "Overvalued", v: "> 3.7", a: G3 }, { l: "Undervalued", v: "< 1.0", a: E }, { l: "Current", v: "1.45 — MID-RANGE", a: O }],
     accent: O, source: "bitcoin-data.com",
   },
   {
-    label: "NUPL", value: "0.36", subtitle: "Net Unrealized Profit/Loss",
+    label: "NUPL", value: "0.31", subtitle: "Net Unrealized Profit/Loss",
     desc: "Measures the overall profit or loss of all BTC holders. Near zero = capitulation zone where cycles historically bottom; above 0.75 = euphoria.",
     rows: [{ l: "Euphoria", v: "> 0.75", a: G3 }, { l: "Capitulation", v: "< 0.0", a: E }, { l: "Current", v: "HOPE / OPTIMISM", a: O }],
     accent: E, source: "bitcoin-data.com",
   },
   {
-    label: "SOPR", value: "1.01", subtitle: "Spent Output Profit Ratio",
+    label: "SOPR", value: "0.99", subtitle: "Spent Output Profit Ratio",
     desc: "Ratio of price sold vs price paid. Below 1.0 = holders selling at a loss. Hovering around 1.0 = coins changing hands near breakeven.",
     rows: [{ l: "Profit Taking", v: "> 1.05", a: G3 }, { l: "Loss Selling", v: "< 1.0", a: E }, { l: "Current", v: "~BREAKEVEN", a: O }],
     accent: O, source: "bitcoin-data.com",
   },
   {
-    label: "MVRV Z", value: "1.01", subtitle: "MVRV Z-Score",
+    label: "MVRV Z", value: "0.79", subtitle: "MVRV Z-Score",
     desc: "Standard deviation of MVRV from mean. Green zone (< 0.5) has historically marked generational buying opportunities; > 7 marks tops.",
     rows: [{ l: "Overheated", v: "> 7.0 (red)", a: G3 }, { l: "Opportunity", v: "< 0.5 (green)", a: E }, { l: "Current", v: "LOW — FAR FROM TOP", a: O }],
     accent: E, source: "bitcoin-data.com",
   },
   {
-    label: "STH-MVRV", value: "1.13", subtitle: "Short-Term Holder MVRV",
+    label: "STH-MVRV", value: "1.03", subtitle: "Short-Term Holder MVRV",
     desc: "Price vs cost basis of recent buyers (< 155 days). Below 1.0 means new investors are underwater — a classic accumulation signal.",
-    rows: [{ l: "STH Cost Basis", v: "~$74.9K", a: G4 }, { l: "Price (21 Oct)", v: "~$84K", a: O }, { l: "STH P/L", v: "+13% IN PROFIT", a: E }],
+    rows: [{ l: "STH Cost Basis", v: "~$75.8K", a: G4 }, { l: "Price (1 Nov)", v: "~$78K", a: O }, { l: "STH P/L", v: "+3% IN PROFIT", a: E }],
     accent: O, source: "bitcoin-data.com",
   },
 ];
@@ -767,7 +789,7 @@ function QuoteTile() {
 
 /* ─── SQUARE POST TILE ─── */
 function PostTile() {
-  const [idx, setIdx] = useState(() => Math.floor(Math.random() * POSTS.length));
+  const [idx, setIdx] = useState(initialPostIndex);
   const [fade, setFade] = useState(true);
   const [resetKey, setResetKey] = useState(0);
 
