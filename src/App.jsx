@@ -222,7 +222,7 @@ function LiveDot({ status, size, font }) {
 const SCHEMES = [
   { bg: O, heading: BK, body: G0, tag: "rgba(0,0,0,0.22)", tagText: BK, meta: G1, dots: BK, dotsOff: "rgba(0,0,0,0.18)" },
   { bg: BK, heading: O, body: G4, tag: "rgba(247,147,26,0.12)", tagText: O, meta: G2, dots: O, dotsOff: "rgba(255,255,255,0.1)" },
-  { bg: O, heading: W, body: "rgba(255,255,255,0.82)", tag: "rgba(0,0,0,0.2)", tagText: W, meta: "rgba(255,255,255,0.55)", dots: W, dotsOff: "rgba(255,255,255,0.22)" },
+  { bg: "#B85F00", heading: W, body: "rgba(255,255,255,0.82)", tag: "rgba(0,0,0,0.2)", tagText: W, meta: "rgba(255,255,255,0.55)", dots: W, dotsOff: "rgba(255,255,255,0.22)" },
   { bg: G0, heading: O, body: G4, tag: "rgba(247,147,26,0.1)", tagText: O, meta: G3, dots: O, dotsOff: "rgba(255,255,255,0.08)" },
 ];
 
@@ -628,10 +628,10 @@ function ValueTile() {
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4 }}>
         <TileLabel text="Fundamental Value" accent={O} />
-        <span style={{ fontSize: "clamp(7px, 0.65vw, 9px)", color: G2, fontFamily: "var(--mono)" }}>{vi + 1}/{FUNDAMENTALS.length}</span>
+        <span style={{ fontSize: "clamp(9px, 0.65vw, 9px)", color: G2, fontFamily: "var(--mono)" }}>{vi + 1}/{FUNDAMENTALS.length}</span>
       </div>
-      <div style={{ opacity: vFade ? 1 : 0, transition: "opacity 0.2s ease", flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: "clamp(6px, 1.5%, 14px)" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "clamp(6px, 1%, 10px)" }}>
+      <div style={{ opacity: vFade ? 1 : 0, transition: "opacity 0.2s ease", flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: "clamp(8px, 1.5%, 14px)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "clamp(8px, 1%, 10px)" }}>
           <span style={{ fontSize: "clamp(18px, 2.5vw, 32px)" }}>{f.icon}</span>
           <div>
             <div style={{ fontSize: "clamp(13px, 1.6vw, 20px)", fontWeight: 900, color: W, fontFamily: "var(--sans)", lineHeight: 1.1 }}>{f.title}</div>
@@ -712,17 +712,17 @@ function MetricsTile() {
         <TileLabel text={m.label} accent={m.accent} />
         <div style={{ textAlign: "center", padding: "2px 0" }}>
           <div style={{ fontSize: "clamp(16px, 2.2vw, 22px)", fontWeight: 800, color: O, fontFamily: "var(--mono)" }}>{m.value}</div>
-          <div style={{ fontSize: "clamp(6px, 0.65vw, 8px)", color: G4, fontFamily: "var(--mono)", marginTop: 1 }}>{m.subtitle}</div>
+          <div style={{ fontSize: "clamp(8px, 0.65vw, 8px)", color: G4, fontFamily: "var(--mono)", marginTop: 1 }}>{m.subtitle}</div>
         </div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
           {m.rows.map((r) => (
             <div key={r.l} style={{ display: "flex", justifyContent: "space-between", padding: "2px 0", borderBottom: `1px solid ${D3}` }}>
-              <span style={{ color: G3, fontSize: "clamp(7px, 0.7vw, 9px)", fontFamily: "var(--mono)" }}>{r.l}</span>
-              <span style={{ color: r.a, fontSize: "clamp(7px, 0.7vw, 9px)", fontWeight: 600, fontFamily: "var(--mono)" }}>{r.v}</span>
+              <span style={{ color: G3, fontSize: "clamp(9px, 0.7vw, 9px)", fontFamily: "var(--mono)" }}>{r.l}</span>
+              <span style={{ color: r.a, fontSize: "clamp(9px, 0.7vw, 9px)", fontWeight: 600, fontFamily: "var(--mono)" }}>{r.v}</span>
             </div>
           ))}
         </div>
-        <div style={{ fontSize: "clamp(6px, 0.55vw, 7px)", color: G2, fontFamily: "var(--mono)", marginTop: 2 }}>{m.source} · as of {METRICS_ASOF}</div>
+        <div style={{ fontSize: "clamp(8px, 0.55vw, 7px)", color: G2, fontFamily: "var(--mono)", marginTop: 2 }}>{m.source} · as of {METRICS_ASOF}</div>
       </div>
     </div>
   );
@@ -792,6 +792,7 @@ function PostTile() {
   const [idx, setIdx] = useState(initialPostIndex);
   const [fade, setFade] = useState(true);
   const [resetKey, setResetKey] = useState(0);
+  const [copied, setCopied] = useState(false);
 
   const goTo = useCallback((newIdx) => {
     setFade(false);
@@ -858,7 +859,26 @@ function PostTile() {
 
       {/* BOTTOM: Nav */}
       <div style={{ opacity: fade ? 1 : 0, transition: "opacity 0.2s ease 0.04s" }}>
-        <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", marginBottom: "clamp(4px, 0.8%, 8px)" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "clamp(4px, 0.8%, 8px)" }}>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              const n = p.tag.replace(/\D/g, "");
+              const url = `${window.location.origin}/?reason=${n}`;
+              const done = () => { setCopied(true); setTimeout(() => setCopied(false), 1600); };
+              if (navigator.share && window.matchMedia("(max-width: 768px)").matches) {
+                navigator.share({ title: `21M Reasons — ${p.tag}`, url }).catch(() => {});
+              } else if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(done, done);
+              }
+            }}
+            aria-label="Copy link to this reason"
+            style={{
+              background: "transparent", border: `1px solid ${s.meta}`, color: s.heading, borderRadius: 3,
+              padding: "5px 10px", fontSize: "clamp(9px, 0.85vw, 11px)", fontFamily: "var(--mono)", fontWeight: 700,
+              letterSpacing: "0.08em", cursor: "pointer",
+            }}
+          >{copied ? "✓ LINK COPIED" : "🔗 COPY LINK"}</button>
           <span style={{ color: s.meta, fontSize: "clamp(8px, 0.8vw, 10px)", fontFamily: "var(--mono)" }}>TAP FOR NEXT →</span>
         </div>
         <div style={{ height: 3, background: s.dotsOff, borderRadius: 2, overflow: "hidden" }}>
@@ -1137,7 +1157,7 @@ function ModelCarousel() {
         {m.stats.map((d) => (
           <div key={d.l} style={{ textAlign: "center" }}>
             <div style={{ fontSize: "clamp(10px, 1.2vw, 15px)", fontWeight: 800, color: d.a, fontFamily: "var(--mono)" }}>{d.v}</div>
-            <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 1 }}>{d.l}</div>
+            <div style={{ fontSize: "clamp(8px, 0.6vw, 8px)", color: G2, fontFamily: "var(--mono)", marginTop: 1 }}>{d.l}</div>
           </div>
         ))}
       </div>
@@ -1343,7 +1363,7 @@ function FiftyDollarsAgo() {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 4 }}>
         {data.map(d => (
           <div key={d.label} style={{ background: D3, borderRadius: 3, padding: "clamp(3px, 0.5%, 6px)", textAlign: "center" }}>
-            <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G3, fontFamily: "var(--mono)" }}>{d.label}</div>
+            <div style={{ fontSize: "clamp(8px, 0.6vw, 8px)", color: G3, fontFamily: "var(--mono)" }}>{d.label}</div>
             <div style={{ fontSize: "clamp(10px, 1.15vw, 15px)", fontWeight: 800, color: d.roi > 0 ? "#00CC66" : "#FF4444", fontFamily: "var(--mono)", margin: "2px 0" }}>
               ${d.endValue >= 10000 ? (d.endValue / 1000).toFixed(0) + "K" : d.endValue.toLocaleString()}
             </div>
@@ -1353,7 +1373,7 @@ function FiftyDollarsAgo() {
           </div>
         ))}
       </div>
-      <div style={{ fontSize: "clamp(6px, 0.6vw, 8px)", color: G4, fontFamily: "var(--mono)", marginTop: 6, textAlign: "center" }}>
+      <div style={{ fontSize: "clamp(8px, 0.6vw, 8px)", color: G4, fontFamily: "var(--mono)", marginTop: 6, textAlign: "center" }}>
         <span style={{ color: "#00CC66", fontWeight: 700 }}>100% WIN RATE</span> — $50/month × 48 months = <span style={{ color: O }}>$2,400</span> invested per period
       </div>
     </div>
@@ -1376,15 +1396,15 @@ function AnnualReturns() {
         const btcWins = d.btc > d.gold && d.btc > d.sp;
         return (
           <div key={d.y} style={{ background: D3, borderRadius: 3, padding: "clamp(3px, 0.5%, 6px) clamp(2px, 0.3%, 4px)", textAlign: "center" }}>
-            <div style={{ fontSize: "clamp(7px, 0.7vw, 9px)", color: G3, fontWeight: 600, marginBottom: 2 }}>{d.y}</div>
+            <div style={{ fontSize: "clamp(9px, 0.7vw, 9px)", color: G3, fontWeight: 600, marginBottom: 2 }}>{d.y}</div>
             <div style={{ fontSize: "clamp(9px, 1.1vw, 14px)", fontWeight: 800, color: d.btc > 0 ? O : "#FF4444", lineHeight: 1.2 }}>{fmtBtc(d.btc)}</div>
-            <div style={{ fontSize: "clamp(6px, 0.55vw, 7px)", color: "#FFD700", marginTop: 1 }}>{fmtPct(d.gold)}</div>
-            <div style={{ fontSize: "clamp(6px, 0.55vw, 7px)", color: "#4A9EFF" }}>{fmtPct(d.sp)}</div>
+            <div style={{ fontSize: "clamp(8px, 0.55vw, 7px)", color: "#FFD700", marginTop: 1 }}>{fmtPct(d.gold)}</div>
+            <div style={{ fontSize: "clamp(8px, 0.55vw, 7px)", color: "#4A9EFF" }}>{fmtPct(d.sp)}</div>
             {btcWins && <div style={{ fontSize: "clamp(5px, 0.4vw, 6px)", color: "#00CC66", fontWeight: 700, marginTop: 1 }}>BTC ✓</div>}
           </div>
         );
       })}
-      <div style={{ gridColumn: "1 / -1", display: "flex", justifyContent: "center", gap: 12, fontSize: "clamp(6px, 0.55vw, 8px)", marginTop: 2 }}>
+      <div style={{ gridColumn: "1 / -1", display: "flex", justifyContent: "center", gap: 12, fontSize: "clamp(8px, 0.55vw, 8px)", marginTop: 2 }}>
         <span style={{ color: O, fontWeight: 700 }}>■ BTC</span>
         <span style={{ color: "#FFD700" }}>■ Gold</span>
         <span style={{ color: "#4A9EFF" }}>■ S&P 500</span>
@@ -1419,7 +1439,7 @@ function HODLReturns() {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 4 }}>
         {data.map(d => (
           <div key={d.y} style={{ background: D3, borderRadius: 3, padding: "clamp(4px, 0.8%, 8px)", textAlign: "center" }}>
-            <div style={{ fontSize: "clamp(6px, 0.55vw, 7px)", color: G2, fontFamily: "var(--mono)" }}>Buy {d.y}</div>
+            <div style={{ fontSize: "clamp(8px, 0.55vw, 7px)", color: G2, fontFamily: "var(--mono)" }}>Buy {d.y}</div>
             <div style={{ fontSize: "clamp(10px, 1.1vw, 14px)", fontWeight: 800, color: d.positive ? "#00CC66" : "#FF4444", fontFamily: "var(--mono)", margin: "2px 0" }}>
               {d.positive ? "+" : ""}{d.retStr}
             </div>
@@ -1427,7 +1447,7 @@ function HODLReturns() {
           </div>
         ))}
       </div>
-      <div style={{ fontSize: "clamp(7px, 0.65vw, 9px)", color: G4, fontFamily: "var(--mono)", marginTop: 8, textAlign: "center" }}>
+      <div style={{ fontSize: "clamp(9px, 0.65vw, 9px)", color: G4, fontFamily: "var(--mono)", marginTop: 8, textAlign: "center" }}>
         <span style={{ color: "#00CC66", fontWeight: 700 }}>100% WIN RATE</span> — Every 4-year hold in Bitcoin's history has been profitable. Based on avg annual prices.
       </div>
     </div>
@@ -1516,9 +1536,12 @@ function MainPortal() {
             gap: 2px;
             height: auto;
           }
+          /* Tiles stretch to fill their row, so no black gaps under short content */
+          .right-grid > div { display: flex; flex-direction: column; }
+          .right-grid > div > * { flex: 1 1 auto; height: auto !important; }
           /* Reorder: quotes first, fundamentals second, then power law, then metrics */
-          .tile-quote    { order: 1; min-height: 180px; }
-          .tile-value    { order: 2; min-height: 320px; }
+          .tile-quote    { order: 1; min-height: 150px; }
+          .tile-value    { order: 2; min-height: 0; }
           .tile-powerlaw { order: 3; min-height: 220px; }
           .tile-metrics  { order: 4; min-height: 240px; }
 
@@ -1532,8 +1555,8 @@ function MainPortal() {
         @media (max-width: 480px) {
           .tile-powerlaw { min-height: 200px; }
           .tile-metrics  { min-height: 260px; }
-          .tile-quote    { min-height: 180px; }
-          .tile-value    { min-height: 340px; }
+          .tile-quote    { min-height: 150px; }
+          .tile-value    { min-height: 0; }
         }
       `}</style>
       {/* Top progress bar */}
@@ -1736,7 +1759,7 @@ function MainPortal() {
             { label: "wtfhappenedin1971", url: "https://wtfhappenedin1971.com/" },
           ].map((l) => (
             <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer"
-              style={{ fontSize: "clamp(7px, 0.7vw, 9px)", fontFamily: "var(--mono)", color: G2, textDecoration: "none" }}
+              style={{ fontSize: "clamp(9px, 0.7vw, 9px)", fontFamily: "var(--mono)", color: G2, textDecoration: "none" }}
               onMouseEnter={(e) => (e.currentTarget.style.color = O)}
               onMouseLeave={(e) => (e.currentTarget.style.color = G2)}
             >{l.label}</a>
