@@ -473,6 +473,16 @@ const POSTS = [
   { tag: "REASON #312", headline: "MINING DIFFICULTY ROSE 11.75% IN OCTOBER 2026 — WITH BTC WELL BELOW ITS HIGH, THE NETWORK STILL RUNS AT OVER 1,000 EXAHASHES PER SECOND", body: "The 29 Oct retarget took difficulty to 148.36T, the highest since Nov 2025. Miners keep plugging in machines through the bear. Price is opinion. Hashrate is commitment — and the security of the network keeps growing." },
   { tag: "REASON #313", headline: "LIGHTNING IS REACHING THE CHECKOUT — SOAP MERCHANTS NOW TAKE LIGHTNING, AND ELIGIBLE CASH APP USERS CAN PAY A LIGHTNING QR FROM THEIR DOLLAR BALANCE", body: "Launched in Oct 2026 through Voltage, alongside exchange WhiteBIT adding Lightning deposits and withdrawals. Payments in seconds for near-zero network fees, 24/7. The open network quietly connects to the apps people already use." },
   { tag: "REASON #314", headline: "US DEBT ROSE FROM $38.1T TO $40.6T IN THE 12 MONTHS TO 29 OCT 2026 — ABOUT $6.9 BILLION A DAY", body: "That's Treasury's own Debt to the Penny data. $2.5 trillion of new debt in a single year, and someone has to pay for it — through taxes or through debasing the dollar. Bitcoin's supply grew by about 0.8% over the same period, on a schedule set in 2009." },
+  { tag: "REASON #315", headline: "DEUTSCHE BANK, GERMANY'S LARGEST BANK, SWITCHED ON BITCOIN CUSTODY FOR PAYING CLIENTS ON 11 NOV 2026", body: "BaFin-approved under the EU's MiCA rules, for corporates, asset managers, hedge funds and even sovereign institutions across Europe. The bank that once dismissed it now guards Bitcoin private keys in cold storage. The institutions aren't coming. They're here." },
+  { tag: "REASON #316", headline: "COINBASE NOW HOLDS A FULL US NATIONAL TRUST CHARTER FROM THE OCC — BITCOIN CUSTODY UNDER FEDERAL BANK SUPERVISION", body: "The Office of the Comptroller of the Currency, which charters America's national banks, gave Coinbase National Trust Company final approval in Nov 2026. Not long ago, Bitcoin businesses struggled to get a bank account. Now one is a federally chartered trust bank." },
+  { tag: "REASON #317", headline: "STRATEGY NOW HOLDS 850,364 BTC — MORE THAN 4% OF ALL THE BITCOIN THAT WILL EVER EXIST", body: "Its 9 Nov 2026 SEC filing shows another 1,036 BTC bought in the first week of November, at an average of $79,012, while the market was falling. One public company owns over 1 in every 25 coins that can ever be mined. The 21 million cap makes every one of those coins a permanent subtraction from what's left." },
+  { tag: "REASON #318", headline: "BITCOIN DIFFICULTY DROPPED 9.1% ON 14 NOV 2026 — NO CEO, NO COMMITTEE, NO VOTE. THE NETWORK SIMPLY ADJUSTED.", body: "When the price falls and weaker miners switch off, blocks slow down — so every 2,016 blocks the protocol retunes itself to bring them back to ~10 minutes. Remaining miners get cheaper hashes; the issuance schedule doesn't budge. A monetary system that self-heals without anyone in charge." },
+  { tag: "REASON #319", headline: "OVER 20.11 MILLION BITCOIN HAVE NOW BEEN MINED — FEWER THAN 890,000 ARE LEFT, AND THEY'LL TRICKLE OUT OVER THE NEXT 114 YEARS", body: "About 95.8% of all Bitcoin that will ever exist is already in circulation. The rest arrives on a fixed, falling schedule that halves roughly every four years until around 2140. No central bank can say what its money supply will be next year. Bitcoin can tell you to the satoshi for the next century." },
+  { tag: "REASON #320", headline: "BTC IS TRADING BELOW ITS 200-WEEK MOVING AVERAGE (~$68K) — BEFORE 2026, EVERY WEEKLY CLOSE BELOW IT WAS AT LEAST 2.8x HIGHER TWO YEARS LATER", body: "In Kraken's weekly price data, closes below the 200-week average came in March 2020 and through 2022–23. Two years on, every one of them was worth between 2.8x and 7.6x more. The past is no promise — but the 200-week line has marked where patient people quietly stack sats while everyone else panics." },
+  { tag: "REASON #321", headline: "AI AGENTS CAN NOW PAY FOR THEIR OWN AI INFERENCE IN BITCOIN — NO ACCOUNT, NO API KEY, NO CREDIT CARD", body: "On 12 Nov 2026 Lightning Labs released pi402, an open-source extension that lets a coding agent pay per request over the Lightning Network using L402. The machine economy isn't a forecast anymore. Software is already paying software, in sats." },
+  { tag: "REASON #322", headline: "TREZOR FOUND SPY IMPLANTS IN SAFE 5 WALLETS BOUGHT FROM A RESELLER — BUY YOUR HARDWARE WALLET DIRECT FROM THE MAKER", body: "In Nov 2026 Trezor confirmed three tampered devices sold by reseller CryptoBilis that tried to capture recovery phrases, shipped firmware 2.13.1 to block them and cut its reseller network by about 80%. Self-custody is the point of Bitcoin — so buy direct, verify the device, and never let anyone else see your seed words." },
+  { tag: "REASON #323", headline: "THE US TREASURY IS BUILDING A CUSTODY SYSTEM FOR AMERICA'S BITCOIN — AN ESTIMATED 198,000 TO 328,000+ BTC THAT, BY ORDER, ISN'T TO BE SOLD", body: "Executive Order 14233 created the Strategic Bitcoin Reserve in March 2025 and bars routine sales. In Nov 2026 the former White House crypto lead said Treasury is setting up a mix of self-custody and third-party custody while agencies re-audit their holdings. Governments don't build vaults for things they plan to dump." },
+  { tag: "REASON #324", headline: "THE BIGGEST CRYPTO HEIST EVER LEFT A PUBLIC TRAIL — THE US MOVED TO SEIZE $1.2 BILLION OF THE STOLEN BINANCE FUNDS IN NOV 2026", body: "Investigators traced the North Korea-linked $6B+ hack in the open and got court approval to seize or restrain over $1.2 billion. Every transaction on a public blockchain is visible forever. That's terrible for thieves — and it's why 'Bitcoin is for criminals' was always backwards. Cash in a suitcase leaves no trail. Coins on a public ledger do." },
 ];
 
 POSTS.forEach((p, i) => { p.scheme = i % 4; });
@@ -650,23 +660,23 @@ function ValueTile() {
   );
 }
 
-// On-chain snapshot: values as of 1 Nov 2026 (bitcoin-data.com / BGeometrics; cost-basis prices as of 26 Oct). Update periodically.
-const METRICS_ASOF = "1 Nov 2026";
+// On-chain snapshot: values as of 9 Nov 2026 (bitcoin-data.com / BGeometrics free delayed data). Update periodically.
+const METRICS_ASOF = "9 Nov 2026";
 const METRICS = [
   {
-    label: "TMMP", value: "$78.4K", subtitle: "True Market Mean Price",
-    desc: "Average on-chain cost basis for active investors using Cointime Economics. Price trading near it = market roughly at breakeven.",
-    rows: [{ l: "Realized Price", v: "~$54.0K", a: G4 }, { l: "STH Cost Basis", v: "~$75.8K", a: G4 }, { l: "Signal", v: "AT ACTIVE COST BASIS", a: O }],
+    label: "TMMP", value: "$79.0K", subtitle: "True Market Mean Price",
+    desc: "Average on-chain cost basis for active investors using Cointime Economics. Price below it = the average active investor is underwater.",
+    rows: [{ l: "Realized Price", v: "~$53.9K", a: G4 }, { l: "STH Cost Basis", v: "~$75.8K", a: G4 }, { l: "Signal", v: "BELOW ACTIVE COST BASIS", a: O }],
     accent: E, source: "bitcoin-data.com",
   },
   {
-    label: "MVRV", value: "1.45", subtitle: "Market Value to Realized Value",
+    label: "MVRV", value: "1.40", subtitle: "Market Value to Realized Value",
     desc: "Below 1.0 = historically the best buying opportunities; above 3.7 = overheated. Mid-range today, well below cycle-top levels.",
-    rows: [{ l: "Overvalued", v: "> 3.7", a: G3 }, { l: "Undervalued", v: "< 1.0", a: E }, { l: "Current", v: "1.45 — MID-RANGE", a: O }],
+    rows: [{ l: "Overvalued", v: "> 3.7", a: G3 }, { l: "Undervalued", v: "< 1.0", a: E }, { l: "Current", v: "1.40 — LOWER MID-RANGE", a: O }],
     accent: O, source: "bitcoin-data.com",
   },
   {
-    label: "NUPL", value: "0.31", subtitle: "Net Unrealized Profit/Loss",
+    label: "NUPL", value: "0.28", subtitle: "Net Unrealized Profit/Loss",
     desc: "Measures the overall profit or loss of all BTC holders. Near zero = capitulation zone where cycles historically bottom; above 0.75 = euphoria.",
     rows: [{ l: "Euphoria", v: "> 0.75", a: G3 }, { l: "Capitulation", v: "< 0.0", a: E }, { l: "Current", v: "HOPE / OPTIMISM", a: O }],
     accent: E, source: "bitcoin-data.com",
@@ -678,15 +688,15 @@ const METRICS = [
     accent: O, source: "bitcoin-data.com",
   },
   {
-    label: "MVRV Z", value: "0.79", subtitle: "MVRV Z-Score",
+    label: "MVRV Z", value: "0.69", subtitle: "MVRV Z-Score",
     desc: "Standard deviation of MVRV from mean. Green zone (< 0.5) has historically marked generational buying opportunities; > 7 marks tops.",
     rows: [{ l: "Overheated", v: "> 7.0 (red)", a: G3 }, { l: "Opportunity", v: "< 0.5 (green)", a: E }, { l: "Current", v: "LOW — FAR FROM TOP", a: O }],
     accent: E, source: "bitcoin-data.com",
   },
   {
-    label: "STH-MVRV", value: "1.03", subtitle: "Short-Term Holder MVRV",
+    label: "STH-MVRV", value: "0.99", subtitle: "Short-Term Holder MVRV",
     desc: "Price vs cost basis of recent buyers (< 155 days). Below 1.0 means new investors are underwater — a classic accumulation signal.",
-    rows: [{ l: "STH Cost Basis", v: "~$75.8K", a: G4 }, { l: "Price (1 Nov)", v: "~$78K", a: O }, { l: "STH P/L", v: "+3% IN PROFIT", a: E }],
+    rows: [{ l: "STH Cost Basis", v: "~$75.8K", a: G4 }, { l: "Price (9 Nov)", v: "~$75K", a: O }, { l: "STH P/L", v: "~1% UNDERWATER", a: E }],
     accent: O, source: "bitcoin-data.com",
   },
 ];
@@ -911,7 +921,7 @@ function MR({ label, value, accent }) {
 /* Santostasi power law: fair value = 1.0117e-17 × (days since genesis)^5.82; support ≈ 0.42 × fair value */
 const GENESIS_MS = Date.UTC(2009, 0, 3);
 const powerLawFair = (t = Date.now()) => 1.0117e-17 * Math.pow((t - GENESIS_MS) / 86400000, 5.82);
-const MA200_USD = 67500; // 200-week moving average, Oct 2026 (Kraken weekly closes)
+const MA200_USD = 68100; // 200-week moving average, mid-Nov 2026 (Kraken weekly closes)
 const fmtK = (v) => "$" + (v >= 1000 ? Math.round(v / 1000) + "K" : Math.round(v));
 const fmtPctSigned = (v) => `${v >= 0 ? "+" : ""}${Math.round(v)}%`;
 
@@ -1605,7 +1615,7 @@ function MainPortal() {
             <span key={copy} style={{ fontSize: "clamp(8px, 0.85vw, 11px)", fontFamily: "var(--mono)", letterSpacing: "0.02em" }}>
               <span style={{ color: O, fontWeight: 700 }}>CHAMPIONS</span><span style={{ color: G1 }}> ░ </span>
               {[
-                { n: "Michael Saylor", d: "Executive Chairman, Strategy Inc. — 848K+ BTC Treasury", u: "https://x.com/saylor" },
+                { n: "Michael Saylor", d: "Executive Chairman, Strategy Inc. — 850K+ BTC Treasury", u: "https://x.com/saylor" },
                 { n: "Larry Fink", d: "CEO, BlackRock — Launched IBIT, $15T+ AUM", u: "https://x.com/BlackRock" },
                 { n: "Jack Mallers", d: "CEO, Strike — Lightning Payments Pioneer", u: "https://x.com/jackmallers" },
                 { n: "Saifedean Ammous", d: "Author, The Bitcoin Standard", u: "https://saifedean.com" },
