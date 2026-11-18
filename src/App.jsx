@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef, createContext, useContext } from "react";
+import WorkWithUs from "./WorkWithUs.jsx";
 
 const O  = "#F7931A";
 const BK = "#000000";
@@ -71,8 +72,17 @@ function SplashScreen({ onComplete }) {
   );
 }
 
+function shouldSkipSplash() {
+  try {
+    const loc = window.location.search + window.location.hash;
+    return /(?:[?&]page=work\b|#work\b)/i.test(loc);
+  } catch (e) {
+    return false;
+  }
+}
+
 export default function App() {
-  const [showSplash, setShowSplash] = useState(true);
+  const [showSplash, setShowSplash] = useState(() => !shouldSkipSplash());
 
   if (showSplash) {
     return <SplashScreen onComplete={() => setShowSplash(false)} />;
@@ -497,6 +507,16 @@ function initialPostIndex() {
     }
   } catch (e) { /* ignore */ }
   return Math.floor(Math.random() * POSTS.length);
+}
+
+// Deep link: ?page=work or #work opens the Work with us page.
+function readPage() {
+  try {
+    const q = new URLSearchParams(window.location.search);
+    if ((q.get("page") || "").toLowerCase() === "work") return "work";
+    if (/#work\b/i.test(window.location.hash)) return "work";
+  } catch (e) { /* ignore */ }
+  return "home";
 }
 
 const YEARLY_LOWS = [
@@ -1466,6 +1486,40 @@ function HODLReturns() {
 
 function MainPortal() {
   const btc = useBTC();
+  const [page, setPage] = useState(readPage);
+
+  useEffect(() => {
+    const onPop = () => setPage(readPage());
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+
+  useEffect(() => {
+    document.title = page === "work" ? "Work with us — 21M Reasons" : "21M Reasons — Why Bitcoin";
+  }, [page]);
+
+  const goTo = (next) => {
+    const url = next === "work" ? "/?page=work" : "/";
+    if (`${window.location.pathname}${window.location.search}` !== url) {
+      window.history.pushState({ page: next }, "", url);
+    }
+    setPage(next);
+    window.scrollTo(0, 0);
+  };
+
+  const workLinkStyle = (active) => ({
+    fontSize: 11,
+    fontWeight: 600,
+    fontFamily: "var(--mono)",
+    letterSpacing: "0.02em",
+    color: active ? O : G3,
+    textDecoration: "none",
+    whiteSpace: "nowrap",
+  });
+
+  const onWorkClick = (e) => { e.preventDefault(); goTo("work"); };
+  const onHomeClick = (e) => { e.preventDefault(); goTo("home"); };
+
   return (
     <BTCContext.Provider value={btc}>
     <div style={{ minHeight: "100vh", background: D1, color: W2, fontFamily: "var(--sans)" }}>
@@ -1577,9 +1631,15 @@ function MainPortal() {
       {/* Desktop Header */}
       <div className="header-bar" style={{ justifyContent: "space-between", alignItems: "center", padding: "7px 14px", borderBottom: `1px solid ${D3}`, background: BK }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ width: 22, height: 22, borderRadius: "50%", background: O, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, color: BK, fontFamily: "var(--mono)" }}>₿</div>
-          <span style={{ fontSize: 12, fontWeight: 700, color: W }}>21M REASONS</span>
+          <a href="/" onClick={onHomeClick} style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", color: "inherit" }}>
+            <div style={{ width: 22, height: 22, borderRadius: "50%", background: O, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 800, color: BK, fontFamily: "var(--mono)" }}>₿</div>
+            <span style={{ fontSize: 12, fontWeight: 700, color: W }}>21M REASONS</span>
+          </a>
           <LiveDot status={btc.status} size={5} font={8} />
+          <a href="/?page=work" onClick={onWorkClick} style={workLinkStyle(page === "work")}
+            onMouseEnter={(e) => { e.currentTarget.style.color = O; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = page === "work" ? O : G3; }}
+          >Work with us</a>
         </div>
         <PriceDisplay btc={btc} size="clamp(15px, 2.2vw, 22px)" labelSize={9} />
       </div>
@@ -1587,10 +1647,16 @@ function MainPortal() {
       {/* Mobile Header */}
       <div className="header-bar-mobile" style={{ flexDirection: "column", borderBottom: `1px solid ${D3}`, background: BK }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 12px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <div style={{ width: 20, height: 20, borderRadius: "50%", background: O, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, color: BK, fontFamily: "var(--mono)" }}>₿</div>
-            <span style={{ fontSize: 13, fontWeight: 700, color: W }}>21M REASONS</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+            <a href="/" onClick={onHomeClick} style={{ display: "flex", alignItems: "center", gap: 6, textDecoration: "none", color: "inherit" }}>
+              <div style={{ width: 20, height: 20, borderRadius: "50%", background: O, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, color: BK, fontFamily: "var(--mono)" }}>₿</div>
+              <span style={{ fontSize: 13, fontWeight: 700, color: W }}>21M REASONS</span>
+            </a>
             <LiveDot status={btc.status} size={4} font={7} />
+            <a href="/?page=work" onClick={onWorkClick} style={workLinkStyle(page === "work")}
+              onMouseEnter={(e) => { e.currentTarget.style.color = O; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = page === "work" ? O : G3; }}
+            >Work with us</a>
           </div>
           <PriceDisplay btc={btc} size={16} labelSize={8} />
         </div>
@@ -1729,6 +1795,9 @@ function MainPortal() {
         </div>
       </div>
 
+      {page === "work" ? (
+        <WorkWithUs />
+      ) : (
       <div className="main-layout">
         <div className="post-col"><PostTile /></div>
         <div className="right-grid">
@@ -1738,17 +1807,25 @@ function MainPortal() {
           <div className="tile-quote"><QuoteTile /></div>
         </div>
       </div>
+      )}
 
       {/* Footer */}
       <div style={{
         background: BK, borderTop: `1px solid ${D3}`, padding: "10px 14px",
         display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8,
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ width: 16, height: 16, borderRadius: "50%", background: O, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 8, fontWeight: 800, color: BK, fontFamily: "var(--mono)" }}>₿</div>
-          <span style={{ fontSize: "clamp(9px, 0.9vw, 11px)", color: G3, fontFamily: "var(--mono)" }}>
-            21M REASONS — <span style={{ color: O, fontWeight: 700 }}>{POSTS.length} reasons</span> and counting
-          </span>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          <a href="/" onClick={onHomeClick} style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
+            <div style={{ width: 16, height: 16, borderRadius: "50%", background: O, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 8, fontWeight: 800, color: BK, fontFamily: "var(--mono)" }}>₿</div>
+            <span style={{ fontSize: "clamp(9px, 0.9vw, 11px)", color: G3, fontFamily: "var(--mono)" }}>
+              21M REASONS — <span style={{ color: O, fontWeight: 700 }}>{POSTS.length} reasons</span> and counting
+            </span>
+          </a>
+          <a href="/?page=work" onClick={onWorkClick}
+            style={{ fontSize: "clamp(9px, 0.7vw, 9px)", fontFamily: "var(--mono)", color: page === "work" ? O : G3, textDecoration: "none", fontWeight: 600 }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = O)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = page === "work" ? O : G3)}
+          >work with us</a>
         </div>
         <div className="footer-links" style={{ display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap" }}>
           {[

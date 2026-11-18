@@ -25,6 +25,19 @@
     </style>
   </head>
   <body>
+
+    <!-- Hidden static form so Netlify can detect the Work with us form at deploy time. -->
+    <form name="work-with-us" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <select name="topic">
+        <option value="do-and-dont">What to do and what not to do</option>
+        <option value="custody-setup">Custody setup</option>
+        <option value="personal-situation">How Bitcoin applies to my situation</option>
+      </select>
+      <textarea name="message"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
