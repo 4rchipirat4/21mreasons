@@ -1,0 +1,9 @@
+# Headers for NIP-05 verification. Build settings stay in the Netlify UI.
+# Clients fetch https://21mreasons.com/.well-known/nostr.json?name=21m
+# and require Access-Control-Allow-Origin: *. The file must not redirect.
+
+[[headers]]
+  for = "/.well-known/nostr.json"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Content-Type = "application/json"

@@ -1,0 +1,15 @@
+{
+  "names": {
+    "21m": "29efe2cca2ca3e67dfa87eaf2b6ec1c9208feabfd404d24db9c9797b79a05044",
+    "_": "29efe2cca2ca3e67dfa87eaf2b6ec1c9208feabfd404d24db9c9797b79a05044"
+  },
+  "relays": {
+    "29efe2cca2ca3e67dfa87eaf2b6ec1c9208feabfd404d24db9c9797b79a05044": [
+      "wss://relay.damus.io",
+      "wss://nos.lol",
+      "wss://relay.primal.net",
+      "wss://relay.nostr.band",
+      "wss://relay.snort.social"
+    ]
+  }
+}
