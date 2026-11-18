@@ -89,24 +89,34 @@ export default function WorkWithUs() {
         letterSpacing: "0.14em",
         color: O,
         fontWeight: 700,
-        marginBottom: 10,
+        marginBottom: 8,
       }}>21M REASONS</div>
+      <div style={{
+        fontFamily: "var(--mono)",
+        fontSize: 12,
+        letterSpacing: "0.08em",
+        textTransform: "uppercase",
+        color: G4,
+        fontWeight: 600,
+        marginBottom: 14,
+      }}>Work with us</div>
       <h1 style={{
         fontSize: "clamp(28px, 4vw, 40px)",
         fontWeight: 800,
         color: W,
         letterSpacing: "-0.03em",
-        lineHeight: 1.1,
+        lineHeight: 1.15,
         marginBottom: 14,
-      }}>Work with us</h1>
+        maxWidth: 720,
+      }}>Bitcoin doesn't have a helpdesk.<br />So we made one.</h1>
       <p style={{
         fontSize: 17,
         lineHeight: 1.55,
         color: W2,
         maxWidth: 640,
-        marginBottom: 12,
+        marginBottom: 16,
       }}>
-        One-to-one Bitcoin advice and information.
+        Years of experience, distilled and delivered, drop by drop.
       </p>
       <p style={{
         fontSize: 15,
