@@ -243,7 +243,7 @@ const POSTS = [
   { tag: "REASON #4", headline: "EVERY TRANSACTION IS IMMUTABLE AND CANNOT BE STOPPED, CHANGED, OR REVERSED BY ANYONE", body: "Nobody can change the ledger, stop or withhold the funds. Once confirmed, it is final." },
   { tag: "REASON #5", headline: "LIKE GOLD, BITCOIN IS SEEN BY BLACKROCK AND OTHERS AS A WAY TO PRESERVE WEALTH AND PROTECT AGAINST INFLATION", body: "'Bitcoin is digital gold' — Larry Fink (BlackRock). Institutional validation of Bitcoin as a store of value continues to accelerate." },
   { tag: "REASON #6", headline: "BITCOIN IS A HEDGE AGAINST INFLATION, FISCAL IRRESPONSIBILITY AND CURRENCY DEBASEMENT", body: "USD is the strongest currency in the world and has lost 40% of its purchasing power in 20 years. Every fiat currency trends toward zero." },
-  { tag: "REASON #7", headline: "BITCOIN IS ONE OF THE 15 LARGEST ASSETS ON EARTH — IN THE SAME LEAGUE AS META, TESLA AND BROADCOM", body: "A $1.5 trillion+ asset built in under 18 years, with no company, no CEO and no marketing budget. Only gold, silver and a handful of mega-cap companies are bigger." },
+  { tag: "REASON #7", headline: "BITCOIN IS ONE OF THE 15 LARGEST ASSETS ON EARTH — IN THE SAME LEAGUE AS META, TESLA AND BROADCOM", body: "A $1 trillion+ asset built in under 18 years, with no company, no CEO and no marketing budget. Only gold, silver and a handful of mega-cap companies are bigger." },
   { tag: "REASON #8", headline: "THE BITCOIN ETF IS THE MOST SUCCESSFUL IN HISTORY — 20X FASTER THAN GOLD ETFS", body: "Despite gold ETFs being available for 20+ years, Bitcoin ETF took only weeks to surpass expectations. Fastest growing ETF product ever launched." },
   { tag: "REASON #9", headline: "BITCOIN STILL REPRESENTS WELL UNDER 1% OF GLOBAL ASSETS AND ITS SUPERIOR QUALITIES WILL CAPTURE EVEN MORE IN THE NEXT DECADES", body: "Bitcoin has arrived as a globally recognised asset with superior properties: scarcity, portability, divisibility, verifiability, and censorship resistance." },
   { tag: "REASON #10", headline: "BITCOIN IS AN UNHACKABLE BANK ACCOUNT THAT ANYONE IN THE WORLD CAN USE — NO PERMISSION, NO ACCOUNT FEES", body: "'You can't crack that at all.' The government can't get in. Everyone is walking around with a Swiss bank account in their pocket." },
@@ -290,7 +290,7 @@ const POSTS = [
   { tag: "REASON #55", headline: "DJT SIGNED AN EXECUTIVE ORDER 'GUARANTEEING FAIR BANKING FOR ALL AMERICANS' — ENDING POLITICALLY MOTIVATED DEBANKING", body: "This comes as a complete U-turn from previous policies including Operation Chokepoint 2.0, which saw crypto businesses and individuals debanked or refused service." },
   { tag: "REASON #56", headline: "CAPITULATION EVENTS — WHEN BILLIONS IN LOSSES ARE REALISED IN DAYS — HAVE HISTORICALLY MARKED MAJOR BOTTOMS. WEAK HANDS OUT, STRONG HANDS IN.", body: "The rotation of supply from weak hands to conviction investors has historically marked the beginning of the next leg up." },
   { tag: "REASON #57", headline: "WHEN THE CRYPTO FEAR & GREED INDEX HITS 'EXTREME FEAR', BTC HAS USUALLY BEEN HIGHER 12 MONTHS LATER", body: "Markets are driven by emotion. When the crowd panics and sells, the smart money accumulates. Fear is temporary. Fundamentals are permanent." },
-  { tag: "REASON #58", headline: "US SPOT BITCOIN ETFS HAVE TAKEN IN ~$57 BILLION OF NET INFLOWS SINCE JAN 2024 — LONG-TERM INVESTORS ARE NOT LEAVING", body: "Even after months of redemptions during the 2026 drawdown, the net position remains overwhelmingly positive. Speculators trim. Conviction holders add." },
+  { tag: "REASON #58", headline: "US SPOT BITCOIN ETFS HAVE TAKEN IN ~$53 BILLION OF NET INFLOWS SINCE JAN 2024 — LONG-TERM INVESTORS ARE NOT LEAVING", body: "Even after months of redemptions during the 2026 drawdown, the net position remains overwhelmingly positive. Speculators trim. Conviction holders add." },
   { tag: "REASON #59", headline: "THE CFTC HAS PACKED ITS INNOVATION ADVISORY COMMITTEE WITH 35 MEMBERS INCLUDING CEOS OF COINBASE, RIPPLE AND GEMINI", body: "The most powerful commodity regulator in the world is building crypto into its infrastructure. This is not the behaviour of a government about to ban anything." },
   { tag: "REASON #60", headline: "THE FEDERAL RESERVE PUBLISHED A WORKING PAPER PROPOSING CRYPTO BE TREATED AS A DISTINCT ASSET CLASS FOR MARGIN REQUIREMENTS", body: "The Fed is acknowledging crypto's maturity at the institutional level. Separate margin frameworks mean they expect it to be a permanent part of the financial system." },
   { tag: "REASON #61", headline: "BTC FELL OVER 50% FROM ITS OCT 2025 ATH IN 2026 — EVERY CYCLE HAS HAD A DRAWDOWN LIKE THIS. EVERY PREVIOUS ONE RECOVERED AND EXCEEDED THE OLD HIGH.", body: "2011: -93%. 2014: -86%. 2018: -84%. 2022: -77%. The pattern is undefeated across 4 previous cycles. Zoom out." },
@@ -299,7 +299,7 @@ const POSTS = [
   { tag: "REASON #64", headline: "PROTECT PROGRESS HAS EARMARKED $1.5M TO UNSEAT ANTI-CRYPTO POLITICIANS — THE INDUSTRY IS FUNDING ITS OWN FUTURE", body: "Crypto PACs are reshaping US elections. Politicians who oppose the industry are being outspent and replaced. The political infrastructure is now permanent." },
   { tag: "REASON #65", headline: "WHEN GOLD MASSIVELY OUTPERFORMS BTC, THE DIVERGENCE HAS HISTORICALLY REVERSED IN BITCOIN'S FAVOUR", body: "Gold leads in fear. Bitcoin leads in recovery. The last time gold massively outperformed BTC was 2022. Within 18 months, BTC had 4x'd from its low." },
   { tag: "REASON #66", headline: "BITCOIN HAS ZERO COUNTERPARTY RISK — IT IS THE ONLY MAJOR ASSET THAT IS SIMULTANEOUSLY BEARER AND DIGITAL", body: "Bonds depend on governments. Stocks depend on companies. Property depends on legal systems. Bitcoin depends on mathematics alone." },
-  { tag: "REASON #67", headline: "BITCOIN USES ROUGHLY 0.5% OF THE WORLD'S ELECTRICITY — A SMALL PRICE TO SECURE A $1.5 TRILLION+ GLOBAL MONETARY NETWORK", body: "Cambridge (CCAF, 2025) estimates ~138 TWh a year, about 0.54% of global electricity — and a growing share of it is stranded or surplus power that would otherwise be wasted." },
+  { tag: "REASON #67", headline: "BITCOIN USES ROUGHLY 0.5% OF THE WORLD'S ELECTRICITY — A SMALL PRICE TO SECURE A $1 TRILLION+ GLOBAL MONETARY NETWORK", body: "Cambridge (CCAF, 2025) estimates ~138 TWh a year, about 0.54% of global electricity — and a growing share of it is stranded or surplus power that would otherwise be wasted." },
   { tag: "REASON #68", headline: "MILLIONS IN AFRICA, LATIN AMERICA AND SOUTHEAST ASIA ARE USING BITCOIN WHERE BANKS NEVER REACHED", body: "Financial inclusion isn't a slogan for Bitcoin — it's a measurable reality. The unbanked are banking themselves, on their own terms." },
   { tag: "REASON #69", headline: "'YOU NEVER CHANGE THINGS BY FIGHTING THE EXISTING REALITY. TO CHANGE SOMETHING, BUILD A NEW MODEL THAT MAKES THE EXISTING MODEL OBSOLETE.'", body: "Buckminster Fuller. Bitcoin doesn't petition banks for reform. It replaces them with something better." },
   { tag: "REASON #70", headline: "BITCOIN'S HASH RATE HAS HIT NEW ALL-TIME HIGHS IN EVERY CYCLE — EVEN AFTER 80%+ DRAWDOWNS", body: "Miners don't stop building during bear markets. The infrastructure keeps growing regardless of price. Security keeps climbing." },
@@ -326,7 +326,7 @@ const POSTS = [
   { tag: "REASON #91", headline: "ATTACKING THE BITCOIN NETWORK (51% ATTACK) WOULD COST TENS OF BILLIONS OF DOLLARS IN SPECIALISED HARDWARE — AND RISING", body: "You would need more hashing power than the entire honest network — over 1 zettahash per second — plus gigawatts of power. And even then, you could only disrupt — not destroy." },
   { tag: "REASON #92", headline: "'THE GOVERNMENTS OF THE WORLD HAVE SPENT TRILLIONS BAILING OUT A DECAYING SYSTEM. BITCOIN IS THE EXIT.'", body: "Raoul Pal, CEO of Real Vision. The macro strategist who sees Bitcoin not as speculation but as the escape hatch from a broken monetary system." },
   { tag: "REASON #93", headline: "BITCOIN'S DIFFICULTY ADJUSTMENT IS THE MOST ELEGANT ECONOMIC MECHANISM EVER DESIGNED", body: "Every 2,016 blocks, the network automatically adjusts mining difficulty. Too many miners? Harder. Too few? Easier. Self-regulating, self-balancing. No committee needed." },
-  { tag: "REASON #94", headline: "SOVEREIGN WEALTH FUNDS ARE ALREADY IN — ABU DHABI'S MUBADALA HOLDS BITCOIN ETF SHARES AND NORWAY'S FUND IS EXPOSED VIA EQUITIES", body: "The biggest pools of capital on Earth can't ignore a $1.5 trillion+ asset class. Indirect exposure came first. Direct allocation has begun." },
+  { tag: "REASON #94", headline: "SOVEREIGN WEALTH FUNDS ARE ALREADY IN — ABU DHABI'S MUBADALA HOLDS BITCOIN ETF SHARES AND NORWAY'S FUND IS EXPOSED VIA EQUITIES", body: "The biggest pools of capital on Earth can't ignore a $1 trillion+ asset class. Indirect exposure came first. Direct allocation has begun." },
   { tag: "REASON #95", headline: "'AT ITS CORE, BITCOIN IS A SMART CURRENCY DESIGNED BY VERY FORWARD-THINKING ENGINEERS.'", body: "Peter Diamandis, founder of XPRIZE. The man who incentivizes moonshots recognises Bitcoin as one of the most consequential engineering achievements of our time." },
   { tag: "REASON #96", headline: "THE BITCOIN WHITEPAPER IS 9 PAGES LONG — THE ENTIRE MONETARY REVOLUTION FITS ON A NAPKIN", body: "Satoshi didn't need 10,000 pages of regulation. Nine pages of elegant mathematics. Open source. Peer reviewed. Launched. Never stopped." },
   { tag: "REASON #97", headline: "EVERY FOUR YEARS, BITCOIN'S NEW SUPPLY IS CUT IN HALF — THE NEXT HALVING IS EXPECTED ~APRIL 2028 AND WILL REDUCE ISSUANCE TO 1.5625 BTC PER BLOCK", body: "Supply shock is mathematically programmed. Every halving has preceded a massive bull run. 2012, 2016, 2020, 2024. The pattern repeats." },
@@ -375,7 +375,7 @@ const POSTS = [
   { tag: "REASON #140", headline: "VISA AND MASTERCARD NOW SUPPORT CRYPTO-LINKED CARDS AND STABLECOIN SETTLEMENT ON THEIR NETWORKS", body: "The world's largest payment networks have integrated crypto. They didn't do this because they like Bitcoin. They did it because their customers demanded it." },
   { tag: "REASON #141", headline: "EVERY FIAT CURRENCY IN HISTORY HAS EVENTUALLY GONE TO ZERO. EVERY SINGLE ONE. BITCOIN IS DESIGNED TO DO THE OPPOSITE.", body: "The Roman denarius. The Weimar mark. The Zimbabwe dollar. The Venezuelan bolivar. 100% failure rate over millennia. Bitcoin's monetary policy cannot be changed by any human." },
   { tag: "REASON #142", headline: "A NIGERIAN FARMER AND A SWISS BANKER USE THE SAME NETWORK, THE SAME RULES, AND THE SAME MONEY — FOR THE FIRST TIME IN HISTORY", body: "No other financial system treats all participants equally regardless of nationality, wealth, status, or geography. Bitcoin doesn't know who you are. It only knows math." },
-  { tag: "REASON #143", headline: "BITCOIN'S ENERGY USE IS FULLY TRANSPARENT AND MEASURABLE — THE BANKING SYSTEM'S AND GOLD MINING'S ARE NOT", body: "The 'energy waste' narrative ignores what that energy buys: final settlement and security for a $1.5 trillion+ network, using about half a percent of global electricity." },
+  { tag: "REASON #143", headline: "BITCOIN'S ENERGY USE IS FULLY TRANSPARENT AND MEASURABLE — THE BANKING SYSTEM'S AND GOLD MINING'S ARE NOT", body: "The 'energy waste' narrative ignores what that energy buys: final settlement and security for a $1 trillion+ network, using about half a percent of global electricity." },
   { tag: "REASON #144", headline: "THE LIGHTNING NETWORK MAKES BITCOIN PAYMENTS INSTANT AND NEAR-FREE — AND IS NOW BUILT INTO MAJOR EXCHANGES AND WALLETS", body: "Coinbase, Kraken, Cash App, Strike and more support Lightning. Micropayments, instant settlement, near-zero fees. Bitcoin scales in layers, just like the internet did." },
   { tag: "REASON #145", headline: "BITCOIN HAS BEEN THE BEST-PERFORMING MAJOR ASSET OF THE PAST 15 YEARS", body: "Stocks, bonds, real estate, gold, commodities. Over the long run nothing comes close — and most 4-year holding periods in Bitcoin's history have beaten them all." },
   { tag: "REASON #146", headline: "THE BITCOIN NETWORK IS SECURED BY MORE HASHING POWER THAN ANY COMPUTING NETWORK EVER BUILT", body: "Over 1,000 exahashes per second — more than 1 zettahash. The most powerful computational network ever assembled by humanity, all pointed at one purpose: securing the ledger." },
@@ -400,7 +400,7 @@ const POSTS = [
   { tag: "REASON #165", headline: "BITCOIN IS THE ONLY ASSET WHERE EVERY HOLDER'S INCENTIVES ARE PERFECTLY ALIGNED — MY SUCCESS IS YOUR SUCCESS", body: "In stocks, insiders dump on retail. In real estate, your gain is your neighbour's loss. In Bitcoin, every holder benefits from every other holder's conviction." },
   { tag: "REASON #166", headline: "THE INTERNET GAVE US FREEDOM OF INFORMATION. BITCOIN GIVES US FREEDOM OF VALUE. THE REVOLUTION ISN'T COMING — IT'S HERE.", body: "Email disrupted postal services. Streaming disrupted media. Bitcoin disrupts money itself. The most fundamental layer of human coordination." },
   { tag: "REASON #167", headline: "BITCOIN MINING IS TURNING LANDFILL METHANE INTO REVENUE AND REDUCING GREENHOUSE GAS EMISSIONS SIMULTANEOUSLY", body: "Landfills emit methane 80x more harmful than CO2. Bitcoin miners capture it, burn it for energy, reduce emissions, and get paid. Environmental good + profit." },
-  { tag: "REASON #168", headline: "US SPOT BITCOIN ETFS HOLD OVER $100 BILLION OF BITCOIN — INSTITUTIONAL DEMAND IS RELENTLESS", body: "Pension funds, endowments, family offices, and sovereign wealth have all bought in. The biggest pools of capital on Earth are entering." },
+  { tag: "REASON #168", headline: "US SPOT BITCOIN ETFS HOLD ABOUT 1.24 MILLION BTC — NEARLY 6% OF ALL THE BITCOIN THAT WILL EVER EXIST", body: "Even after billions of dollars of outflows in November 2026, the 14 US spot Bitcoin ETFs still held about 1,244,000 BTC on 20 Nov. Pension funds, endowments, financial advisers, family offices and sovereign wealth funds have all bought in. The biggest pools of capital on Earth are here." },
   { tag: "REASON #169", headline: "TENS OF MILLIONS OF BITCOIN ADDRESSES HOLD A BALANCE — EACH ONE A VOLUNTARY OPT-IN", body: "Each wallet represents a person, a family, a business that chose to opt into a new financial system. Voluntarily. Without anyone's permission." },
   { tag: "REASON #170", headline: "BITCOIN HAS SURVIVED EVERY 'BITCOIN IS DEAD' HEADLINE — OVER 470 OBITUARIES AND COUNTING", body: "Declared dead by mainstream media 470+ times. Each time it came back stronger. The most resilient idea in the history of technology and finance." },
   { tag: "REASON #171", headline: "THERE ARE NOW 36 CRYPTO BILLIONAIRES AND 241,700 CRYPTO MILLIONAIRES GLOBALLY — UP 40% IN ONE YEAR", body: "Henley & Partners Crypto Wealth Report 2025. Bitcoin isn't just preserving wealth — it's creating it. A new generation of financially sovereign individuals, built on conviction and patience." },
@@ -421,7 +421,7 @@ const POSTS = [
   { tag: "REASON #186", headline: "BITCOIN MINING HAS CREATED ECONOMIC OPPORTUNITY IN SOME OF THE POOREST AND MOST REMOTE COMMUNITIES ON EARTH", body: "From rural Texas to Congo to Paraguay to Iceland — communities with stranded energy now have a global buyer. Bitcoin turns geographic disadvantage into economic advantage." },
   { tag: "REASON #187", headline: "EVERY AMERICAN BORN TODAY INHERITS A SHARE OF NATIONAL DEBT WORTH OVER $110,000 THEY NEVER AGREED TO", body: "$40 trillion+ divided by ~340 million people. Governments spend. Citizens pay. Across generations. Without consent. Bitcoin is the first opt-out." },
   { tag: "REASON #188", headline: "THE BITCOIN PROTOCOL HAS BEEN RUNNING CONTINUOUSLY SINCE BLOCK #0 ON JANUARY 3, 2009 — THE LONGEST UNINTERRUPTED FINANCIAL SYSTEM IN THE DIGITAL AGE", body: "No maintenance windows. No downtime since 2013. The genesis block is still part of the living chain. Well over 15 years of operation." },
-  { tag: "REASON #189", headline: "IN 2009, ONE BITCOIN WAS WORTH LESS THAN A PENNY. TODAY IT SECURES A $1.5 TRILLION+ NETWORK. THE JOURNEY IS FAR FROM OVER.", body: "From cypherpunk experiment to global financial infrastructure in under 18 years. The adoption curve isn't flattening. And you're still early." },
+  { tag: "REASON #189", headline: "IN 2009, ONE BITCOIN WAS WORTH LESS THAN A PENNY. TODAY IT SECURES A $1 TRILLION+ NETWORK. THE JOURNEY IS FAR FROM OVER.", body: "From cypherpunk experiment to global financial infrastructure in under 18 years. The adoption curve isn't flattening. And you're still early." },
   { tag: "REASON #190", headline: "BITCOIN ALIGNS THE INCENTIVES OF SAVERS AND INVESTORS FOR THE FIRST TIME — WHAT'S GOOD FOR YOU IS GOOD FOR ME", body: "Inflation punishes savers to benefit borrowers. Bitcoin rewards savers equally. No insider advantage. No front-running. The most fair financial system ever created." },
   { tag: "REASON #191", headline: "MORE PEOPLE OWN CRYPTO THAN SUBSCRIBE TO NETFLIX — DIGITAL MONEY IS ALREADY A MAINSTREAM TECHNOLOGY", body: "An estimated 590 million crypto owners vs. around 300 million Netflix subscribers. The adoption battle is well under way." },
   { tag: "REASON #192", headline: "GOLD TOOK 5,000 YEARS TO BECOME THE WORLD'S BIGGEST ASSET. BITCOIN REACHED $1.5 TRILLION+ IN UNDER 18 YEARS.", body: "At the current rate of adoption, Bitcoin doesn't need centuries. It needs decades. And the trajectory is accelerating, not slowing." },
@@ -432,7 +432,7 @@ const POSTS = [
   { tag: "REASON #197", headline: "BITCOIN GIVES EVERY HUMAN BEING THE ABILITY TO SAVE IN AN ASSET THAT CANNOT BE DEBASED — FOR THE FIRST TIME IN HISTORY", body: "For 5,000 years, rulers have debased money. Gold was clipped. Coins were diluted. Currency was printed. Bitcoin ends this cycle. Permanently." },
   { tag: "REASON #198", headline: "THE MOST SUCCESSFUL INVESTORS OF OUR TIME — DRUCKENMILLER, TUDOR JONES, DALIO, FINK — ALL HOLD OR RECOMMEND BITCOIN", body: "This isn't a retail fad. The greatest investors alive have done their research and allocated capital. Follow the money. Follow the conviction." },
   { tag: "REASON #199", headline: "BITCOIN IS HOPE. FOR THE UNBANKED, THE OPPRESSED, THE INFLATED, AND THE FORGOTTEN. HOPE ENCODED IN MATHEMATICS.", body: "It's not just technology. It's not just money. It's the first system that gives every human being on Earth equal access to financial freedom. And no one can take it away." },
-  { tag: "REASON #200", headline: "THE QUESTION ISN'T 'WHY BITCOIN?' THE QUESTION IS 'WHY NOT?' — AND NOBODY HAS EVER HAD A GOOD ANSWER.", body: "Every objection has been answered. Every attack has failed. Every obituary has been wrong. Since 2009. $1.5 trillion+. Hundreds of millions of users. The case is closed." },
+  { tag: "REASON #200", headline: "THE QUESTION ISN'T 'WHY BITCOIN?' THE QUESTION IS 'WHY NOT?' — AND NOBODY HAS EVER HAD A GOOD ANSWER.", body: "Every objection has been answered. Every attack has failed. Every obituary has been wrong. Since 2009. $1 trillion+. Hundreds of millions of users. The case is closed." },
   { tag: "REASON #201", headline: "IN TURKEY, WHERE INFLATION PEAKED ABOVE 85% IN 2022, CRYPTO OWNERSHIP IS AMONG THE HIGHEST IN THE WORLD", body: "When your government destroys your currency, you find an alternative. Necessity is the mother of adoption." },
   { tag: "REASON #202", headline: "BITCOIN IS THE ONLY ASSET THAT CAN BE SELF-CUSTODIED, INSTANTLY VERIFIED, AND GLOBALLY TRANSFERRED — ALL AT ONCE", body: "Gold can be self-custodied but not transferred digitally. Stocks can be transferred but not self-custodied. Cash can be held but not verified. Bitcoin does all three." },
   { tag: "REASON #203", headline: "THE BITCOIN WHITEPAPER HAS BEEN TRANSLATED INTO OVER 40 LANGUAGES — THE IDEA BELONGS TO EVERYONE", body: "No copyright. No patent. No intellectual property restrictions. Anyone can read it, build on it, improve it. The most important open-source document since Wikipedia." },
@@ -449,7 +449,7 @@ const POSTS = [
   { tag: "REASON #214", headline: "THERE WILL COME A DAY WHEN PEOPLE LOOK BACK AND SAY 'I CAN'T BELIEVE BITCOIN WAS AVAILABLE FOR UNDER $100,000'", body: "They said it at $1. At $100. At $1,000. At $10,000. At $60,000. Every level felt expensive at the time. Every level now looks like a gift." },
   { tag: "REASON #215", headline: "BITCOIN ISN'T JUST AN INVESTMENT. IT'S A SAVINGS TECHNOLOGY. THE DIFFERENCE IS EVERYTHING.", body: "Investments can fail. Technologies that solve fundamental problems persist. The telephone didn't fail. The internet didn't fail. Bitcoin solves money. It won't fail." },
   { tag: "REASON #216", headline: "59% OF PEOPLE PLANNING TO BUY CRYPTO IN 2026 PLAN TO BUY BITCOIN — IT REMAINS THE OVERWHELMINGLY PREFERRED ENTRY POINT", body: "Not altcoins. Not memecoins. Bitcoin. When new capital enters the ecosystem, it enters through BTC. The gravitational centre of the entire crypto universe." },
-  { tag: "REASON #217", headline: "THE AVERAGE BITCOIN TRANSACTION USES LESS ENERGY THAN A GOOGLE SEARCH WHEN AMORTIZED ACROSS THE NETWORK'S TOTAL VALUE SECURED", body: "Per dollar of value secured, Bitcoin is extraordinarily energy-efficient. The narrative that it 'wastes' energy ignores the $1.5 trillion+ of value it protects." },
+  { tag: "REASON #217", headline: "THE AVERAGE BITCOIN TRANSACTION USES LESS ENERGY THAN A GOOGLE SEARCH WHEN AMORTIZED ACROSS THE NETWORK'S TOTAL VALUE SECURED", body: "Per dollar of value secured, Bitcoin is extraordinarily energy-efficient. The narrative that it 'wastes' energy ignores the $1 trillion+ of value it protects." },
   { tag: "REASON #218", headline: "BITCOIN IS THE GREATEST PEACEFUL REVOLUTION IN HUMAN HISTORY — NO VIOLENCE, NO COERCION, JUST OPT-IN MATHEMATICS", body: "Every other monetary revolution required war, bloodshed, or political upheaval. Bitcoin asks for nothing except your voluntary participation. And hundreds of millions have said yes." },
   { tag: "REASON #219", headline: "YOU DON'T NEED TO BUY A WHOLE BITCOIN. 1,000 SATOSHIS COSTS ABOUT A DOLLAR. EVERYONE CAN START.", body: "The 'Bitcoin is too expensive' myth dies when you understand divisibility. You don't buy a whole gold bar either. Start small. Stack consistently. Time does the rest." },
   { tag: "REASON #220", headline: "BITCOIN IS THE EXIT. FROM INFLATION. FROM SURVEILLANCE. FROM CONTROL. FROM A SYSTEM THAT WASN'T BUILT FOR YOU.", body: "You don't have to fight the system. You don't have to protest. You just have to leave. Bitcoin is the door. And it's open to everyone." },
@@ -485,7 +485,7 @@ const POSTS = [
   { tag: "REASON #314", headline: "US DEBT ROSE FROM $38.1T TO $40.6T IN THE 12 MONTHS TO 29 OCT 2026 — ABOUT $6.9 BILLION A DAY", body: "That's Treasury's own Debt to the Penny data. $2.5 trillion of new debt in a single year, and someone has to pay for it — through taxes or through debasing the dollar. Bitcoin's supply grew by about 0.8% over the same period, on a schedule set in 2009." },
   { tag: "REASON #315", headline: "5 OF THE WORLD'S 29 SYSTEMICALLY IMPORTANT BANKS NOW OFFER BITCOIN CUSTODY OR TRADING — DEUTSCHE BANK SWITCHED ON CUSTODY ON 11 NOV 2026", body: "The Financial Stability Board's official list of global systemically important banks is 29 names long. Germany's largest bank now holds Bitcoin keys for institutional clients under EU MiCA rules — joining BNY, Standard Chartered, Santander and Morgan Stanley. The institutions aren't coming. They're here." },
   { tag: "REASON #316", headline: "BITCOIN CUSTODY IS NOW A FEDERALLY CHARTERED BANKING ACTIVITY — THE OCC HAS APPROVED 17 DIGITAL-ASSET BANK OR TRUST CHARTERS SINCE DEC 2025", body: "The OCC, which charters America's national banks, approved 17 digital-asset bank or trust charters in under a year. Coinbase received final approval in November 2026 and can now hold Bitcoin under federal fiduciary supervision, joining names already open including Fidelity, BitGo, Ripple, Circle and Paxos. Bitcoin firms once struggled to get a bank account. Now they are becoming banks." },
-  { tag: "REASON #317", headline: "STRATEGY NOW HOLDS 850,364 BTC — MORE THAN 4% OF ALL THE BITCOIN THAT WILL EVER EXIST", body: "Its 9 Nov 2026 SEC filing shows another 1,036 BTC bought in the first week of November, at an average of $79,012, while the market was falling. One public company owns over 1 in every 25 coins that can ever be mined. The 21 million cap makes every one of those coins a permanent subtraction from what's left." },
+  { tag: "REASON #317", headline: "STRATEGY NOW HOLDS 850,849 BTC — MORE THAN 4% OF ALL THE BITCOIN THAT WILL EVER EXIST", body: "Its 16 Nov 2026 SEC filing shows another 485 BTC bought from 9 to 15 Nov at an average of $68,887 — after 1,036 BTC the week before — while the market was falling. One public company owns over 1 in every 25 coins that can ever be mined. The 21 million cap makes every one of those coins a permanent subtraction from what's left." },
   { tag: "REASON #318", headline: "BITCOIN DIFFICULTY DROPPED 9.1% ON 14 NOV 2026 — AND THE NETWORK STILL HASHES AT ABOUT 965 EXAHASHES A SECOND, WITH NO ONE IN CHARGE", body: "When the price falls and weaker miners switch off, blocks slow down — so every 2,016 blocks the protocol retunes itself to bring them back to ~10 minutes. The 14 Nov cut took difficulty from 148.36T to 134.82T; the issuance schedule didn't budge. The network still runs at nearly 1,000 exahashes per second. A monetary system that self-heals without anyone in charge." },
   { tag: "REASON #319", headline: "OVER 20.11 MILLION BITCOIN HAVE NOW BEEN MINED — FEWER THAN 890,000 ARE LEFT, AND THEY'LL TRICKLE OUT OVER THE NEXT 114 YEARS", body: "About 95.8% of all Bitcoin that will ever exist is already in circulation. The rest arrives on a fixed, falling schedule that halves roughly every four years until around 2140. No central bank can say what its money supply will be next year. Bitcoin can tell you to the satoshi for the next century." },
   { tag: "REASON #320", headline: "BTC IS TRADING BELOW ITS 200-WEEK MOVING AVERAGE (~$68K) — BEFORE 2026, EVERY WEEKLY CLOSE BELOW IT WAS AT LEAST 2.8x HIGHER TWO YEARS LATER", body: "In Kraken's weekly price data, closes below the 200-week average came in March 2020 and through 2022–23. Two years on, every one of them was worth between 2.8x and 7.6x more. The past is no promise — but the 200-week line has marked where patient people quietly stack sats while everyone else panics." },
@@ -493,6 +493,16 @@ const POSTS = [
   { tag: "REASON #322", headline: "A HARDWARE WALLET IS ONLY AS TRUSTWORTHY AS THE PATH IT TOOK TO REACH YOU — TREZOR FOUND SPY IMPLANTS IN THREE DEVICES AND CUT 80% OF ITS RESELLERS", body: "In Nov 2026 Trezor confirmed three Safe 5 wallets from reseller CryptoBilis had hidden boards that copied recovery phrases and tried to send them over the mobile network. Firmware 2.13.1 stops the implants that were found, and Trezor cut its reseller network by about 80%. Self-custody is the point of Bitcoin — so buy direct from the maker, verify the device, and never let anyone else see your seed words." },
   { tag: "REASON #323", headline: "THE US IS BUILDING VAULTS FOR AN ESTIMATED 198,000 TO 328,000+ BTC — ABOUT 1–1.6% OF ALL BITCOIN THAT WILL EVER EXIST, WHICH BY ORDER ISN'T TO BE SOLD", body: "Executive Order 14233 created the Strategic Bitcoin Reserve in March 2025 and bars routine sales. In Nov 2026 the former White House crypto lead said Treasury is setting up a mix of self-custody and third-party custody while agencies re-audit their holdings. Governments don't build vaults for things they plan to dump." },
   { tag: "REASON #324", headline: "INVESTIGATORS FROZE ABOUT HALF OF THE BIGGEST CRYPTO HEIST EVER — MORE THAN $2.7 BILLION — BECAUSE EVERY MOVE ON A PUBLIC LEDGER IS VISIBLE", body: "North Korea-linked actors stole more than $6 billion from Binance in late October 2026. Within two weeks the Justice Department said efforts had frozen more than $2.7 billion — about half the breach — with courts authorizing seizure or restraint of over $1.2 billion. Cash in a suitcase leaves no trail. Coins on a public ledger do. That's why 'Bitcoin is for criminals' was always backwards." },
+  { tag: "REASON #325", headline: "KAZAKHSTAN IS SWAPPING ELECTRICITY FOR BITCOIN — MINERS ON A 300 MW STATE POWER QUOTA HAND 10% OF THEIR NET OUTPUT TO THE NATIONAL CRYPTO RESERVE", body: "Bitcoin is the only money you can produce directly from energy. Kazakhstan's strategic-mining rules, detailed on 17 Nov 2026, give big miners 10-year power contracts at capped prices in return for 10% of what they mine after power costs. The reserve they feed started with about $700 million; roughly $190 million (27%) was invested by the end of October. Surplus power in, an asset nobody can print out." },
+  { tag: "REASON #326", headline: "WHEN WEST TEXAS POWER SPIKED IN NOV 2026, MINERS SWITCHED OFF ~65 EXAHASHES — ABOUT 71% OF THE NETWORK'S DROP — AND CAME BACK WITHIN A DAY", body: "Hashrate Index found the 14 Nov difficulty cut was driven by power prices, not the Bitcoin price. When wind output collapsed and evening prices jumped, Texas miners — about 17% of global hashrate — powered down and left the electricity to everyone else. When prices eased, hashrate climbed back near 1,100 EH/s within a day, even as BTC fell 13%. No other industrial load bends to the grid like this." },
+  { tag: "REASON #327", headline: "FINANCIAL ADVISERS HAVE GROWN THEIR BITCOIN ETF HOLDINGS FOR 9 STRAIGHT QUARTERS — TO A RECORD 144,307 BTC", body: "Galaxy Research's count of Q3 2026 13F filings, published in Nov, shows US institutions held a record 356,491 BTC through spot ETFs after adding 49,229 BTC in the quarter. Advisers and wealth platforms now own 40.5% of it, and Wells Fargo became the largest reported holder with 30,553 BTC. Traders think in weeks. Wealth managers allocate for decades — and they keep adding." },
+  { tag: "REASON #328", headline: "ABU DHABI'S SOVEREIGN FUNDS HELD ~$1.09 BILLION OF BLACKROCK'S BITCOIN ETF — FOR ONE OF THEM IT'S 54% OF ITS DISCLOSED US PORTFOLIO", body: "Filings in mid-Nov 2026 show Mubadala (14.7 million IBIT shares) and the Abu Dhabi Investment Council (8.2 million) didn't sell a single share in Q3. For the Council, IBIT is its largest reported US holding: $389 million of $717 million. Sovereign wealth funds invest across generations. Some have chosen Bitcoin." },
+  { tag: "REASON #329", headline: "RUSSIANS CAN LEGALLY BUY BITCOIN FROM 17 NOV 2026 — THEY WERE ALREADY AN ESTIMATED 15–20% OF TRAFFIC ON ASIA'S BIGGEST CRYPTO EXCHANGES", body: "The Bank of Russia approved just three assets for retail buyers — Bitcoin, Ether and USDT — capped at ₽300,000 (about $3,600) a year per broker. A senior Finam executive estimates Russians already made up 15–20% of traffic on the largest Asian exchanges. Governments don't lead Bitcoin adoption; their citizens do, and the law follows. The network doesn't pick sides — the same rules apply to everyone." },
+  { tag: "REASON #330", headline: "BITCOIN IS NOW SWITCHED ON AT SQUARE'S CHECKOUT FOR ELIGIBLE US SELLERS — ON A $20 SALE, 1% IS 20¢ VS 67¢ FOR A CARD TAP", body: "Square finished rolling out Lightning payments to eligible US sellers outside New York on 10 Nov 2026. Processing is free until 31 Dec 2026, then 1% — against 2.6% + 15¢ for an in-person card payment on Square's free plan. Sellers can keep dollars or sats, and a Bitcoin payment can't be charged back. Lower fees and final settlement: that's how Bitcoin wins the checkout." },
+  { tag: "REASON #331", headline: "BITCOIN'S 21 NOV 2026 LOW (~$55,100) WAS 3.6x ITS LOW EXACTLY FOUR YEARS EARLIER — ABOUT +37% A YEAR, MEASURED FROM WORST DAY TO WORST DAY", body: "On 21 Nov 2022 BTC bottomed near $15,480. On 21 Nov 2026, in a sell-off to a two-year low, it bottomed near $55,100. Bear-market lows keep stepping up: ~$172 in 2015, ~$3,200 in 2018, ~$15,500 in 2022. Judge Bitcoin by its worst days and it is still compounding." },
+  { tag: "REASON #332", headline: "UK INFLATION ROSE TO 3.6% IN OCT 2026 — £1 FROM JAN 2009, WHEN BITCOIN LAUNCHED, NOW BUYS WHAT 59P DID THEN", body: "The ONS release on 18 Nov put the CPI index at 144.9, up from 84.9 in January 2009 — prices up 71%, while the Bank of England's target is 2% a year. Every year the pound buys less, by design. Bitcoin's supply schedule hasn't changed once since 2009, and no committee can change it." },
+  { tag: "REASON #333", headline: "BITCOIN'S SECURITY HAPPENS IN THE OPEN — A NODE-STALL BUG FOUND BY AN AI SCAN WAS FIXED, SHIPPED IN 3 RELEASE LINES, THEN PUBLISHED ON 20 NOV 2026", body: "CVE-2026-117348 let a peer briefly stall a node. An automated LLM scan flagged it on 8 Jul; a fix was merged on 6 Aug; Bitcoin Core 32.1, 31.3 and 30.5 shipped it; the full write-up went public on 20 Nov, 135 days after the first report. No funds at risk, no secret patches. Try reading your bank's bug reports." },
+  { tag: "REASON #334", headline: "LEVERAGE GETS LIQUIDATED — BITCOIN IN YOUR OWN WALLET DOESN'T. $1.8 BILLION OF LEVERAGED CRYPTO BETS WERE WIPED OUT IN 24 HOURS ON 21 NOV 2026", body: "As BTC slid to about $55,100, CoinGlass data showed $1.8 billion of leveraged positions force-closed — $1.3 billion (about 72%) of them bets on higher prices. Nobody holding Bitcoin outright in their own wallet got a margin call. The price fell; their coins stayed exactly where they were. Skip the leverage, hold the asset, and a bad week is just a bad week." },
 ];
 
 POSTS.forEach((p, i) => { p.scheme = i % 4; });
@@ -523,7 +533,7 @@ const YEARLY_LOWS = [
   { y: "2012", v: 4 },{ y: "2013", v: 65 },{ y: "2014", v: 275 },{ y: "2015", v: 172 },
   { y: "2016", v: 365 },{ y: "2017", v: 780 },{ y: "2018", v: 3200 },{ y: "2019", v: 3400 },
   { y: "2020", v: 3850 },{ y: "2021", v: 28700 },{ y: "2022", v: 15480 },{ y: "2023", v: 16500 },
-  { y: "2024", v: 38500 },{ y: "2025", v: 74522 },{ y: "2026", v: 57718, current: true },
+  { y: "2024", v: 38500 },{ y: "2025", v: 74522 },{ y: "2026", v: 55100, current: true },
 ];
 
 const LINKS = [
@@ -556,7 +566,7 @@ const FUNDAMENTALS = [
   },
   {
     title: "UNHACKABLE & SECURE",
-    subtitle: "Since 2009. Zero breaches. $1.5T+ bounty.",
+    subtitle: "Since 2009. Zero breaches. $1T+ bounty.",
     body: "Every nation-state, every hacker collective, every intelligence agency has had since 2009 and a trillion-dollar-plus incentive to break Bitcoin. None have succeeded. The protocol is secured by mathematics, not institutions.",
     icon: "🔒",
   },
@@ -680,43 +690,43 @@ function ValueTile() {
   );
 }
 
-// On-chain snapshot: values as of 9 Nov 2026 (bitcoin-data.com / BGeometrics free delayed data). Update periodically.
-const METRICS_ASOF = "9 Nov 2026";
+// On-chain snapshot: values as of 16 Nov 2026 (bitcoin-data.com / BGeometrics free delayed data). Update periodically.
+const METRICS_ASOF = "16 Nov 2026";
 const METRICS = [
   {
-    label: "TMMP", value: "$79.0K", subtitle: "True Market Mean Price",
+    label: "TMMP", value: "$78.5K", subtitle: "True Market Mean Price",
     desc: "Average on-chain cost basis for active investors using Cointime Economics. Price below it = the average active investor is underwater.",
-    rows: [{ l: "Realized Price", v: "~$53.9K", a: G4 }, { l: "STH Cost Basis", v: "~$75.8K", a: G4 }, { l: "Signal", v: "BELOW ACTIVE COST BASIS", a: O }],
+    rows: [{ l: "Realized Price", v: "~$53.6K", a: G4 }, { l: "STH Cost Basis", v: "~$74.3K", a: G4 }, { l: "Signal", v: "BELOW ACTIVE COST BASIS", a: O }],
     accent: E, source: "bitcoin-data.com",
   },
   {
-    label: "MVRV", value: "1.40", subtitle: "Market Value to Realized Value",
-    desc: "Below 1.0 = historically the best buying opportunities; above 3.7 = overheated. Mid-range today, well below cycle-top levels.",
-    rows: [{ l: "Overvalued", v: "> 3.7", a: G3 }, { l: "Undervalued", v: "< 1.0", a: E }, { l: "Current", v: "1.40 — LOWER MID-RANGE", a: O }],
+    label: "MVRV", value: "1.21", subtitle: "Market Value to Realized Value",
+    desc: "Below 1.0 = historically the best buying opportunities; above 3.7 = overheated. Low-range today, far below cycle-top levels.",
+    rows: [{ l: "Overvalued", v: "> 3.7", a: G3 }, { l: "Undervalued", v: "< 1.0", a: E }, { l: "Current", v: "1.21 — LOW RANGE", a: O }],
     accent: O, source: "bitcoin-data.com",
   },
   {
-    label: "NUPL", value: "0.28", subtitle: "Net Unrealized Profit/Loss",
+    label: "NUPL", value: "0.17", subtitle: "Net Unrealized Profit/Loss",
     desc: "Measures the overall profit or loss of all BTC holders. Near zero = capitulation zone where cycles historically bottom; above 0.75 = euphoria.",
-    rows: [{ l: "Euphoria", v: "> 0.75", a: G3 }, { l: "Capitulation", v: "< 0.0", a: E }, { l: "Current", v: "HOPE / OPTIMISM", a: O }],
+    rows: [{ l: "Euphoria", v: "> 0.75", a: G3 }, { l: "Capitulation", v: "< 0.0", a: E }, { l: "Current", v: "HOPE / FEAR", a: O }],
     accent: E, source: "bitcoin-data.com",
   },
   {
-    label: "SOPR", value: "0.99", subtitle: "Spent Output Profit Ratio",
+    label: "SOPR", value: "0.98", subtitle: "Spent Output Profit Ratio",
     desc: "Ratio of price sold vs price paid. Below 1.0 = holders selling at a loss. Hovering around 1.0 = coins changing hands near breakeven.",
-    rows: [{ l: "Profit Taking", v: "> 1.05", a: G3 }, { l: "Loss Selling", v: "< 1.0", a: E }, { l: "Current", v: "~BREAKEVEN", a: O }],
+    rows: [{ l: "Profit Taking", v: "> 1.05", a: G3 }, { l: "Loss Selling", v: "< 1.0", a: E }, { l: "Current", v: "SELLING AT A LOSS", a: O }],
     accent: O, source: "bitcoin-data.com",
   },
   {
-    label: "MVRV Z", value: "0.69", subtitle: "MVRV Z-Score",
+    label: "MVRV Z", value: "0.37", subtitle: "MVRV Z-Score",
     desc: "Standard deviation of MVRV from mean. Green zone (< 0.5) has historically marked generational buying opportunities; > 7 marks tops.",
-    rows: [{ l: "Overheated", v: "> 7.0 (red)", a: G3 }, { l: "Opportunity", v: "< 0.5 (green)", a: E }, { l: "Current", v: "LOW — FAR FROM TOP", a: O }],
+    rows: [{ l: "Overheated", v: "> 7.0 (red)", a: G3 }, { l: "Opportunity", v: "< 0.5 (green)", a: E }, { l: "Current", v: "IN THE GREEN ZONE", a: O }],
     accent: E, source: "bitcoin-data.com",
   },
   {
-    label: "STH-MVRV", value: "0.99", subtitle: "Short-Term Holder MVRV",
+    label: "STH-MVRV", value: "0.87", subtitle: "Short-Term Holder MVRV",
     desc: "Price vs cost basis of recent buyers (< 155 days). Below 1.0 means new investors are underwater — a classic accumulation signal.",
-    rows: [{ l: "STH Cost Basis", v: "~$75.8K", a: G4 }, { l: "Price (9 Nov)", v: "~$75K", a: O }, { l: "STH P/L", v: "~1% UNDERWATER", a: E }],
+    rows: [{ l: "STH Cost Basis", v: "~$74.3K", a: G4 }, { l: "Price (16 Nov)", v: "~$64.8K", a: O }, { l: "STH P/L", v: "~13% UNDERWATER", a: E }],
     accent: O, source: "bitcoin-data.com",
   },
 ];
@@ -941,7 +951,7 @@ function MR({ label, value, accent }) {
 /* Santostasi power law: fair value = 1.0117e-17 × (days since genesis)^5.82; support ≈ 0.42 × fair value */
 const GENESIS_MS = Date.UTC(2009, 0, 3);
 const powerLawFair = (t = Date.now()) => 1.0117e-17 * Math.pow((t - GENESIS_MS) / 86400000, 5.82);
-const MA200_USD = 68100; // 200-week moving average, mid-Nov 2026 (Kraken weekly closes)
+const MA200_USD = 68400; // 200-week moving average, 23 Nov 2026 (last 200 completed Kraken weekly closes)
 const fmtK = (v) => "$" + (v >= 1000 ? Math.round(v / 1000) + "K" : Math.round(v));
 const fmtPctSigned = (v) => `${v >= 0 ? "+" : ""}${Math.round(v)}%`;
 
@@ -1034,11 +1044,11 @@ const MODEL_VIEWS = [
   },
   {
     label: "BTC Yearly Lows",
-    source: "Every bear-market low has been higher than the last: $172 → $3.2K → $15.5K → $57.7K",
+    source: "Every bear-market low has been higher than the last: $172 → $3.2K → $15.5K → $55.1K",
     stats: [
       { l: "2024 Low", v: "$38.5K", a: G4 },
       { l: "2025 Low", v: "$74.5K", a: O },
-      { l: "2026 Low", v: "$57.7K", a: E },
+      { l: "2026 Low", v: "$55.1K", a: E },
       { l: "Cycle Lows", v: "HIGHER", a: O },
     ],
     render: "yearlylows",
@@ -1058,7 +1068,7 @@ const MODEL_VIEWS = [
     label: "200-Week Moving Average",
     source: "BTC has never closed a cycle below it",
     stats: [
-      { l: "200W MA", v: "~$67.5K", a: E },
+      { l: "200W MA", v: "~$68.4K", a: E },
       { l: "Price", v: "LIVE", a: O },
       { l: "Multiple", v: "LIVE", a: G4 },
       { l: "Signal", v: "LIVE", a: "#00CC66" },
@@ -1069,10 +1079,10 @@ const MODEL_VIEWS = [
     label: "MVRV Z-Score",
     source: "On-chain: market value vs realised value",
     stats: [
-      { l: "Z-Score", v: "1.01", a: E },
+      { l: "Z-Score", v: "0.37", a: E },
       { l: "Overvalued", v: "> 7.0", a: "#FF4444" },
       { l: "Undervalued", v: "< 0.5", a: "#00CC66" },
-      { l: "Signal", v: "LOW / NEUTRAL", a: O },
+      { l: "Signal", v: "GREEN ZONE", a: O },
     ],
     render: "mvrv",
   },
@@ -1089,11 +1099,11 @@ const MODEL_VIEWS = [
   },
   {
     label: "XAU/BTC Ratio — Gold vs Bitcoin",
-    source: "Gold priced in BTC — down ~99.3% since 2013",
+    source: "Gold priced in BTC — down ~99.2% since 2013",
     stats: [
       { l: "2013", v: "7.2 BTC/oz", a: "#FFD700" },
-      { l: "Oct 2026", v: "0.05 BTC/oz", a: O },
-      { l: "Decline", v: "-99.3%", a: "#FF4444" },
+      { l: "Nov 2026", v: "0.059 BTC/oz", a: O },
+      { l: "Decline", v: "-99.2%", a: "#FF4444" },
       { l: "Verdict", v: "BTC WINS", a: "#00CC66" },
     ],
     render: "xaubtc",
@@ -1230,9 +1240,9 @@ function RainbowSVG() {
 
 function MA200SVG() {
   const w = 300, h = 120;
-  // Year-end closes / 200-week MA (2015–2025), last point = Oct 2026 (Kraken weekly data)
-  const priceData = [310,960,13900,3700,7200,29000,47500,16500,42800,94400,87500,80500];
-  const maData = [280,420,2200,5800,4500,6800,17500,24000,30000,43000,57100,67500];
+  // Year-end closes / 200-week MA (2015–2025), last point = 23 Nov 2026 (Kraken weekly data)
+  const priceData = [310,960,13900,3700,7200,29000,47500,16500,42800,94400,87500,61600];
+  const maData = [280,420,2200,5800,4500,6800,17500,24000,30000,43000,57100,68400];
   const maxP = 100000;
   const toY = (v) => h - 8 - (Math.log10(Math.max(v, 1)) / Math.log10(maxP)) * (h - 16);
   const pricePts = priceData.map((v, i) => `${(i / (priceData.length - 1)) * w},${toY(v)}`);
@@ -1260,7 +1270,7 @@ function MVRVBars() {
     { y: "2016", z: 0.8 }, { y: "2017", z: 9.5 }, { y: "2018", z: 0.1 },
     { y: "2019", z: 2.5 }, { y: "2020", z: 3.8 }, { y: "2021", z: 7.2 },
     { y: "2022", z: -0.5 }, { y: "2023", z: 1.8 }, { y: "2024", z: 3.2 },
-    { y: "2025", z: 2.4 }, { y: "2026", z: 1.0 },
+    { y: "2025", z: 2.4 }, { y: "2026", z: 0.37 },
   ];
   const w = 300, h = 120;
   const maxZ = 10, minZ = -1;
@@ -1320,7 +1330,7 @@ function XAUBTCLine() {
     { y: "2014", r: 2.4 }, { y: "2015", r: 4.5 }, { y: "2016", r: 1.35 },
     { y: "2017", r: 0.093 }, { y: "2018", r: 0.34 }, { y: "2019", r: 0.20 },
     { y: "2020", r: 0.065 }, { y: "2021", r: 0.039 }, { y: "2022", r: 0.11 },
-    { y: "2023", r: 0.048 }, { y: "2024", r: 0.028 }, { y: "2025", r: 0.030 }, { y: "2026", r: 0.050 },
+    { y: "2023", r: 0.048 }, { y: "2024", r: 0.028 }, { y: "2025", r: 0.030 }, { y: "2026", r: 0.059 },
   ];
   const w = 300, h = 120;
   // Log scale so the decline from 200 → 0.03 is visible
